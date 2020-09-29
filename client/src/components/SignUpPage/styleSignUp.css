@@ -1,0 +1,79 @@
+.flex {
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.myContainer {
+  justify-content: center;
+  align-items: center;
+}
+
+.cardBg {
+  background-size: cover;
+  background-position: center;
+}
+
+.bg {
+  background-image: url("./img/marvel-dc-card.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+.gradient {
+  background: -moz-linear-gradient(
+    45deg,
+    rgba(88, 80, 148, 0.7),
+    rgba(83, 81, 81, 0.7) 100%
+  );
+  background: -webkit-linear-gradient(
+    45deg,
+    rgba(158, 64, 64, 0.7),
+    rgba(95, 94, 94, 0.7) 100%
+  );
+  background: -webkit-gradient(
+    linear,
+    45deg,
+    from(rgba(86, 76, 160, 0.7)),
+    to rgba(67, 65, 65, 0.701) 100%
+  );
+  background: -o-linear-gradient(
+    45deg,
+    rgba(155, 64, 64, 0.7),
+    rgba(85, 82, 82, 0.7) 100%
+  );
+  background: linear-gradient(
+    45deg,
+    rgba(78, 68, 151, 0.7),
+    rgba(77, 75, 75, 0.7) 100%
+  );
+}
+
+.card-gradient {
+  background: -moz-linear-gradient(
+    45deg,
+    rgba(42, 27, 161, 0.7),
+    rgba(210, 29, 29, 0.7) 100%
+  );
+  background: -webkit-linear-gradient(
+    45deg,
+    rgba(42, 27, 161, 0.7),
+    rgba(210, 29, 29, 0.7) 100%
+  );
+  background: -webkit-gradient(
+    linear,
+    45deg,
+    from(rgba(42, 27, 161, 0.7)),
+    to rgba(210, 29, 29, 0.7) 100%
+  );
+  background: -o-linear-gradient(
+    45deg,
+    rgba(42, 27, 161, 0.7),
+    rgba(210, 29, 29, 0.7) 100%
+  );
+  background: linear-gradient(
+    45deg,
+    rgba(42, 27, 161, 0.7),
+    rgba(210, 29, 29, 0.7) 100%
+  );
+}

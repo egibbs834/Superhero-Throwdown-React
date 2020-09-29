@@ -49,7 +49,7 @@ class Navbar extends Component {
             <MDBCollapse isOpen={this.state.collapsed} navbar>
               <MDBNavbarNav left>
                 <MDBNavItem active>
-                  <MDBLink to="/">Search</MDBLink>
+                  <MDBLink to="/search">Search</MDBLink>
                 </MDBNavItem>
                 <MDBNavItem>
                   <MDBLink to="/fight">Universe</MDBLink>
