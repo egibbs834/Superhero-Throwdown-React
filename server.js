@@ -1,18 +1,18 @@
 // Server dependendencies
-const express = require("express");
 const mongoose = require("mongoose");
+const express = require("express");
 const cors = require("cors");
 const passport = require("passport");
-const passportLocal = require("passport-local");
-const bcrypt = require("bcryptjs");
+const passportLocal = require("passport-local").Strategy;
 const cookieParser = require("cookie-parser");
-const expressSession = require("express-session");
-const user = require("./models/user");
+const bcrypt = require("bcryptjs");
+const session = require("express-session");
+const User = require("./models/user");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// middleware
+// =================== middleware ===================================
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(
@@ -23,7 +23,7 @@ app.use(
 );
 
 app.use(
-  expressSession({
+  session({
     secret: "secretcode",
     resave: true,
     saveUninitialized: true,
@@ -31,29 +31,68 @@ app.use(
 );
 
 app.use(cookieParser("secretcode"));
+app.use(passport.initialize());
+app.use(passport.session());
+require("./config/passportConfig")(passport);
+// console.log("passport: ", passport);
+// =================== End of Middleware =============================
 
-// routes
-app.post("/login", (req, res) => {
-  console.log("req.body login: ", req.body);
+// ===================== routes ======================================
+app.post("/login", (req, res, next) => {
+  console.log("req.body: ", req.body);
+  passport.authenticate("local", (err, user, info) => {
+    if (err) throw err;
+    if (!user) {
+      console.log("Username or Password is incorrect");
+      res.send("Username or Password is incorrect");
+    } else {
+      req.logIn(user, (err) => {
+        if (err) throw err;
+        res.send("Succesfully Authenticated");
+        console.log("Succesfully Authenticated");
+        console.log("req.user: ", req.user);
+      });
+    }
+  })(req, res, next);
 });
 
 app.post("/signup", (req, res) => {
   console.log("req.body signup: ", req.body);
-  user.findOne({ email: req.body.email }, async (err, doc) => {
-    if (err) throw err;
-    if (doc) res.send("User Already Exists");
+  User.findOne({ username: req.body.username }, async (err, doc) => {
+    if (err) {
+      throw err;
+    }
+    if (doc) {
+      console.log("doc: ", doc);
+      res.send("User Already Exists");
+    }
     if (!doc) {
-      const newUser = new user({
-        email: req.body.email,
-        password: req.body.password,
-      });
-      await newUser.save();
-      res.send("User has been created");
+      if (req.body.password === "" || req.body.password.length < 4) {
+        console.log(
+          "Error, all fields must be entered and password atleast 4 characters long"
+        );
+        res.send(
+          "Error, all fields must be entered and password atleast 4 characters long"
+        );
+      } else {
+        console.log("Created User");
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const newUser = new User({
+          username: req.body.username,
+          password: hashedPassword,
+        });
+        await newUser.save().catch((err) => {
+          console.log(newUser);
+          res.send(err);
+        });
+      }
     }
   });
 });
 
-app.get("/user", (req, res) => {});
+app.get("/user", (req, res) => {
+  res.send(req.user);
+});
 
 mongoose
   .connect(process.env.MONGODB_URI || "mongodb://localhost/reactsuperhero", {
@@ -61,10 +100,10 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log("🎯connected to reactsuperhero mongodb");
+    console.log("🎯 connected to reactsuperhero mongodb");
     app.listen(PORT, () => {
       console.log(
-        `🚀Blast off🚀 =====> App listening on http://localhost:${PORT}`
+        `🚀 Blast off 🚀 =====> App listening on http://localhost:${PORT}`
       );
     });
   });

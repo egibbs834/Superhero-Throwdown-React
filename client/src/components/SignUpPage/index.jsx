@@ -19,27 +19,27 @@ import axios from "axios";
 import "./styleSignUp.css";
 
 const SignUpPage = () => {
-  const [registerEmail, setRegisterEmail] = useState("");
-  // console.log("registerEmail: ", registerEmail);
+  const [registerUsername, setRegisterUsername] = useState("");
+  // console.log("registerUsername: ", registerUsername);
   const [registerPassword, setRegisterPassword] = useState("");
   // console.log("registerPassword: ", registerPassword);
 
-  function handleInputChangeEmail(event) {
+  function handleInputChangeUsername(event) {
     event.preventDefault();
-    setRegisterEmail(event.target.value);
+    setRegisterUsername(event.target.value);
   }
   function handleInputChangePassword(event) {
     event.preventDefault();
     setRegisterPassword(event.target.value);
   }
 
-  function handleFormSubmit(event) {
+  function register(event) {
     event.preventDefault();
-    console.log({ registerEmail, registerPassword });
+    console.log({ registerUsername, registerPassword });
     axios({
       method: "POST",
       data: {
-        email: registerEmail,
+        username: registerUsername,
         password: registerPassword,
       },
       withCredentials: true,
@@ -65,15 +65,15 @@ const SignUpPage = () => {
                     <form>
                       <div className="grey-text">
                         <MDBInput
-                          label="Type your email"
-                          icon="envelope"
+                          label="Type your username"
+                          icon="user"
                           group
                           type="text"
                           validate
                           error="wrong"
                           success="right"
-                          onChange={handleInputChangeEmail}
-                          value={registerEmail}
+                          onChange={handleInputChangeUsername}
+                          value={registerUsername}
                         />
                         <MDBInput
                           label="Type your password"
@@ -88,7 +88,7 @@ const SignUpPage = () => {
 
                       <div className="text-center mt-4">
                         <MDBBtn
-                          onClick={handleFormSubmit}
+                          onClick={register}
                           color="secondary"
                           className="mb-3"
                           type="submit"
