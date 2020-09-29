@@ -57,11 +57,7 @@ const ResultCard = (props) => {
           {props.characters.map((character, i) => {
             console.log("character in map: ", character);
             return (
-              <MDBCard
-                style={{ width: "14rem", height: "38rem" }}
-                key={i}
-                className="m-2"
-              >
+              <MDBCard style={{ width: "16rem" }} key={i} className="m-2">
                 <MDBCardImage
                   className="img-fluid img-thumbnail"
                   src={character.img}
