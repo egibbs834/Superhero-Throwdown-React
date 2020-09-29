@@ -20,7 +20,7 @@ import "./styleLogin.css";
 
 const LoginPage = () => {
   const [loginUsername, setLoginUsername] = useState("");
-  const [loginPassword, setLoginPassword] = useState();
+  const [loginPassword, setLoginPassword] = useState("");
   function handleInputChangeUsername(event) {
     event.preventDefault();
     setLoginUsername(event.target.value);
@@ -41,9 +41,11 @@ const LoginPage = () => {
       },
       withCredentials: true,
       url: "http://localhost:3001/login",
-    }).then((res) => {
-      console.log("res: ", res);
-    });
+    })
+      .then((res) => {
+        console.log("res: ", res);
+      })
+      .catch(console.error);
   }
 
   return (
@@ -90,6 +92,7 @@ const LoginPage = () => {
                           color="secondary"
                           className="mb-3"
                           type="submit"
+                          href="/search"
                         >
                           Login
                         </MDBBtn>

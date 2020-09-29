@@ -48,6 +48,7 @@ app.post("/login", (req, res, next) => {
     } else {
       req.logIn(user, (err) => {
         if (err) throw err;
+        // res.redirect("/search");
         res.send("Succesfully Authenticated");
         console.log("Succesfully Authenticated");
         console.log("req.user: ", req.user);
@@ -103,7 +104,7 @@ mongoose
     console.log("🎯 connected to reactsuperhero mongodb");
     app.listen(PORT, () => {
       console.log(
-        `🚀 Blast off 🚀 =====> App listening on http://localhost:${PORT}`
+        `🚀 blast off 🚀 =====> app listening on http://localhost:${PORT}`
       );
     });
   });
