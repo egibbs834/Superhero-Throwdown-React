@@ -67,14 +67,14 @@ const ResultCard = (props) => {
                     }}
                     alt={`picture of ${character.name}`}
                   />
-                  <MDBCardBody style={{ height: "22rem", padding: "none" }}>
+                  <MDBCardBody style={{ height: "27rem", padding: "none" }}>
                     <MDBCardTitle className="align-text-center myColor">
                       <strong>{character.name}</strong>
                     </MDBCardTitle>
                     <hr></hr>
-                    <div fluid style={{ height: "8rem" }}>
+                    <div fluid style={{ height: "12rem" }}>
                       <MDBCardText className="marginBtm">
-                        Tier Ranking:{" "}
+                        <strong>Tier Ranking: </strong>
                         <strong>
                           <span className="myColor">
                             {tierList(
@@ -88,12 +88,6 @@ const ResultCard = (props) => {
                           </span>
                         </strong>
                       </MDBCardText>
-                      <MDBCardText className="marginBtm">
-                        Alignment: {character.alignment}
-                      </MDBCardText>
-                      <MDBCardText className="marginBtm">
-                        Occupaton: {character.work}
-                      </MDBCardText>
                       <MDBCardText>
                         <strong>
                           Total Power:{" "}
@@ -105,7 +99,20 @@ const ResultCard = (props) => {
                             parseInt(character.strength)}
                         </strong>{" "}
                       </MDBCardText>
+                      <MDBCardText className="marginBtm">
+                        Alignment: {character.alignment}
+                      </MDBCardText>
+                      <MDBCardText className="marginBtm">
+                        Occupaton: {character.work}
+                      </MDBCardText>
+                      <MDBCardText className="marginBtm">
+                        Height: {character.height}
+                      </MDBCardText>
+                      <MDBCardText>Weight: {character.weight} </MDBCardText>
                     </div>
+                    <MDBCardText className="mmarginBt">
+                      Publisher: <strong>{character.publisher}</strong>
+                    </MDBCardText>
                     <hr></hr>
                     <MDBDropdown className="text-center" size="sm" hover>
                       <MDBDropdownToggle color="secondary">
