@@ -6,13 +6,9 @@ import {
   MDBBtn,
   MDBView,
   MDBContainer,
-  MDBForm,
   MDBAnimation,
   MDBCard,
   MDBCardBody,
-  MDBCardImage,
-  MDBCardTitle,
-  MDBCardText,
   MDBJumbotron,
 } from "mdbreact";
 import "./index.css";
@@ -26,10 +22,9 @@ function SearchPage() {
     results: [],
     characters: [],
   });
-  console.log("results: ", results);
+  // console.log("results: ", results);
   function handleInputChange(event) {
     event.preventDefault();
-    console.log("event target value: ", event.target.value);
     setSearchName(event.target.value);
   }
 
@@ -109,17 +104,17 @@ function SearchPage() {
           </MDBMask>
         </MDBView>
       </div>
-      <MDBContainer
-        fluid
-        className="justify-content-center align-items-center flex"
-      >
-        {/* <MDBAnimation type="fadeInDownBig" delay=".3s"> */}
-        <ResultCard characters={results.characters} />
-        {/* </MDBAnimation> */}
-        {/* {results.characters.map((character) => {
-          console.log("character: ", character);
-          return <ResultCard character={character} />;
-        })} */}
+      <MDBRow className="justify-content-center mt-2">
+        <MDBCard className="bg-secondary text-white">
+          <MDBCardBody>
+            <h1>Searched Comic Book Characters</h1>
+          </MDBCardBody>
+        </MDBCard>
+      </MDBRow>
+      <MDBContainer fluid className="justify-content-center">
+        <MDBJumbotron>
+          <ResultCard characters={results.characters} />
+        </MDBJumbotron>
       </MDBContainer>
     </div>
   );
