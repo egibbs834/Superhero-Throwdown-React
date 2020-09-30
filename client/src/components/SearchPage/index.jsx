@@ -36,14 +36,17 @@ function SearchPage() {
           return {
             img: character.image.url,
             name: character.name,
+            publisher: character.biography.publisher,
             alignment: character.biography.alignment,
+            work: character.work.occupation,
+            height: character.appearance.height[0],
+            weight: character.appearance.weight[0],
             combat: character.powerstats.combat,
             durability: character.powerstats.durability,
             intelligence: character.powerstats.intelligence,
             power: character.powerstats.power,
             speed: character.powerstats.speed,
             strength: character.powerstats.strength,
-            work: character.work.occupation,
           };
         });
         console.log("character: ", character);
@@ -105,11 +108,13 @@ function SearchPage() {
         </MDBView>
       </div>
       <MDBRow className="justify-content-center mt-2">
-        <MDBCard className="bg-secondary text-white">
-          <MDBCardBody>
-            <h1>Searched Comic Book Characters</h1>
-          </MDBCardBody>
-        </MDBCard>
+        <MDBAnimation type="fadeInRight" delay=".3s">
+          <MDBCard className="bg-secondary text-white">
+            <MDBCardBody>
+              <h1>Searched Comic Book Characters</h1>
+            </MDBCardBody>
+          </MDBCard>
+        </MDBAnimation>
       </MDBRow>
       <MDBContainer fluid className="justify-content-center">
         <MDBJumbotron>
