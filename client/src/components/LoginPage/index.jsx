@@ -18,9 +18,11 @@ import axios from "axios";
 
 import "./styleLogin.css";
 
-const LoginPage = () => {
+const LoginPage = (props) => {
+  console.log("props: ", props);
   const [loginUsername, setLoginUsername] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+
   function handleInputChangeUsername(event) {
     event.preventDefault();
     setLoginUsername(event.target.value);
@@ -44,6 +46,11 @@ const LoginPage = () => {
     })
       .then((res) => {
         console.log("res: ", res);
+        if (res.data === "Succesfully Authenticated") {
+          props.history.push("/search");
+        } else {
+          throw Error(res.data);
+        }
       })
       .catch(console.error);
   }
@@ -92,7 +99,6 @@ const LoginPage = () => {
                           color="secondary"
                           className="mb-3"
                           type="submit"
-                          href="/search"
                         >
                           Login
                         </MDBBtn>

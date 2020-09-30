@@ -16,8 +16,10 @@ import {
   MDBJumbotron,
 } from "mdbreact";
 import "./index.css";
+
 import API from "../../utils/API";
 import ResultCard from "../Search-Result-Card";
+
 function SearchPage() {
   const [searchName, setSearchName] = useState("");
   const [results, setResults] = useState({
@@ -30,6 +32,7 @@ function SearchPage() {
     console.log("event target value: ", event.target.value);
     setSearchName(event.target.value);
   }
+
   function handleFormSubmit() {
     API.getSuperhero(searchName)
       .then((res) => {

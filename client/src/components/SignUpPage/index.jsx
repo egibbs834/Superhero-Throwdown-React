@@ -18,11 +18,14 @@ import axios from "axios";
 
 import "./styleSignUp.css";
 
-const SignUpPage = () => {
+const SignUpPage = (props) => {
   const [registerUsername, setRegisterUsername] = useState("");
   // console.log("registerUsername: ", registerUsername);
   const [registerPassword, setRegisterPassword] = useState("");
   // console.log("registerPassword: ", registerPassword);
+  const [errorMessage, setErrorMessage] = useState({
+    errorMessage: "",
+  });
 
   function handleInputChangeUsername(event) {
     event.preventDefault();
@@ -32,6 +35,11 @@ const SignUpPage = () => {
     event.preventDefault();
     setRegisterPassword(event.target.value);
   }
+
+  // function handleLoginErr(err) {
+  //   setErrorMessage(err);
+  //   console.log("errorMessage: ", errorMessage);
+  // }
 
   function register(event) {
     event.preventDefault();
@@ -44,9 +52,16 @@ const SignUpPage = () => {
       },
       withCredentials: true,
       url: "http://localhost:3001/signup",
-    }).then((res) => {
-      console.log("res: ", res);
-    });
+    })
+      .then((res) => {
+        console.log("res: ", res);
+        if (res.data === "Succesfully Authenticated") {
+          props.history.push("/search");
+        } else {
+          // handleLoginErr(res.data);
+        }
+      })
+      .catch(console.error);
   }
   return (
     <MDBView className="bg">
@@ -85,7 +100,18 @@ const SignUpPage = () => {
                           value={registerPassword}
                         />
                       </div>
-
+                      <div
+                        style={{ display: "none" }}
+                        id="alert"
+                        className="alert alert-danger"
+                      >
+                        <span
+                          class="glyphicon glyphicon-exclamation-sign"
+                          aria-hidden="true"
+                        ></span>
+                        <span class="sr-only">Error:</span>{" "}
+                        <span class="msg"></span>
+                      </div>
                       <div className="text-center mt-4">
                         <MDBBtn
                           onClick={register}

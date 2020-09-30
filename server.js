@@ -77,6 +77,7 @@ app.post("/signup", (req, res) => {
         );
       } else {
         console.log("Created User");
+        res.send("Succesfully Authenticated");
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const newUser = new User({
           username: req.body.username,
