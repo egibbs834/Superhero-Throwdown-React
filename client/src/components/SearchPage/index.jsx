@@ -16,6 +16,7 @@ import "./index.css";
 
 import API from "../../utils/API";
 import ResultCard from "../Search-Result-Card";
+import VillainCard from "../Villain-Card-Result";
 
 function SearchPage() {
   const [searchName, setSearchName] = useState("");
@@ -114,15 +115,11 @@ function SearchPage() {
                     </div>
                   </MDBAnimation>
                 </MDBCol>
-                {/* <MDBCol md="6" xl="5" className="mt-xl-5">
-                  <MDBAnimation type="fadeInRight" delay=".3s">
-                    <img
-                      src={this.props.img}
-                      alt=""
-                      className="img-fluid rounded rightCardImg"
-                    />
-                  </MDBAnimation>
-                </MDBCol> */}
+                <MDBCol md="6" xl="5" className="mt-xl-5">
+                  {/* <MDBAnimation type="fadeInRight" delay=".3s">
+                    <VillainCard characters={randomVillain} />
+                  </MDBAnimation> */}
+                </MDBCol>
               </MDBRow>
             </MDBContainer>
           </MDBMask>
@@ -137,9 +134,6 @@ function SearchPage() {
           </MDBCard>
         </MDBAnimation>
       </MDBRow>
-      {/*<MDBRow className="justify-content-center mt-5"> 
-            {isLoading ? <LoadingSpinner /> : <MDBRow />}
-      </MDBRow> */}
       <MDBContainer fluid className="justify-content-center">
         <MDBJumbotron>
           {/* <ResultCard characters={results.characters} /> */}

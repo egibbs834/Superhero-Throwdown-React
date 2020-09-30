@@ -54,7 +54,7 @@ const ResultCard = (props) => {
       {props.characters.length ? (
         <div className="row justify-content-center align-items-center container-fluid">
           {props.characters.map((character, i) => {
-            console.log("character in map: ", character);
+            // console.log("character in map: ", character);
             return (
               <MDBView hover zoom key={i}>
                 <MDBCard style={{ width: "16rem" }} className="m-2">
@@ -69,7 +69,7 @@ const ResultCard = (props) => {
                   />
                   <MDBCardBody
                     style={{
-                      height: "27rem",
+                      height: "24rem",
                       padding: "none",
                       textTransform: "capitalize",
                     }}
@@ -78,7 +78,7 @@ const ResultCard = (props) => {
                       <strong>{character.name}</strong>
                     </MDBCardTitle>
                     <hr></hr>
-                    <div fluid style={{ height: "13rem" }}>
+                    <div fluid style={{ height: "10rem" }}>
                       <MDBCardText className="marginBtm mt-0">
                         <strong>Tier Ranking: </strong>
                         <strong>
