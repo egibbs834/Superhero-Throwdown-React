@@ -57,12 +57,13 @@ mongoose
     useUnifiedTopology: true,
     useCreateIndex: true,
     useFindAndModify: false,
-  })
-  .then(() => {
-    console.log("🎯 connected to reactsuperhero mongodb");
+  });
+  
+  // .then(() => {
+    // console.log("🎯 connected to reactsuperhero mongodb");
     app.listen(PORT, () => {
       console.log(
         `🚀 blast off 🚀 =====> app listening on http://localhost:${PORT}`
       );
     });
-  });
+  // });
