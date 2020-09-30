@@ -51,7 +51,7 @@ const SignUpPage = (props) => {
         password: registerPassword,
       },
       withCredentials: true,
-      url: "http://localhost:3001/signup",
+      url: "http://localhost:3001/api/signup",
     })
       .then((res) => {
         console.log("res: ", res);
