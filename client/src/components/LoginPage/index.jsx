@@ -42,7 +42,7 @@ const LoginPage = (props) => {
         password: loginPassword,
       },
       withCredentials: true,
-      url: "http://localhost:3001/login",
+      url: "http://localhost:3001/api/login",
     })
       .then((res) => {
         console.log("res: ", res);
@@ -65,7 +65,7 @@ const LoginPage = (props) => {
                 <MDBCard className="cardBg">
                   <MDBCardBody>
                     <MDBCardHeader className="form-header card-gradient rounded">
-                      <h3 className="my-3">
+                      <h3 className="my-2">
                         <MDBIcon icon="lock" /> Login:
                       </h3>
                     </MDBCardHeader>

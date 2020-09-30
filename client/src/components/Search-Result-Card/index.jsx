@@ -67,7 +67,13 @@ const ResultCard = (props) => {
                     }}
                     alt={`picture of ${character.name}`}
                   />
-                  <MDBCardBody style={{ height: "27rem", padding: "none" }}>
+                  <MDBCardBody
+                    style={{
+                      height: "27rem",
+                      padding: "none",
+                      textTransform: "capitalize",
+                    }}
+                  >
                     <MDBCardTitle className="align-text-center myColor">
                       <strong>{character.name}</strong>
                     </MDBCardTitle>
@@ -103,7 +109,7 @@ const ResultCard = (props) => {
                         Alignment: {character.alignment}
                       </MDBCardText>
                       <MDBCardText className="marginBtm">
-                        Occupaton: {character.work}
+                        Race: {character.race}
                       </MDBCardText>
                       <MDBCardText className="marginBtm">
                         Height: {character.height}
