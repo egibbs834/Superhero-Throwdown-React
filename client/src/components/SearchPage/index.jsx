@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState  } from "react";
 import {
   MDBMask,
   MDBRow,
@@ -11,6 +11,7 @@ import {
   MDBCardBody,
   MDBJumbotron,
 } from "mdbreact";
+import LoadingSpinner from "../LoadSpinner"
 import "./index.css";
 
 import API from "../../utils/API";
@@ -22,6 +23,8 @@ function SearchPage() {
     results: [],
     characters: [],
   });
+  // Sets default state to display content is loading
+  const [ isLoading, setIsLoading ] = useState(false)
   // console.log("results: ", results);
   function handleInputChange(event) {
     event.preventDefault();
@@ -29,8 +32,10 @@ function SearchPage() {
   }
 
   function handleFormSubmit() {
+    setIsLoading(true)
     API.getSuperhero(searchName)
       .then((res) => {
+        setIsLoading(false)
         console.log("res: ", res);
         const character = res.data.results.map((character) => {
           return {
@@ -116,9 +121,15 @@ function SearchPage() {
           </MDBCard>
         </MDBAnimation>
       </MDBRow>
+      {/*<MDBRow className="justify-content-center mt-5"> 
+            {isLoading ? <LoadingSpinner /> : <MDBRow />}
+      </MDBRow> */}
       <MDBContainer fluid className="justify-content-center">
         <MDBJumbotron>
-          <ResultCard characters={results.characters} />
+          {/* <ResultCard characters={results.characters} /> */}
+          <MDBRow className="justify-content-center">
+            {isLoading ? <LoadingSpinner /> : <ResultCard characters={results.characters} />} 
+          </MDBRow>   
         </MDBJumbotron>
       </MDBContainer>
     </div>
