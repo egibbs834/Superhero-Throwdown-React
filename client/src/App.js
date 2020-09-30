@@ -18,9 +18,9 @@ function App() {
     <Router>
       <Navbar />
       <Switch>
-        <Route path="/login" render={(props) => <Login {...props} />} />
+        <Route exact path={["/", "/login"]} render={(props) => <Login {...props} />} />
         <Route exact path="/signup" render={(props) => <SignUp {...props} />} />
-        <Route exact path={"/search"} component={SearchPage} />
+        <Route exact path="/search" component={SearchPage} />
         <Route exact path="/fight" component={Fight} />
         <Route exact path="*" component={NoMatch} />
       </Switch>
