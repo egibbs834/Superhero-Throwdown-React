@@ -1,4 +1,4 @@
-import React, { useState  } from "react";
+import React, { useState } from "react";
 import {
   MDBMask,
   MDBRow,
@@ -11,7 +11,7 @@ import {
   MDBCardBody,
   MDBJumbotron,
 } from "mdbreact";
-import LoadingSpinner from "../LoadSpinner"
+import LoadingSpinner from "../LoadSpinner";
 import "./index.css";
 
 import API from "../../utils/API";
@@ -24,18 +24,33 @@ function SearchPage() {
     characters: [],
   });
   // Sets default state to display content is loading
-  const [ isLoading, setIsLoading ] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   // console.log("results: ", results);
+
+  const [randomVillain, setRandomVillain] = useState({
+    randomVillain: "empty",
+  });
+  console.log("randomVillain: ", randomVillain);
   function handleInputChange(event) {
     event.preventDefault();
     setSearchName(event.target.value);
   }
+  function getRandomVillain() {
+    API.getRandomVillain().then((res) => {
+      // console.log("res: ", res);
+      setRandomVillain(res);
+    });
+  }
+
+  if (randomVillain.randomVillain === "empty") {
+    getRandomVillain();
+  }
 
   function handleFormSubmit() {
-    setIsLoading(true)
+    setIsLoading(true);
     API.getSuperhero(searchName)
       .then((res) => {
-        setIsLoading(false)
+        setIsLoading(false);
         console.log("res: ", res);
         const character = res.data.results.map((character) => {
           return {
@@ -43,7 +58,7 @@ function SearchPage() {
             name: character.name,
             publisher: character.biography.publisher,
             alignment: character.biography.alignment,
-            work: character.work.occupation,
+            race: character.appearance.race,
             height: character.appearance.height[0],
             weight: character.appearance.weight[0],
             combat: character.powerstats.combat,
@@ -92,6 +107,7 @@ function SearchPage() {
                         color="secondary"
                         className="ml-0"
                         size="sm"
+                        href="#searched"
                       >
                         Search
                       </MDBBtn>
@@ -127,9 +143,13 @@ function SearchPage() {
       <MDBContainer fluid className="justify-content-center">
         <MDBJumbotron>
           {/* <ResultCard characters={results.characters} /> */}
-          <MDBRow className="justify-content-center">
-            {isLoading ? <LoadingSpinner /> : <ResultCard characters={results.characters} />} 
-          </MDBRow>   
+          <MDBRow className="justify-content-center" id="searched">
+            {isLoading ? (
+              <LoadingSpinner />
+            ) : (
+              <ResultCard characters={results.characters} />
+            )}
+          </MDBRow>
         </MDBJumbotron>
       </MDBContainer>
     </div>

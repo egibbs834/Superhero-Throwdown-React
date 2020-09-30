@@ -5,11 +5,16 @@ module.exports = {
   findAll: function (req, res) {
     db.Villains.find(req.query).then((dbModel) => res.json(dbModel));
   },
-  randomizeOne: function (req, res) {
-    db.Villains.aggregate([
+  randomizeOne: async function (req, res) {
+    await db.Villains.aggregate([
       {
         $sample: { size: 1 },
       },
-    ]);
+    ])
+      .then((res) => {
+        console.log("res: ", res);
+        res.json(res);
+      })
+      .catch(console.error);
   },
 };
