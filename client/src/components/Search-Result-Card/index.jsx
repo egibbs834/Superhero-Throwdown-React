@@ -72,8 +72,8 @@ const ResultCard = (props) => {
                       <strong>{character.name}</strong>
                     </MDBCardTitle>
                     <hr></hr>
-                    <div fluid style={{ height: "12rem" }}>
-                      <MDBCardText className="marginBtm">
+                    <div fluid style={{ height: "13rem" }}>
+                      <MDBCardText className="marginBtm mt-0">
                         <strong>Tier Ranking: </strong>
                         <strong>
                           <span className="myColor">
@@ -108,11 +108,13 @@ const ResultCard = (props) => {
                       <MDBCardText className="marginBtm">
                         Height: {character.height}
                       </MDBCardText>
-                      <MDBCardText>Weight: {character.weight} </MDBCardText>
+                      <MDBCardText className="marginBtm">
+                        Weight: {character.weight}{" "}
+                      </MDBCardText>
+                      <MDBCardText className="">
+                        Publisher: <strong>{character.publisher}</strong>
+                      </MDBCardText>
                     </div>
-                    <MDBCardText className="mmarginBt">
-                      Publisher: <strong>{character.publisher}</strong>
-                    </MDBCardText>
                     <hr></hr>
                     <MDBDropdown className="text-center" size="sm" hover>
                       <MDBDropdownToggle color="secondary">
