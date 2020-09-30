@@ -11,4 +11,12 @@ export default {
       `https://cors-anywhere.herokuapp.com/https://superheroapi.com/api/${api_key}/search/${name}`
     );
   },
+  getRandomVillain: function () {
+    return axios({
+      method: "GET",
+
+      withCredentials: true,
+      url: "http://localhost:3001/api/villain_data",
+    });
+  },
 };
