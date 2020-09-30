@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState  } from "react";
 import {
   MDBMask,
   MDBRow,
@@ -11,6 +11,7 @@ import {
   MDBCardBody,
   MDBJumbotron,
 } from "mdbreact";
+import LoadingSpinner from "../LoadSpinner"
 import "./index.css";
 
 import API from "../../utils/API";
@@ -22,6 +23,8 @@ function SearchPage() {
     results: [],
     characters: [],
   });
+  // Sets default state to display content is loading
+  const [ isLoading, setIsLoading ] = useState(false)
   // console.log("results: ", results);
   function handleInputChange(event) {
     event.preventDefault();
@@ -29,21 +32,26 @@ function SearchPage() {
   }
 
   function handleFormSubmit() {
+    setIsLoading(true)
     API.getSuperhero(searchName)
       .then((res) => {
+        setIsLoading(false)
         console.log("res: ", res);
         const character = res.data.results.map((character) => {
           return {
             img: character.image.url,
             name: character.name,
+            publisher: character.biography.publisher,
             alignment: character.biography.alignment,
+            work: character.work.occupation,
+            height: character.appearance.height[0],
+            weight: character.appearance.weight[0],
             combat: character.powerstats.combat,
             durability: character.powerstats.durability,
             intelligence: character.powerstats.intelligence,
             power: character.powerstats.power,
             speed: character.powerstats.speed,
             strength: character.powerstats.strength,
-            work: character.work.occupation,
           };
         });
         console.log("character: ", character);
@@ -105,15 +113,23 @@ function SearchPage() {
         </MDBView>
       </div>
       <MDBRow className="justify-content-center mt-2">
-        <MDBCard className="bg-secondary text-white">
-          <MDBCardBody>
-            <h1>Searched Comic Book Characters</h1>
-          </MDBCardBody>
-        </MDBCard>
+        <MDBAnimation type="fadeInRight" delay=".3s">
+          <MDBCard className="bg-secondary text-white">
+            <MDBCardBody>
+              <h1>Searched Comic Book Characters</h1>
+            </MDBCardBody>
+          </MDBCard>
+        </MDBAnimation>
       </MDBRow>
+      {/*<MDBRow className="justify-content-center mt-5"> 
+            {isLoading ? <LoadingSpinner /> : <MDBRow />}
+      </MDBRow> */}
       <MDBContainer fluid className="justify-content-center">
         <MDBJumbotron>
-          <ResultCard characters={results.characters} />
+          {/* <ResultCard characters={results.characters} /> */}
+          <MDBRow className="justify-content-center">
+            {isLoading ? <LoadingSpinner /> : <ResultCard characters={results.characters} />} 
+          </MDBRow>   
         </MDBJumbotron>
       </MDBContainer>
     </div>
