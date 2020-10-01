@@ -19,11 +19,11 @@ export default {
     });
   },
 
-  addHero: function (hero) {
-    console.log("(addHero) hero:", hero);
+  addHero: function (heroToBeAdded) {
+    console.log({ heroToBeAdded });
     return axios({
       method: "POST",
-      data: hero,
+      data: heroToBeAdded,
       withCredentials: true,
       url: "http://localhost:3001/api/hero_data",
     });

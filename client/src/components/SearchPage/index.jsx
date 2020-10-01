@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   MDBMask,
   MDBRow,
@@ -16,7 +16,8 @@ import "./index.css";
 
 import API from "../../utils/API";
 import ResultCard from "../Search-Result-Card";
-import VillainCard from "../Villain-Card-Result";
+import AuthenticationContext from "../../context/authenticationContext";
+import UsernameContext from "../../context/usernameContext";
 
 function SearchPage() {
   const [searchName, setSearchName] = useState("");
@@ -24,15 +25,21 @@ function SearchPage() {
     results: [],
     characters: [],
   });
+  // console.log("results: ", results);
+
   // Sets default state to display content is loading
   const [isLoading, setIsLoading] = useState(false);
-  // console.log("results: ", results);
 
   const [randomVillain, setRandomVillain] = useState("");
   console.log("randomVillain: ", randomVillain);
 
-  const [username, setUsername] = useState("");
-  console.log("username: ", username);
+  const { isAuthenticated, setIsAuthenticated } = useContext(
+    AuthenticationContext
+  );
+  console.log("Search Page isAuthenticated: ", isAuthenticated);
+
+  const { username, setUsername } = useContext(UsernameContext);
+  console.log("Search Page username: ", username);
 
   function handleInputChange(event) {
     event.preventDefault();
@@ -49,27 +56,63 @@ function SearchPage() {
     getRandomVillain();
   }
 
+  function tierList(value) {
+    if (value <= 100) {
+      return "F";
+    } else if (value > 100 && value <= 200) {
+      return "D";
+    } else if (value > 200 && value <= 300) {
+      return "C";
+    } else if (value > 300 && value <= 400) {
+      return "B";
+    } else if (value > 400 && value <= 500) {
+      return "A";
+    } else if (value > 500 && value < 600) {
+      return "S";
+    } else if (value === 600) {
+      return "GOD";
+    } else {
+      return;
+    }
+  }
+
   function handleFormSubmit() {
     setIsLoading(true);
     API.getSuperhero(searchName)
       .then((res) => {
         setIsLoading(false);
         console.log("res: ", res);
-        const character = res.data.results.map((character) => {
+        let character = res.data.results.map((character) => {
           return {
             img: character.image.url,
             name: character.name,
+            heroID: parseInt(character.id),
             publisher: character.biography.publisher,
             alignment: character.biography.alignment,
             race: character.appearance.race,
             height: character.appearance.height[0],
             weight: character.appearance.weight[0],
-            combat: character.powerstats.combat,
-            durability: character.powerstats.durability,
-            intelligence: character.powerstats.intelligence,
-            power: character.powerstats.power,
-            speed: character.powerstats.speed,
-            strength: character.powerstats.strength,
+            tierList: tierList(
+              parseInt(character.powerstats.combat) +
+                parseInt(character.powerstats.durability) +
+                parseInt(character.powerstats.intelligence) +
+                parseInt(character.powerstats.power) +
+                parseInt(character.powerstats.speed) +
+                parseInt(character.powerstats.strength)
+            ),
+            totalPower:
+              parseInt(character.powerstats.combat) +
+              parseInt(character.powerstats.durability) +
+              parseInt(character.powerstats.intelligence) +
+              parseInt(character.powerstats.power) +
+              parseInt(character.powerstats.speed) +
+              parseInt(character.powerstats.strength),
+            combat: parseInt(character.powerstats.combat),
+            durability: parseInt(character.powerstats.durability),
+            intelligence: parseInt(character.powerstats.intelligence),
+            power: parseInt(character.powerstats.power),
+            speed: parseInt(character.powerstats.speed),
+            strength: parseInt(character.powerstats.strength),
           };
         });
         console.log("character: ", character);
@@ -117,11 +160,7 @@ function SearchPage() {
                     </div>
                   </MDBAnimation>
                 </MDBCol>
-                <MDBCol md="6" xl="5" className="mt-xl-5">
-                  {/* <MDBAnimation type="fadeInRight" delay=".3s">
-                    <VillainCard characters={randomVillain} />
-                  </MDBAnimation> */}
-                </MDBCol>
+                <MDBCol md="6" xl="5" className="mt-xl-5"></MDBCol>
               </MDBRow>
             </MDBContainer>
           </MDBMask>
@@ -138,7 +177,6 @@ function SearchPage() {
       </MDBRow>
       <MDBContainer fluid className="justify-content-center">
         <MDBJumbotron>
-          {/* <ResultCard characters={results.characters} /> */}
           <MDBRow className="justify-content-center" id="searched">
             {isLoading ? (
               <LoadingSpinner />

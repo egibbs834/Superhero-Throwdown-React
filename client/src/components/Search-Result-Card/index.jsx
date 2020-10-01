@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import {
   MDBView,
   MDBBtn,
@@ -15,31 +15,34 @@ import {
   MDBDropdownItem,
 } from "mdbreact";
 import "./index.css";
-import Axios from "axios";
+
 import API from "../../utils/API";
+import UsernameContext from "../../context/usernameContext";
 
 const ResultCard = (props) => {
   console.log("(ResultCard) props: ", props);
+  const { username, setUsername } = useContext(UsernameContext);
+  console.log("username: ", username);
 
-  const [addTo, setAddTo] = useState({});
-  console.log("addTo: ", addTo);
-
-  function addHeroToDatabase(character) {
+  function addHeroToDatabase(character, username) {
     console.log("MyCharacter: ", character);
+    const heroToBeAdded = { character, username };
+    console.log("heroToBeAdded: ", heroToBeAdded);
     if (
       window.confirm(
-        `Are you sure you want to add ${character.name} to the DB?`
+        `Are you sure you want to add ${character.name} to your universe?`
       )
     ) {
-      console.log("Wonderful news!");
-      API.addHero(character).then((res) => {
-        console.log("Successfully added hero to database: ", res);
-      });
+      console.log(`confirm to add ${character.name} to universe`);
+      API.addHero(heroToBeAdded)
+        .then((res) => {
+          console.log(`res: `, res);
+        })
+        .catch(console.error);
     }
   }
 
   function statBarColor(value) {
-    // console.log("value: ", typeof value);
     if (value <= 50) {
       return "warning";
     } else if (value > 50 && value <= 75) {
@@ -50,32 +53,12 @@ const ResultCard = (props) => {
       return;
     }
   }
-  // console.log(statBarColor());
-  function tierList(value) {
-    if (value <= 100) {
-      return "F";
-    } else if (value > 100 && value <= 200) {
-      return "D";
-    } else if (value > 200 && value <= 300) {
-      return "C";
-    } else if (value > 300 && value <= 400) {
-      return "B";
-    } else if (value > 400 && value <= 500) {
-      return "A";
-    } else if (value > 500 && value < 600) {
-      return "S";
-    } else if (value === 600) {
-      return "GOD";
-    } else {
-      return;
-    }
-  }
+
   return (
     <MDBCol className="justify-content-center align-items-center text-center container-fluid">
       {props.characters.length ? (
         <div className="row justify-content-center align-items-center container-fluid">
           {props.characters.map((character, i) => {
-            // console.log("character in map: ", character);
             return (
               <MDBView hover zoom key={i}>
                 <MDBCard style={{ width: "16rem" }} className="m-2">
@@ -101,30 +84,13 @@ const ResultCard = (props) => {
                     <hr></hr>
                     <div fluid style={{ height: "10rem" }}>
                       <MDBCardText className="marginBtm mt-0">
-                        <strong>Tier Ranking: </strong>
                         <strong>
-                          <span className="myColor">
-                            {tierList(
-                              parseInt(character.combat) +
-                                parseInt(character.durability) +
-                                parseInt(character.intelligence) +
-                                parseInt(character.power) +
-                                parseInt(character.speed) +
-                                parseInt(character.strength)
-                            )}
-                          </span>
+                          Tier Ranking:{" "}
+                          <span className="myColor">{character.tierList}</span>{" "}
                         </strong>
                       </MDBCardText>
                       <MDBCardText>
-                        <strong>
-                          Total Power:{" "}
-                          {parseInt(character.combat) +
-                            parseInt(character.durability) +
-                            parseInt(character.intelligence) +
-                            parseInt(character.power) +
-                            parseInt(character.speed) +
-                            parseInt(character.strength)}
-                        </strong>{" "}
+                        <strong>Total Power: {character.totalPower}</strong>{" "}
                       </MDBCardText>
                       <MDBCardText className="marginBtm">
                         Alignment: {character.alignment}
@@ -208,7 +174,7 @@ const ResultCard = (props) => {
                     </MDBDropdown>
                     <div className="row">
                       <MDBBtn
-                        onClick={() => addHeroToDatabase(character)}
+                        onClick={() => addHeroToDatabase(character, username)}
                         className="ml-auto"
                         color="white"
                         size="sm"
