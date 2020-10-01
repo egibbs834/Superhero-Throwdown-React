@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   MDBContainer,
   MDBRow,
@@ -17,11 +17,23 @@ import {
 import axios from "axios";
 
 import "./styleLogin.css";
+import AuthenticationContext from "../../context/authenticationContext";
+import UsernameContext from "../../context/usernameContext";
 
 const LoginPage = (props) => {
   console.log("props: ", props);
   const [loginUsername, setLoginUsername] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+  const {
+    isAuthenticated,
+    setIsAuthenticated,
+    // username,
+    // setUsername,
+  } = useContext(AuthenticationContext);
+  console.log("isAuthenticated: ", isAuthenticated);
+
+  const { username, setUsername } = useContext(UsernameContext);
+  console.log("username: ", username);
 
   function handleInputChangeUsername(event) {
     event.preventDefault();
@@ -47,6 +59,8 @@ const LoginPage = (props) => {
       .then((res) => {
         console.log("res: ", res);
         if (res.data === "Succesfully Authenticated") {
+          setUsername(loginUsername);
+          setIsAuthenticated(true);
           props.history.push("/search");
         } else {
           throw Error(res.data);

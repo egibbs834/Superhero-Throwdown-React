@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, Fragment } from "react";
 import {
   MDBNavbar,
   MDBNavbarBrand,
@@ -11,16 +11,43 @@ import {
 } from "mdbreact";
 
 import "./index.css";
+import AuthenticationContext from "../../context/authenticationContext";
+import axios from "axios";
 // useContext
 
 const Navbar = () => {
   const [collapsed, setCollapsed] = useState(false);
+  console.log("collapsed: ", collapsed);
+  const { isAuthenticated, setIsAuthenticated } = useContext(
+    AuthenticationContext
+  );
 
   const handleTogglerClick = () => {
     setCollapsed((prevState) => ({
       collapsed: !prevState.collapsed,
     }));
   };
+
+  function handleLogout() {
+    setIsAuthenticated(false);
+    axios({
+      method: "GET",
+      withCredentials: true,
+      url: "http://localhost:3001/logout",
+    })
+      .then((res) => {
+        console.log("user logged out");
+      })
+      .catch(console.error);
+  }
+
+  const overlay = (
+    <div
+      id="sidenav-overlay"
+      style={{ backgroundColor: "transparent" }}
+      onClick={handleTogglerClick}
+    />
+  );
 
   return (
     <div id="apppage">
@@ -39,28 +66,30 @@ const Navbar = () => {
           <MDBNavbarToggler onClick={handleTogglerClick} />
           <MDBCollapse isOpen={collapsed} navbar>
             <MDBNavbarNav left>
-              <MDBNavItem>
-                <MDBLink to="/search">Search</MDBLink>
-              </MDBNavItem>
-              <MDBNavItem>
-                <MDBLink to="/fight">Universe</MDBLink>
-              </MDBNavItem>
+              {isAuthenticated && (
+                <Fragment>
+                  <MDBNavItem>
+                    <MDBLink to="/search">Search</MDBLink>
+                  </MDBNavItem>
+                  <MDBNavItem>
+                    <MDBLink to="/fight">Universe</MDBLink>
+                  </MDBNavItem>
+                </Fragment>
+              )}
             </MDBNavbarNav>
             <MDBNavbarNav right>
-              <MDBNavItem>
-                <MDBLink to="/login">Log Out</MDBLink>
-              </MDBNavItem>
+              {isAuthenticated && (
+                <MDBNavItem>
+                  <MDBLink to="/login" onClick={handleLogout}>
+                    Log Out
+                  </MDBLink>
+                </MDBNavItem>
+              )}
             </MDBNavbarNav>
           </MDBCollapse>
         </MDBContainer>
       </MDBNavbar>
-      {collapsed && (
-        <div
-          id="sidenav-overlay"
-          style={{ backgroundColor: "transparent" }}
-          onClick={handleTogglerClick}
-        />
-      )}
+      {collapsed && overlay}
     </div>
   );
 };

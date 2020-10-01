@@ -12,8 +12,7 @@ const villainSchema = new Schema({
   combat: { type: Number, required: true },
   total_power: { type: Number, required: true },
   alignment: { type: String, required: true },
-  img_url: { type: String, required: true},
-  
+  img_url: { type: String, required: true },
 });
 
 const Villain = mongoose.model("Villain", villainSchema);

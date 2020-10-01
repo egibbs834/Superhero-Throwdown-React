@@ -16,6 +16,7 @@ import "./index.css";
 
 import API from "../../utils/API";
 import ResultCard from "../Search-Result-Card";
+import VillainCard from "../Villain-Card-Result";
 
 function SearchPage() {
   const [searchName, setSearchName] = useState("");
@@ -27,22 +28,24 @@ function SearchPage() {
   const [isLoading, setIsLoading] = useState(false);
   // console.log("results: ", results);
 
-  const [randomVillain, setRandomVillain] = useState({
-    randomVillain: "empty",
-  });
+  const [randomVillain, setRandomVillain] = useState("");
   console.log("randomVillain: ", randomVillain);
+
+  const [username, setUsername] = useState("");
+  console.log("username: ", username);
+
   function handleInputChange(event) {
     event.preventDefault();
     setSearchName(event.target.value);
   }
   function getRandomVillain() {
     API.getRandomVillain().then((res) => {
-      // console.log("res: ", res);
+      console.log("res: ", res);
       setRandomVillain(res);
     });
   }
 
-  if (randomVillain.randomVillain === "empty") {
+  if (!randomVillain) {
     getRandomVillain();
   }
 
@@ -144,48 +147,42 @@ function SearchPage() {
                             >
                               Search
                       </MDBBtn>
-                          </div>
-                        </MDBAnimation>
-                      </MDBCol>
-                      {/* <MDBCol md="6" xl="5" className="mt-xl-5">
-                  <MDBAnimation type="fadeInRight" delay=".3s">
-                    <img
-                      src={this.props.img}
-                      alt=""
-                      className="img-fluid rounded rightCardImg"
-                    />
-                  </MDBAnimation>
-                </MDBCol> */}
-                    </MDBRow>
-                  </MDBContainer>
-                </MDBMask>
-              </MDBView>
-            </div>
-            <MDBRow className="justify-content-center mt-2">
-              <MDBAnimation type="fadeInRight" delay=".3s">
-                <MDBCard className="bg-secondary text-white">
-                  <MDBCardBody>
-                    <h1>Searched Comic Book Characters</h1>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBAnimation>
-            </MDBRow>
-            {/*<MDBRow className="justify-content-center mt-5"> 
-            {isLoading ? <LoadingSpinner /> : <MDBRow />}
-      </MDBRow> */}
-            <MDBContainer fluid className="justify-content-center">
-              <MDBJumbotron>
-                {/* <ResultCard characters={results.characters} /> */}
-                <MDBRow className="justify-content-center" id="searched">
-                  {isLoading ? (
-                    <LoadingSpinner />
-                  ) : (
-                      <ResultCard characters={results.characters} />
-                    )}
-                </MDBRow>
-              </MDBJumbotron>
-            </MDBContainer>
-          </div>
-        );
 
-        export default SearchPage;
+                   </div>
+                  </MDBAnimation>
+                </MDBCol>
+                <MDBCol md="6" xl="5" className="mt-xl-5">
+                  {/* <MDBAnimation type="fadeInRight" delay=".3s">
+                    <VillainCard characters={randomVillain} />
+                  </MDBAnimation> */}
+                </MDBCol>
+              </MDBRow>
+            </MDBContainer>
+          </MDBMask>
+        </MDBView>
+      </div>
+      <MDBRow className="justify-content-center mt-2">
+        <MDBAnimation type="fadeInRight" delay=".3s">
+          <MDBCard className="bg-secondary text-white">
+            <MDBCardBody>
+              <h1>Searched Comic Book Characters</h1>
+            </MDBCardBody>
+          </MDBCard>
+        </MDBAnimation>
+      </MDBRow>
+      <MDBContainer fluid className="justify-content-center">
+        <MDBJumbotron>
+          {/* <ResultCard characters={results.characters} /> */}
+          <MDBRow className="justify-content-center" id="searched">
+            {isLoading ? (
+              <LoadingSpinner />
+            ) : (
+              <ResultCard characters={results.characters} />
+            )}
+        </MDBRow>
+      </MDBJumbotron>
+    </MDBContainer>
+  </div>
+);
+}
+export default SearchPage;
