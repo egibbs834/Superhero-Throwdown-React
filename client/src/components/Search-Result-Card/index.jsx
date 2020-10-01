@@ -50,6 +50,18 @@ const ResultCard = (props) => {
       return;
     }
   }
+
+  function addHeroToDatabase(character) {
+    console.log("MyCharacter: ", character);
+    if (window.confirm(`Are you sure you want to add ${character.name} to the DB?`)) {
+
+      console.log("Wonderful news!")
+      API.addHero(character).then((res) => {
+        console.log("Successfully added hero to database: ", res);
+      })
+
+    }
+  }
   // console.log(statBarColor());
   function tierList(value) {
     if (value <= 100) {
