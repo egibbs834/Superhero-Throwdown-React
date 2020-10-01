@@ -44,7 +44,9 @@ require("./config/passportConfig")(passport);
 
 // ===================== routes
 require("./routes/villainRoutes")(app);
+require("./routes/heroRoutes")(app);
 require("./routes/userRoutes")(app);
+require("./routes/heroRoutes")(app);
 
 // ===================== end of routes
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   MDBMask,
   MDBRow,
@@ -16,6 +16,8 @@ import "./index.css";
 
 import API from "../../utils/API";
 import ResultCard from "../Search-Result-Card";
+import AuthenticationContext from "../../context/authenticationContext";
+import UsernameContext from "../../context/usernameContext";
 
 function SearchPage() {
   const [searchName, setSearchName] = useState("");
@@ -23,27 +25,55 @@ function SearchPage() {
     results: [],
     characters: [],
   });
-  // Sets default state to display content is loading
-  const [isLoading, setIsLoading] = useState(false);
   // console.log("results: ", results);
 
-  const [randomVillain, setRandomVillain] = useState({
-    randomVillain: "empty",
-  });
+  // Sets default state to display content is loading
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [randomVillain, setRandomVillain] = useState("");
   console.log("randomVillain: ", randomVillain);
+
+  const { isAuthenticated, setIsAuthenticated } = useContext(
+    AuthenticationContext
+  );
+  console.log("Search Page isAuthenticated: ", isAuthenticated);
+
+  const { username, setUsername } = useContext(UsernameContext);
+  console.log("Search Page username: ", username);
+
   function handleInputChange(event) {
     event.preventDefault();
     setSearchName(event.target.value);
   }
   function getRandomVillain() {
     API.getRandomVillain().then((res) => {
-      // console.log("res: ", res);
+      console.log("res: ", res);
       setRandomVillain(res);
     });
   }
 
-  if (randomVillain.randomVillain === "empty") {
+  if (!randomVillain) {
     getRandomVillain();
+  }
+
+  function tierList(value) {
+    if (value <= 100) {
+      return "F";
+    } else if (value > 100 && value <= 200) {
+      return "D";
+    } else if (value > 200 && value <= 300) {
+      return "C";
+    } else if (value > 300 && value <= 400) {
+      return "B";
+    } else if (value > 400 && value <= 500) {
+      return "A";
+    } else if (value > 500 && value < 600) {
+      return "S";
+    } else if (value === 600) {
+      return "GOD";
+    } else {
+      return;
+    }
   }
 
   function handleFormSubmit() {
@@ -52,21 +82,37 @@ function SearchPage() {
       .then((res) => {
         setIsLoading(false);
         console.log("res: ", res);
-        const character = res.data.results.map((character) => {
+        let character = res.data.results.map((character) => {
           return {
             img: character.image.url,
             name: character.name,
+            heroID: parseInt(character.id),
             publisher: character.biography.publisher,
             alignment: character.biography.alignment,
             race: character.appearance.race,
             height: character.appearance.height[0],
             weight: character.appearance.weight[0],
-            combat: character.powerstats.combat,
-            durability: character.powerstats.durability,
-            intelligence: character.powerstats.intelligence,
-            power: character.powerstats.power,
-            speed: character.powerstats.speed,
-            strength: character.powerstats.strength,
+            tierList: tierList(
+              parseInt(character.powerstats.combat) +
+                parseInt(character.powerstats.durability) +
+                parseInt(character.powerstats.intelligence) +
+                parseInt(character.powerstats.power) +
+                parseInt(character.powerstats.speed) +
+                parseInt(character.powerstats.strength)
+            ),
+            totalPower:
+              parseInt(character.powerstats.combat) +
+              parseInt(character.powerstats.durability) +
+              parseInt(character.powerstats.intelligence) +
+              parseInt(character.powerstats.power) +
+              parseInt(character.powerstats.speed) +
+              parseInt(character.powerstats.strength),
+            combat: parseInt(character.powerstats.combat),
+            durability: parseInt(character.powerstats.durability),
+            intelligence: parseInt(character.powerstats.intelligence),
+            power: parseInt(character.powerstats.power),
+            speed: parseInt(character.powerstats.speed),
+            strength: parseInt(character.powerstats.strength),
           };
         });
         console.log("character: ", character);
@@ -74,118 +120,73 @@ function SearchPage() {
           results: res.data.results,
           characters: character,
         });
-
-      
-//         API.getSuperheroID(searchName)
-//           .then((res2) => {
-//             console.log("res2:", res2);
-//             const superHeroID = res2.data.results.map((superHeroID) => {
-//               return {
-//                 id: superHeroID.id;
-//                 // if(superHeroID.id.length === 3, superHeroID.id = "0" + superHeroID.id
-//                 // else(superheroID.id = superHeroID.id)
-//           }
-//             })
-//   }
-// )
-
-// })
-// API.getMoreInfo(superHeroID.id)
-//   .then((res3) => {
-//     console.log("res3:", res3);
-//     const superHeroID = res3.data.results.map((moreInfo) => {
-//       setResults({
-//         results3: res3.data.results,
-//         moreInfo: moreInfo,
-
-    //   })
-    // }
-    // )
-  // })
-
-  })
-
-npm .catch (console.error);
-}
-return (
-  <div>
-    <div id="apppage">
-      <MDBView>
-        <MDBMask className="d-flex justify-content-center align-items-center gradient">
-          <MDBContainer>
-            <MDBRow>
-              <MDBCol
-                md="8"
-                className="white-text text-center text-md-left mt-xl-5 mb-5"
-              >
-                <MDBAnimation type="fadeInLeft" delay=".3s">
-                  <h1 className="h1-responsive font-weight-bold mt-sm-5">
-                    Search over 700 comicbook superheroes and villains!
+      })
+      .catch(console.error);
+  }
+  return (
+    <div>
+      <div id="apppage">
+        <MDBView>
+          <MDBMask className="d-flex justify-content-center align-items-center gradient">
+            <MDBContainer>
+              <MDBRow>
+                <MDBCol
+                  md="8"
+                  className="white-text text-center text-md-left mt-xl-5 mb-5"
+                >
+                  <MDBAnimation type="fadeInLeft" delay=".3s">
+                    <h1 className="h1-responsive font-weight-bold mt-sm-5">
+                      Search over 700 comicbook superheroes and villains!
                     </h1>
-                  <hr className="hr-light" />
-                  <div className="active-pink-3 active-pink-4 mb-4">
-                    <input
-                      onChange={handleInputChange}
-                      value={searchName}
-                      className="form-control"
-                      type="text"
-                      placeholder="Search"
-                      aria-label="Search"
-                    />
-                    <MDBBtn
-                      onClick={handleFormSubmit}
-                      color="secondary"
-                      className="ml-0"
-                      size="sm"
-                      href="#searched"
-                    >
-                      Search
+                    <hr className="hr-light" />
+                    <div className="active-pink-3 active-pink-4 mb-4">
+                      <input
+                        onChange={handleInputChange}
+                        value={searchName}
+                        className="form-control"
+                        type="text"
+                        placeholder="Search"
+                        aria-label="Search"
+                      />
+                      <MDBBtn
+                        onClick={handleFormSubmit}
+                        color="secondary"
+                        className="ml-0"
+                        size="sm"
+                        href="#searched"
+                      >
+                        Search
                       </MDBBtn>
-                  </div>
-                </MDBAnimation>
-              </MDBCol>
-              {/* <MDBCol md="6" xl="5" className="mt-xl-5">
-                  <MDBAnimation type="fadeInRight" delay=".3s">
-                    <img
-                      src={this.props.img}
-                      alt=""
-                      className="img-fluid rounded rightCardImg"
-                    />
+                    </div>
                   </MDBAnimation>
-                </MDBCol> */}
-            </MDBRow>
-          </MDBContainer>
-        </MDBMask>
-      </MDBView>
-    </div>
-    <MDBRow className="justify-content-center mt-2">
-      <MDBAnimation type="fadeInRight" delay=".3s">
-        <MDBCard className="bg-secondary text-white">
-          <MDBCardBody>
-            <h1>Searched Comic Book Characters</h1>
-          </MDBCardBody>
-        </MDBCard>
-      </MDBAnimation>
-    </MDBRow>
-    {/*<MDBRow className="justify-content-center mt-5"> 
-            {isLoading ? <LoadingSpinner /> : <MDBRow />}
-      </MDBRow> */}
-    <MDBContainer fluid className="justify-content-center">
-      <MDBJumbotron>
-        {/* <ResultCard characters={results.characters} /> */}
-        <MDBRow className="justify-content-center" id="searched">
-          {isLoading ? (
-            <LoadingSpinner />
-          ) : (
+                </MDBCol>
+                <MDBCol md="6" xl="5" className="mt-xl-5"></MDBCol>
+              </MDBRow>
+            </MDBContainer>
+          </MDBMask>
+        </MDBView>
+      </div>
+      <MDBRow className="justify-content-center mt-2">
+        <MDBAnimation type="fadeInRight" delay=".3s">
+          <MDBCard className="bg-secondary text-white">
+            <MDBCardBody>
+              <h1>Searched Comic Book Characters</h1>
+            </MDBCardBody>
+          </MDBCard>
+        </MDBAnimation>
+      </MDBRow>
+      <MDBContainer fluid className="justify-content-center">
+        <MDBJumbotron>
+          <MDBRow className="justify-content-center" id="searched">
+            {isLoading ? (
+              <LoadingSpinner />
+            ) : (
               <ResultCard characters={results.characters} />
             )}
-        </MDBRow>
-      </MDBJumbotron>
-    </MDBContainer>
-  </div>
-
-);
-          }
-  
-
+          </MDBRow>
+        </MDBJumbotron>
+      </MDBContainer>
+    </div>
+  );
+}
 export default SearchPage;
