@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   MDBContainer,
   MDBRow,
@@ -14,18 +14,28 @@ import {
   MDBView,
   MDBLink,
 } from "mdbreact";
-import axios from "axios";
 
 import "./styleSignUp.css";
+import AuthenticationContext from "../../context/authenticationContext";
+import UsernameContext from "../../context/usernameContext";
+import API from "../../utils/API";
 
 const SignUpPage = (props) => {
   const [registerUsername, setRegisterUsername] = useState("");
   // console.log("registerUsername: ", registerUsername);
   const [registerPassword, setRegisterPassword] = useState("");
   // console.log("registerPassword: ", registerPassword);
-  const [errorMessage, setErrorMessage] = useState({
-    errorMessage: "",
-  });
+  // const [errorMessage, setErrorMessage] = useState({
+  //   errorMessage: "",
+  // });
+
+  const { isAuthenticated, setIsAuthenticated } = useContext(
+    AuthenticationContext
+  );
+  console.log("isAuthenticated: ", isAuthenticated);
+
+  const { username, setUsername } = useContext(UsernameContext);
+  console.log("username: ", username);
 
   function handleInputChangeUsername(event) {
     event.preventDefault();
@@ -44,21 +54,15 @@ const SignUpPage = (props) => {
   function register(event) {
     event.preventDefault();
     console.log({ registerUsername, registerPassword });
-    axios({
-      method: "POST",
-      data: {
-        username: registerUsername,
-        password: registerPassword,
-      },
-      withCredentials: true,
-      url: "http://localhost:3001/api/signup",
-    })
+    API.registerUsername({ registerUsername, registerPassword })
       .then((res) => {
         console.log("res: ", res);
         if (res.data === "Succesfully Authenticated") {
+          setUsername(registerUsername);
+          setIsAuthenticated(true);
           props.history.push("/search");
-        } else {
-          // handleLoginErr(res.data);
+        } else if (res.data === "User Already Exists") {
+          props.history.push("/signup");
         }
       })
       .catch(console.error);

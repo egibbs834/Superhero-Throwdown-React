@@ -1,3 +1,7 @@
+.customHover:hover {
+  color: purple !important;
+}
+
 @media only screen and (max-width: 400px) {
   #apppage .animated img {
     max-height: 50vh;
