@@ -21,19 +21,19 @@ export default {
       url: "http://localhost:3001/api/villain_data",
     });
   },
-  getSuperheroID: function (name) {
-    console.log("name", name);
-    return axios.get(
-      `https://comicvine.gamespot.com/api/characters/?api_key=${apicv_key}&format&json&filter=name:${name}`
-    )
-  },
+  // getSuperheroID: function (name) {
+  //   console.log("name", name);
+  //   return axios.get(
+  //     `https://comicvine.gamespot.com/api/characters/?api_key=${apicv_key}&format&json&filter=name:${name}`
+  //   )
+  // },
   
-  getMoreInfo: function (superHeroID.id) {
-    console.log("getMoreInfo", getMoreInfo);
-    return axios.get(
-      `https://comicvine.gamespot.com/api/character/4005-${superHeroID.id}/?api_key=${apicv_key}&format&json`
-    )
-  }
+  // getMoreInfo: function (superHeroID.id) {
+  //   console.log("getMoreInfo", getMoreInfo);
+  //   return axios.get(
+  //     `https://comicvine.gamespot.com/api/character/4005-${superHeroID.id}/?api_key=${apicv_key}&format&json`
+  //   )
+  // }
 
 };
 
