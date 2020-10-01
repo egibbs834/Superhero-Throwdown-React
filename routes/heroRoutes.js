@@ -3,67 +3,57 @@ const mongoose = require("mongoose");
 const Hero = require("../models/heroes");
 // const Heroes = require("../models")
 module.exports = (app) => {
-  // app.post("/api/hero_data", (req, res) => {
-  //     console.log("req.body for addHero: ", req.body);
-  //     const newHero =
-  //     Hero.insertOne({
-  //         img: req.body.img,
-  //         name: req.body.name,
-  //         publisher: req.body.publisher,
-  //         alignment: req.body.alignment,
-  //         race: req.body.race,
-  //         height: req.body.height,
-  //         weight: req.body.weight,
-  //         combat: req.body.combat,
-  //         durability: req.body.durability,
-  //         intelligence: req.body.intelligence,
-  //         power: req.body.power,
-  //         speed: req.body.speed,
-  //         strength: req.body.strength
-  //     })
-  //         .then((newHero) => {
-  //             console.log("newHero: ", newHero)
-  //             res.send(newHero)
-  //         })
-  //         .catch(err => res.status(422).json(err));
-  //     // res.send("Succesfully Authenticated");
-  // })
   app.post("/api/hero_data", (req, res) => {
-    console.log("req.body heroData: ", req.body);
-    Hero.findOne({ name: req.body.name }, async (err, doc) => {
-      if (err) {
-        throw err;
-      }
-      if (doc) {
-        console.log("doc: ", doc);
-        res.send("hero Already Exists");
-      }
-      if (!doc) {
-        console.log("Created new hero");
-        //   res.send("Succesfully Created");
-        const newHero = new Hero({
-          img: req.body.img,
-          name: req.body.name,
-          publisher: req.body.publisher,
-          alignment: req.body.alignment,
-          race: req.body.race,
-          height: req.body.height,
-          weight: req.body.weight,
-          combat: req.body.combat,
-          durability: req.body.durability,
-          intelligence: req.body.intelligence,
-          power: req.body.power,
-          speed: req.body.speed,
-          strength: req.body.strength,
-        });
-        await newHero
-          .save()
-          .then(console.log("We created our new hero: ", newHero))
-          .catch((err) => {
-            console.log("Oops there was a problem");
-            res.send(err);
+    console.log("post /api/hero_data");
+    console.log("req.body: ", req.body);
+    Hero.findOne(
+      {
+        hero_id: req.body.character.heroID,
+        createdBy: req.body.username,
+      },
+      async (err, doc) => {
+        if (err) {
+          throw err;
+        }
+        if (doc) {
+          console.log(`${req.body.character.name} already exists in db `, doc);
+          res.send(
+            `${req.body.character.name} already exists in your universe!`
+          );
+        }
+        if (!doc) {
+          const newHero = new Hero({
+            img_url: req.body.character.img,
+            name: req.body.character.name,
+            hero_id: req.body.character.heroID,
+            publisher: req.body.character.publisher,
+            alignment: req.body.character.alignment,
+            race: req.body.character.race,
+            height: req.body.character.height,
+            weight: req.body.character.weight,
+            tier_list: req.body.character.tierList,
+            total_power: req.body.character.totalPower,
+            combat: req.body.character.combat,
+            durability: req.body.character.durability,
+            intelligence: req.body.character.intelligence,
+            power: req.body.character.power,
+            speed: req.body.character.speed,
+            strength: req.body.character.strength,
+            createdBy: req.body.username,
           });
+          console.log(
+            `${req.body.character.name} has been created and added to db`
+          );
+          await newHero
+            .save()
+            .then(
+              res.send(
+                `${req.body.character.name} has been added to your universe!`
+              )
+            )
+            .catch(console.error);
+        }
       }
-    });
+    );
   });
 };
