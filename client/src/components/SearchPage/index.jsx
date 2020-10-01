@@ -77,36 +77,7 @@ function SearchPage() {
           results: res.data.results,
           characters: character,
         });
-        API.getSuperheroID(searchName)
-          .then((res2) => {
-            console.log("res2:", res2);
-            const superHeroID = res2.data.results.map((superHeroID) => {
-              return {
-                id: superHeroID.id;
-                // if(superHeroID.id.length === 3, superHeroID.id = "0" + superHeroID.id
-                // else(superheroID.id = superHeroID.id)
-          }
-            })
-  }
-)
-
-})
-API.getMoreInfo(superHeroID.id)
-  .then((res3) => {
-    console.log("res3:", res3);
-    const superHeroID = res3.data.results.map((moreInfo) => {
-      setResults({
-        results3: res3.data.results,
-        moreInfo: moreInfo,
-
-      })
-    }
-    )
   })
-
-  })
-
-      .catch (console.error);
 }
 return (
   <div>
