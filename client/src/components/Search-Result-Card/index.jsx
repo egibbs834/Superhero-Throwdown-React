@@ -15,13 +15,9 @@ import {
   MDBDropdownItem,
 } from "mdbreact";
 import "./index.css";
-<<<<<<< HEAD
-import API from "../../utils/API";
-=======
 import Axios from "axios";
 import API from "../../utils/API";
 
->>>>>>> e2a2a660676c780cdcec2ba3a2ea3ada213fdd78
 const ResultCard = (props) => {
   console.log("(ResultCard) props: ", props);
 
@@ -223,9 +219,6 @@ const ResultCard = (props) => {
                       </MDBDropdownMenu>
                     </MDBDropdown>
                     <div className="row">
-<<<<<<< HEAD
-                      <MDBBtn className="ml-auto" color="white" size="sm" value={character} onClick={() => addHeroToDatabase(character)}>
-=======
                       <MDBBtn
                         onClick={() => addHeroToDatabase(character)}
                         className="ml-auto"
@@ -233,7 +226,6 @@ const ResultCard = (props) => {
                         size="sm"
                         value={character}
                       >
->>>>>>> e2a2a660676c780cdcec2ba3a2ea3ada213fdd78
                         Add To
                       </MDBBtn>
                       <MDBBtn className="mr-auto" color="white" size="sm">
