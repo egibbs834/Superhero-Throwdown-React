@@ -14,9 +14,18 @@ export default {
   getRandomVillain: function () {
     return axios({
       method: "GET",
-
       withCredentials: true,
       url: "http://localhost:3001/api/villain_data",
+    });
+  },
+
+  addHero: function (hero) {
+    console.log("(addHero) hero:", hero);
+    return axios({
+      method: "POST",
+      data: hero,
+      withCredentials: true,
+      url: "http://localhost:3001/api/hero_data",
     });
   },
 };

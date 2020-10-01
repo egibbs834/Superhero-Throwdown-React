@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   MDBView,
   MDBBtn,
@@ -15,8 +15,29 @@ import {
   MDBDropdownItem,
 } from "mdbreact";
 import "./index.css";
+import Axios from "axios";
+import API from "../../utils/API";
+
 const ResultCard = (props) => {
   console.log("(ResultCard) props: ", props);
+
+  const [addTo, setAddTo] = useState({});
+  console.log("addTo: ", addTo);
+
+  function addHeroToDatabase(character) {
+    console.log("MyCharacter: ", character);
+    if (
+      window.confirm(
+        `Are you sure you want to add ${character.name} to the DB?`
+      )
+    ) {
+      console.log("Wonderful news!");
+      API.addHero(character).then((res) => {
+        console.log("Successfully added hero to database: ", res);
+      });
+    }
+  }
+
   function statBarColor(value) {
     // console.log("value: ", typeof value);
     if (value <= 50) {
@@ -186,7 +207,13 @@ const ResultCard = (props) => {
                       </MDBDropdownMenu>
                     </MDBDropdown>
                     <div className="row">
-                      <MDBBtn className="ml-auto" color="white" size="sm">
+                      <MDBBtn
+                        onClick={() => addHeroToDatabase(character)}
+                        className="ml-auto"
+                        color="white"
+                        size="sm"
+                        value={character}
+                      >
                         Add To
                       </MDBBtn>
                       <MDBBtn className="mr-auto" color="white" size="sm">

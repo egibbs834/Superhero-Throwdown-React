@@ -28,22 +28,24 @@ function SearchPage() {
   const [isLoading, setIsLoading] = useState(false);
   // console.log("results: ", results);
 
-  const [randomVillain, setRandomVillain] = useState({
-    randomVillain: "empty",
-  });
+  const [randomVillain, setRandomVillain] = useState("");
   console.log("randomVillain: ", randomVillain);
+
+  const [username, setUsername] = useState("");
+  console.log("username: ", username);
+
   function handleInputChange(event) {
     event.preventDefault();
     setSearchName(event.target.value);
   }
   function getRandomVillain() {
     API.getRandomVillain().then((res) => {
-      // console.log("res: ", res);
+      console.log("res: ", res);
       setRandomVillain(res);
     });
   }
 
-  if (randomVillain.randomVillain === "empty") {
+  if (!randomVillain) {
     getRandomVillain();
   }
 
