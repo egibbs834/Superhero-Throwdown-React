@@ -15,6 +15,7 @@ import {
   MDBDropdownItem,
 } from "mdbreact";
 import "./index.css";
+import API from "../../utils/API";
 const ResultCard = (props) => {
   console.log("(ResultCard) props: ", props);
   function statBarColor(value) {
@@ -27,6 +28,18 @@ const ResultCard = (props) => {
       return "danger";
     } else {
       return;
+    }
+  }
+
+  function addHeroToDatabase(character) {
+    console.log("MyCharacter: ", character);
+    if (window.confirm(`Are you sure you want to add ${character.name} to the DB?`)) {
+
+      console.log("Wonderful news!")
+      API.addHero(character).then((res) => {
+        console.log("Successfully added hero to database: ", res);
+      })
+
     }
   }
   // console.log(statBarColor());
@@ -186,7 +199,7 @@ const ResultCard = (props) => {
                       </MDBDropdownMenu>
                     </MDBDropdown>
                     <div className="row">
-                      <MDBBtn className="ml-auto" color="white" size="sm">
+                      <MDBBtn className="ml-auto" color="white" size="sm" value={character} onClick={() => addHeroToDatabase(character)}>
                         Add To
                       </MDBBtn>
                       <MDBBtn className="mr-auto" color="white" size="sm">

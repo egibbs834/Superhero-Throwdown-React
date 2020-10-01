@@ -19,4 +19,14 @@ export default {
       url: "http://localhost:3001/api/villain_data",
     });
   },
+
+  addHero: function(hero) {
+    console.log("API.jsx Hero: ", hero);
+    return axios({
+      method: "POST",
+      data: hero,
+      withCredentials: true,
+      url:"http://localhost:3001/api/hero_data", 
+    })
+  }
 };
