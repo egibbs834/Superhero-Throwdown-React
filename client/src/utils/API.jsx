@@ -28,12 +28,12 @@ export default {
     )
   },
   
-  getMoreInfo: function (shid) {
-    console.log("shid", shid);
+  getMoreInfo: function (superHeroID.id) {
+    console.log("getMoreInfo", getMoreInfo);
     return axios.get(
-      `https://comicvine.gamespot.com/api/character/4005-${shid}/?api_key=${apicv_key}&format&json`
+      `https://comicvine.gamespot.com/api/character/4005-${superHeroID.id}/?api_key=${apicv_key}&format&json`
     )
-  },
+  }
 
 };
 
