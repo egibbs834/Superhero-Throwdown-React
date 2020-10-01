@@ -19,13 +19,12 @@ import ResultCard from "../Search-Result-Card";
 import AuthenticationContext from "../../context/authenticationContext";
 import UsernameContext from "../../context/usernameContext";
 
-function SearchPage() {
+function SearchPage(props) {
   const [searchName, setSearchName] = useState("");
   const [results, setResults] = useState({
     results: [],
     characters: [],
   });
-  // console.log("results: ", results);
 
   // Sets default state to display content is loading
   const [isLoading, setIsLoading] = useState(false);
@@ -33,13 +32,15 @@ function SearchPage() {
   const [randomVillain, setRandomVillain] = useState("");
   console.log("randomVillain: ", randomVillain);
 
-  const { isAuthenticated, setIsAuthenticated } = useContext(
-    AuthenticationContext
-  );
-  console.log("Search Page isAuthenticated: ", isAuthenticated);
+  const { isAuthenticated } = useContext(AuthenticationContext);
+  console.log("isAuthenticated: ", isAuthenticated);
 
-  const { username, setUsername } = useContext(UsernameContext);
-  console.log("Search Page username: ", username);
+  if (!isAuthenticated) {
+    props.history.push("/login");
+  }
+
+  const { username } = useContext(UsernameContext);
+  console.log("username: ", username);
 
   function handleInputChange(event) {
     event.preventDefault();
@@ -154,6 +155,7 @@ function SearchPage() {
                         className="ml-0"
                         size="sm"
                         href="#searched"
+                        type="submit"
                       >
                         Search
                       </MDBBtn>

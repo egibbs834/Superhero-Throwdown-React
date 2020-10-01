@@ -9,6 +9,7 @@ import Login from "./pages/Login/login";
 import SignUp from "./pages/SignUp/index";
 import AuthenticationContext from "./context/authenticationContext";
 import UsernameContext from "./context/usernameContext";
+import Search from "./pages/Search/Search";
 
 const dotenv = require("dotenv").config();
 
@@ -40,7 +41,11 @@ function App() {
           <Switch>
             {isAuthenticated ? (
               <Fragment>
-                <Route exact path="/search" component={SearchPage} />
+                <Route
+                  exact
+                  path="/search"
+                  render={(props) => <Search {...props} />}
+                />
                 <Route exact path="/fight" component={Fight} />
               </Fragment>
             ) : (

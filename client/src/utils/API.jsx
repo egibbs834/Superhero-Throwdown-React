@@ -6,12 +6,16 @@ console.log("api_key: ", api_key);
 
 export default {
   getSuperhero: function (name) {
+    console.log(
+      `GET https://cors-anywhere.herokuapp.com/https://superheroapi.com/api/${api_key}/search/${name}`
+    );
     console.log("name", name);
     return axios.get(
       `https://cors-anywhere.herokuapp.com/https://superheroapi.com/api/${api_key}/search/${name}`
     );
   },
   getRandomVillain: function () {
+    console.log("POST /api/villain_data");
     return axios({
       method: "GET",
       withCredentials: true,
@@ -20,12 +24,39 @@ export default {
   },
 
   addHero: function (heroToBeAdded) {
+    console.log("POST /api/hero_data");
     console.log({ heroToBeAdded });
     return axios({
       method: "POST",
       data: heroToBeAdded,
       withCredentials: true,
       url: "http://localhost:3001/api/hero_data",
+    });
+  },
+  registerUsername: function (data) {
+    console.log("POST /api/signup");
+    console.log({ data });
+    return axios({
+      method: "POST",
+      data: {
+        username: data.registerUsername,
+        password: data.registerPassword,
+      },
+      withCredentials: true,
+      url: "http://localhost:3001/api/signup",
+    });
+  },
+  handleLogin: function (data) {
+    console.log("POST /api/login");
+    console.log({ data });
+    return axios({
+      method: "POST",
+      data: {
+        username: data.loginUsername,
+        password: data.loginPassword,
+      },
+      withCredentials: true,
+      url: "http://localhost:3001/api/login",
     });
   },
 };
