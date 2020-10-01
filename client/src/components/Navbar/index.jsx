@@ -8,10 +8,16 @@ import {
   MDBNavbarToggler,
   MDBContainer,
   MDBCollapse,
+  MDBIcon,
+  MDBDropdown,
+  MDBDropdownToggle,
+  MDBDropdownMenu,
+  MDBDropdownItem,
 } from "mdbreact";
 
 import "./index.css";
 import AuthenticationContext from "../../context/authenticationContext";
+import UsernameContext from "../../context/usernameContext";
 import axios from "axios";
 // useContext
 
@@ -22,14 +28,19 @@ const Navbar = () => {
     AuthenticationContext
   );
 
+  const { username, setUsername } = useContext(UsernameContext);
+  console.log("(Navbar) username: ", username);
+
   const handleTogglerClick = () => {
     setCollapsed((prevState) => ({
       collapsed: !prevState.collapsed,
     }));
   };
 
+  // sets authentication and username back to false and empty string for next user to login and hits route to back end to hit a req.logout
   function handleLogout() {
     setIsAuthenticated(false);
+    setUsername("");
     axios({
       method: "GET",
       withCredentials: true,
@@ -61,7 +72,7 @@ const Navbar = () => {
       >
         <MDBContainer>
           <MDBNavbarBrand>
-            <strong className="white-text">SuperHero Universe</strong>
+            <strong className="">SuperHero Universe</strong>
           </MDBNavbarBrand>
           <MDBNavbarToggler onClick={handleTogglerClick} />
           <MDBCollapse isOpen={collapsed} navbar>
@@ -79,11 +90,25 @@ const Navbar = () => {
             </MDBNavbarNav>
             <MDBNavbarNav right>
               {isAuthenticated && (
-                <MDBNavItem>
-                  <MDBLink to="/login" onClick={handleLogout}>
-                    Log Out
-                  </MDBLink>
-                </MDBNavItem>
+                <MDBDropdown size="sm" hover>
+                  <MDBDropdownToggle>
+                    {`${username.toUpperCase()} `}
+                    <MDBIcon icon="user"></MDBIcon>
+                  </MDBDropdownToggle>
+                  <MDBDropdownMenu>
+                    <MDBDropdownItem>
+                      <MDBNavItem>
+                        <MDBLink
+                          to="/login"
+                          onClick={handleLogout}
+                          className="customHover black-text"
+                        >
+                          Logout
+                        </MDBLink>
+                      </MDBNavItem>
+                    </MDBDropdownItem>
+                  </MDBDropdownMenu>
+                </MDBDropdown>
               )}
             </MDBNavbarNav>
           </MDBCollapse>

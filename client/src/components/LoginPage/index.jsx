@@ -14,22 +14,19 @@ import {
   MDBView,
   MDBLink,
 } from "mdbreact";
-import axios from "axios";
 
 import "./styleLogin.css";
 import AuthenticationContext from "../../context/authenticationContext";
 import UsernameContext from "../../context/usernameContext";
+import API from "../../utils/API";
 
 const LoginPage = (props) => {
   console.log("props: ", props);
   const [loginUsername, setLoginUsername] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-  const {
-    isAuthenticated,
-    setIsAuthenticated,
-    // username,
-    // setUsername,
-  } = useContext(AuthenticationContext);
+  const { isAuthenticated, setIsAuthenticated } = useContext(
+    AuthenticationContext
+  );
   console.log("isAuthenticated: ", isAuthenticated);
 
   const { username, setUsername } = useContext(UsernameContext);
@@ -46,16 +43,7 @@ const LoginPage = (props) => {
 
   function handleLogin(event) {
     event.preventDefault();
-    // console.log({ loginUsername, loginPassword });
-    axios({
-      method: "POST",
-      data: {
-        username: loginUsername,
-        password: loginPassword,
-      },
-      withCredentials: true,
-      url: "http://localhost:3001/api/login",
-    })
+    API.handleLogin({ loginUsername, loginPassword })
       .then((res) => {
         console.log("res: ", res);
         if (res.data === "Succesfully Authenticated") {

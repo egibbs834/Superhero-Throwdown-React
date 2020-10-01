@@ -17,13 +17,18 @@ import {
 import "./index.css";
 
 import API from "../../utils/API";
+import AuthenticationContext from "../../context/authenticationContext";
 import UsernameContext from "../../context/usernameContext";
 
 const ResultCard = (props) => {
   console.log("(ResultCard) props: ", props);
-  const { username, setUsername } = useContext(UsernameContext);
+
+  const { isAuthenticated } = useContext(AuthenticationContext);
+  console.log("isAuthenticated: ", isAuthenticated);
+  const { username } = useContext(UsernameContext);
   console.log("username: ", username);
 
+  // hits our API to hit route to backend to add to datatbase
   function addHeroToDatabase(character, username) {
     console.log("MyCharacter: ", character);
     const heroToBeAdded = { character, username };
@@ -42,6 +47,7 @@ const ResultCard = (props) => {
     }
   }
 
+  // creates the colors in the dropdown menu in our card
   function statBarColor(value) {
     if (value <= 50) {
       return "warning";
@@ -53,7 +59,6 @@ const ResultCard = (props) => {
       return;
     }
   }
-
 
   return (
     <MDBCol className="justify-content-center align-items-center text-center container-fluid">
@@ -110,7 +115,7 @@ const ResultCard = (props) => {
                       </MDBCardText>
                     </div>
                     <hr></hr>
-                    <MDBDropdown className="text-center" size="sm" hover>
+                    <MDBDropdown className="text-center" size="sm" hover dropup>
                       <MDBDropdownToggle color="secondary">
                         Power Stats
                       </MDBDropdownToggle>
