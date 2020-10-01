@@ -80,7 +80,7 @@ const Navbar = () => {
                     <MDBLink to="/search">Search</MDBLink>
                   </MDBNavItem>
                   <MDBNavItem>
-                    <MDBLink to="/fight">Universe</MDBLink>
+                    <MDBLink to="/universe">Universe</MDBLink>
                   </MDBNavItem>
                 </Fragment>
               )}

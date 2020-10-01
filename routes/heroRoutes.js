@@ -55,5 +55,14 @@ module.exports = (app) => {
         }
       }
     );
+  }),
+
+  app.get("/api/universe", async (req, res) => {
+    let allHeroes = await Hero.find({})
+      .then((allHeroes) => {
+        console.log("Number of heroes: ", allHeroes.length)
+        res.send(allHeroes)
+      })
+      .catch(console.error);
   });
 };

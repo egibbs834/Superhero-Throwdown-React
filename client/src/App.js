@@ -9,6 +9,8 @@ import SignUp from "./pages/SignUp/index";
 import AuthenticationContext from "./context/authenticationContext";
 import UsernameContext from "./context/usernameContext";
 import Search from "./pages/Search/Search";
+import Universe from "./pages/Universe"
+
 
 const dotenv = require("dotenv").config();
 
@@ -45,6 +47,7 @@ function App() {
                   path="/search"
                   render={(props) => <Search {...props} />}
                 />
+                <Route exact path="/universe" component={Universe} />
                 <Route exact path="/fight" component={Fight} />
               </Fragment>
             ) : (
