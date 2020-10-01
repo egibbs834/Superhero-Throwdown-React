@@ -59,6 +59,14 @@ export default {
       url: "/api/login",
     });
   },
+  handleLogout: function () {
+    console.log("GET /logout");
+    return axios({
+      method: "GET",
+      withCredentials: true,
+      url: "/logout",
+    });
+  },
 };
 
 // https://comicvine.gamespot.com/api/character/4005-75487/?api_key=b84279396e62eefae65b678fe285ad3c06e136fb&format=json

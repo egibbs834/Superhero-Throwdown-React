@@ -19,6 +19,7 @@ import "./index.css";
 import AuthenticationContext from "../../context/authenticationContext";
 import UsernameContext from "../../context/usernameContext";
 import axios from "axios";
+import API from "../../utils/API";
 // useContext
 
 const Navbar = () => {
@@ -41,11 +42,7 @@ const Navbar = () => {
   function handleLogout() {
     setIsAuthenticated(false);
     setUsername("");
-    axios({
-      method: "GET",
-      withCredentials: true,
-      url: "http://localhost:3001/logout",
-    })
+    API.handleLogout()
       .then((res) => {
         console.log("user logged out");
       })
