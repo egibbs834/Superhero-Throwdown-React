@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import {
+  MDBView,
   MDBBtn,
   MDBCard,
   MDBCardBody,
   MDBCardImage,
   MDBCardTitle,
   MDBCardText,
-  MDBRow,
   MDBCol,
   MDBProgress,
   MDBDropdown,
@@ -16,7 +16,6 @@ import {
 } from "mdbreact";
 import "./index.css";
 const ResultCard = (props) => {
-  // const [totalPower, setTotalPower] = useState(0);
   console.log("(ResultCard) props: ", props);
   function statBarColor(value) {
     // console.log("value: ", typeof value);
@@ -57,120 +56,146 @@ const ResultCard = (props) => {
           {props.characters.map((character, i) => {
             console.log("character in map: ", character);
             return (
-              <MDBCard style={{ width: "16rem" }} key={i} className="m-2">
-                <MDBCardImage
-                  className="img-fluid img-thumbnail"
-                  src={character.img}
-                />
-                <MDBCardBody>
-                  <MDBCardTitle className="align-text-center myColor">
-                    <strong>{character.name}</strong>
-                  </MDBCardTitle>
-                  <hr></hr>
-                  <MDBCardText className="marginBtm">
-                    Tier Ranking:{" "}
-                    <strong>
-                      <span className="myColor">
-                        {tierList(
-                          parseInt(character.combat) +
+              <MDBView hover zoom key={i}>
+                <MDBCard style={{ width: "16rem" }} className="m-2">
+                  <MDBCardImage
+                    className="img-thumbnail"
+                    src={character.img}
+                    style={{
+                      width: "100%",
+                      maxHeight: "338px",
+                    }}
+                    alt={`picture of ${character.name}`}
+                  />
+                  <MDBCardBody
+                    style={{
+                      height: "27rem",
+                      padding: "none",
+                      textTransform: "capitalize",
+                    }}
+                  >
+                    <MDBCardTitle className="align-text-center myColor">
+                      <strong>{character.name}</strong>
+                    </MDBCardTitle>
+                    <hr></hr>
+                    <div fluid style={{ height: "13rem" }}>
+                      <MDBCardText className="marginBtm mt-0">
+                        <strong>Tier Ranking: </strong>
+                        <strong>
+                          <span className="myColor">
+                            {tierList(
+                              parseInt(character.combat) +
+                                parseInt(character.durability) +
+                                parseInt(character.intelligence) +
+                                parseInt(character.power) +
+                                parseInt(character.speed) +
+                                parseInt(character.strength)
+                            )}
+                          </span>
+                        </strong>
+                      </MDBCardText>
+                      <MDBCardText>
+                        <strong>
+                          Total Power:{" "}
+                          {parseInt(character.combat) +
                             parseInt(character.durability) +
                             parseInt(character.intelligence) +
                             parseInt(character.power) +
                             parseInt(character.speed) +
-                            parseInt(character.strength)
-                        )}
-                      </span>
-                    </strong>
-                  </MDBCardText>
-                  <MDBCardText className="marginBtm">
-                    Alignment: {character.alignment}
-                  </MDBCardText>
-                  <MDBCardText className="marginBtm">
-                    Occupaton: {character.work}
-                  </MDBCardText>
-                  <MDBCardText>
-                    <strong>
-                      Total Power:{" "}
-                      {parseInt(character.combat) +
-                        parseInt(character.durability) +
-                        parseInt(character.intelligence) +
-                        parseInt(character.power) +
-                        parseInt(character.speed) +
-                        parseInt(character.strength)}
-                    </strong>{" "}
-                  </MDBCardText>
-                  <hr></hr>
-                  <MDBDropdown className="text-center" size="sm">
-                    <MDBDropdownToggle color="secondary">
-                      Power Stats
-                    </MDBDropdownToggle>
-                    <MDBDropdownMenu color="secondary" basic>
-                      <MDBDropdownItem>
-                        Combat: {character.combat}
-                        <MDBProgress
-                          className="my-2"
-                          material
-                          value={character.combat}
-                          color={statBarColor(parseInt(character.combat))}
-                        />
-                      </MDBDropdownItem>
-                      <MDBDropdownItem>
-                        Durability: {character.durability}
-                        <MDBProgress
-                          className="my-2"
-                          material
-                          value={character.durability}
-                          color={statBarColor(parseInt(character.durability))}
-                        />
-                      </MDBDropdownItem>
-                      <MDBDropdownItem>
-                        Intelligence: {character.intelligence}
-                        <MDBProgress
-                          className="my-2"
-                          material
-                          value={character.intelligence}
-                          color={statBarColor(parseInt(character.intelligence))}
-                        />
-                      </MDBDropdownItem>
-                      <MDBDropdownItem>
-                        Power: {character.power}
-                        <MDBProgress
-                          className="my-2"
-                          material
-                          value={character.power}
-                          color={statBarColor(parseInt(character.power))}
-                        />
-                      </MDBDropdownItem>
-                      <MDBDropdownItem>
-                        Speed: {character.speed}
-                        <MDBProgress
-                          className="my-2"
-                          material
-                          value={character.speed}
-                          color={statBarColor(parseInt(character.speed))}
-                        />
-                      </MDBDropdownItem>
-                      <MDBDropdownItem>
-                        Strength: {character.strength}
-                        <MDBProgress
-                          className="my-2"
-                          material
-                          value={character.strength}
-                          color={statBarColor(parseInt(character.strength))}
-                        />
-                      </MDBDropdownItem>
-                    </MDBDropdownMenu>
-                  </MDBDropdown>
-                  <div className="row">
-                    <MDBBtn className="ml-auto" color="white" size="sm">
-                      Add To
-                    </MDBBtn>
-                    <MDBBtn className="mr-auto" color="white" size="sm">
-                      Universe
-                    </MDBBtn>
-                  </div>
-                </MDBCardBody>
-              </MDBCard>
+                            parseInt(character.strength)}
+                        </strong>{" "}
+                      </MDBCardText>
+                      <MDBCardText className="marginBtm">
+                        Alignment: {character.alignment}
+                      </MDBCardText>
+                      <MDBCardText className="marginBtm">
+                        Race: {character.race}
+                      </MDBCardText>
+                      <MDBCardText className="marginBtm">
+                        Height: {character.height}
+                      </MDBCardText>
+                      <MDBCardText className="marginBtm">
+                        Weight: {character.weight}{" "}
+                      </MDBCardText>
+                      <MDBCardText className="">
+                        Publisher: <strong>{character.publisher}</strong>
+                      </MDBCardText>
+                    </div>
+                    <hr></hr>
+                    <MDBDropdown className="text-center" size="sm" hover>
+                      <MDBDropdownToggle color="secondary">
+                        Power Stats
+                      </MDBDropdownToggle>
+                      <MDBDropdownMenu color="secondary" basic>
+                        <MDBDropdownItem>
+                          Combat: {character.combat}
+                          <MDBProgress
+                            className="my-2"
+                            material
+                            value={character.combat}
+                            color={statBarColor(parseInt(character.combat))}
+                          />
+                        </MDBDropdownItem>
+                        <MDBDropdownItem>
+                          Durability: {character.durability}
+                          <MDBProgress
+                            className="my-2"
+                            material
+                            value={character.durability}
+                            color={statBarColor(parseInt(character.durability))}
+                          />
+                        </MDBDropdownItem>
+                        <MDBDropdownItem>
+                          Intelligence: {character.intelligence}
+                          <MDBProgress
+                            className="my-2"
+                            material
+                            value={character.intelligence}
+                            color={statBarColor(
+                              parseInt(character.intelligence)
+                            )}
+                          />
+                        </MDBDropdownItem>
+                        <MDBDropdownItem>
+                          Power: {character.power}
+                          <MDBProgress
+                            className="my-2"
+                            material
+                            value={character.power}
+                            color={statBarColor(parseInt(character.power))}
+                          />
+                        </MDBDropdownItem>
+                        <MDBDropdownItem>
+                          Speed: {character.speed}
+                          <MDBProgress
+                            className="my-2"
+                            material
+                            value={character.speed}
+                            color={statBarColor(parseInt(character.speed))}
+                          />
+                        </MDBDropdownItem>
+                        <MDBDropdownItem>
+                          Strength: {character.strength}
+                          <MDBProgress
+                            className="my-2"
+                            material
+                            value={character.strength}
+                            color={statBarColor(parseInt(character.strength))}
+                          />
+                        </MDBDropdownItem>
+                      </MDBDropdownMenu>
+                    </MDBDropdown>
+                    <div className="row">
+                      <MDBBtn className="ml-auto" color="white" size="sm">
+                        Add To
+                      </MDBBtn>
+                      <MDBBtn className="mr-auto" color="white" size="sm">
+                        More Info
+                      </MDBBtn>
+                    </div>
+                  </MDBCardBody>
+                </MDBCard>
+              </MDBView>
             );
           })}
         </div>

@@ -18,9 +18,11 @@ import axios from "axios";
 
 import "./styleLogin.css";
 
-const LoginPage = () => {
+const LoginPage = (props) => {
+  console.log("props: ", props);
   const [loginUsername, setLoginUsername] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+
   function handleInputChangeUsername(event) {
     event.preventDefault();
     setLoginUsername(event.target.value);
@@ -40,10 +42,15 @@ const LoginPage = () => {
         password: loginPassword,
       },
       withCredentials: true,
-      url: "http://localhost:3001/login",
+      url: "http://localhost:3001/api/login",
     })
       .then((res) => {
         console.log("res: ", res);
+        if (res.data === "Succesfully Authenticated") {
+          props.history.push("/search");
+        } else {
+          throw Error(res.data);
+        }
       })
       .catch(console.error);
   }
@@ -58,7 +65,7 @@ const LoginPage = () => {
                 <MDBCard className="cardBg">
                   <MDBCardBody>
                     <MDBCardHeader className="form-header card-gradient rounded">
-                      <h3 className="my-3">
+                      <h3 className="my-2">
                         <MDBIcon icon="lock" /> Login:
                       </h3>
                     </MDBCardHeader>
@@ -92,7 +99,6 @@ const LoginPage = () => {
                           color="secondary"
                           className="mb-3"
                           type="submit"
-                          href="/search"
                         >
                           Login
                         </MDBBtn>
