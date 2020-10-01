@@ -54,6 +54,7 @@ const ResultCard = (props) => {
     }
   }
 
+
   return (
     <MDBCol className="justify-content-center align-items-center text-center container-fluid">
       {props.characters.length ? (
