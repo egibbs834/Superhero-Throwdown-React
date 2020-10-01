@@ -20,6 +20,7 @@ import AuthenticationContext from "../../context/authenticationContext";
 import UsernameContext from "../../context/usernameContext";
 
 function SearchPage(props) {
+  console.log("(SearchPage) props: ", props);
   const [searchName, setSearchName] = useState("");
   const [results, setResults] = useState({
     results: [],
@@ -35,9 +36,9 @@ function SearchPage(props) {
   const { isAuthenticated } = useContext(AuthenticationContext);
   console.log("isAuthenticated: ", isAuthenticated);
 
-  if (!isAuthenticated) {
-    props.history.push("/login");
-  }
+  // if (!isAuthenticated) {
+  //   props.match.url("/login");
+  // }
 
   const { username } = useContext(UsernameContext);
   console.log("username: ", username);

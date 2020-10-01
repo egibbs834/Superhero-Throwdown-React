@@ -13,8 +13,8 @@ const Villain = require("./models/villains");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
 }
 
 // =================== middleware
@@ -46,7 +46,6 @@ require("./config/passportConfig")(passport);
 require("./routes/villainRoutes")(app);
 require("./routes/heroRoutes")(app);
 require("./routes/userRoutes")(app);
-require("./routes/heroRoutes")(app);
 
 // ===================== end of routes
 
@@ -57,22 +56,21 @@ require("./routes/heroRoutes")(app);
 //     useUnifiedTopology: true,
 //   })
 
-mongoose
-  .connect(process.env.MONGODB_URI || "mongodb://localhost/reactsuperhero", {
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://localhost/reactsuperhero",
+  {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
     useFindAndModify: false,
-  });
-  
-  // .then(() => {
-    // console.log("🎯 connected to reactsuperhero mongodb");
-    app.listen(PORT, () => {
-      console.log(
-        `🚀 blast off 🚀 =====> app listening on http://localhost:${PORT}`
-      );
-    });
-  // });
+  }
+);
 
-
-
+// .then(() => {
+// console.log("🎯 connected to reactsuperhero mongodb");
+app.listen(PORT, () => {
+  console.log(
+    `🚀 blast off 🚀 =====> app listening on http://localhost:${PORT}`
+  );
+});
+// });
