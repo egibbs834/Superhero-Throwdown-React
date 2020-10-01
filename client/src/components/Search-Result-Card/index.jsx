@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   MDBView,
   MDBBtn,
@@ -15,9 +15,33 @@ import {
   MDBDropdownItem,
 } from "mdbreact";
 import "./index.css";
+<<<<<<< HEAD
 import API from "../../utils/API";
+=======
+import Axios from "axios";
+import API from "../../utils/API";
+
+>>>>>>> e2a2a660676c780cdcec2ba3a2ea3ada213fdd78
 const ResultCard = (props) => {
   console.log("(ResultCard) props: ", props);
+
+  const [addTo, setAddTo] = useState({});
+  console.log("addTo: ", addTo);
+
+  function addHeroToDatabase(character) {
+    console.log("MyCharacter: ", character);
+    if (
+      window.confirm(
+        `Are you sure you want to add ${character.name} to the DB?`
+      )
+    ) {
+      console.log("Wonderful news!");
+      API.addHero(character).then((res) => {
+        console.log("Successfully added hero to database: ", res);
+      });
+    }
+  }
+
   function statBarColor(value) {
     // console.log("value: ", typeof value);
     if (value <= 50) {
@@ -67,7 +91,7 @@ const ResultCard = (props) => {
       {props.characters.length ? (
         <div className="row justify-content-center align-items-center container-fluid">
           {props.characters.map((character, i) => {
-            console.log("character in map: ", character);
+            // console.log("character in map: ", character);
             return (
               <MDBView hover zoom key={i}>
                 <MDBCard style={{ width: "16rem" }} className="m-2">
@@ -82,7 +106,7 @@ const ResultCard = (props) => {
                   />
                   <MDBCardBody
                     style={{
-                      height: "27rem",
+                      height: "24rem",
                       padding: "none",
                       textTransform: "capitalize",
                     }}
@@ -91,7 +115,7 @@ const ResultCard = (props) => {
                       <strong>{character.name}</strong>
                     </MDBCardTitle>
                     <hr></hr>
-                    <div fluid style={{ height: "13rem" }}>
+                    <div fluid style={{ height: "10rem" }}>
                       <MDBCardText className="marginBtm mt-0">
                         <strong>Tier Ranking: </strong>
                         <strong>
@@ -199,7 +223,17 @@ const ResultCard = (props) => {
                       </MDBDropdownMenu>
                     </MDBDropdown>
                     <div className="row">
+<<<<<<< HEAD
                       <MDBBtn className="ml-auto" color="white" size="sm" value={character} onClick={() => addHeroToDatabase(character)}>
+=======
+                      <MDBBtn
+                        onClick={() => addHeroToDatabase(character)}
+                        className="ml-auto"
+                        color="white"
+                        size="sm"
+                        value={character}
+                      >
+>>>>>>> e2a2a660676c780cdcec2ba3a2ea3ada213fdd78
                         Add To
                       </MDBBtn>
                       <MDBBtn className="mr-auto" color="white" size="sm">

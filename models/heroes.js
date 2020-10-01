@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 // const Schema = mongoose.Schema;
-
 const hero = new mongoose.Schema({
   name: { type: String },
   intel: { type: Number },
@@ -15,9 +14,8 @@ const hero = new mongoose.Schema({
   weight: { type: String },
   race: { type: String },
   publisher: { type: String },
-//   tier_ranking: { type: String },
-  img_url: { type: String},
-//   createdBy: { type: String, required: true }
+  //   tier_ranking: { type: String },
+  img_url: { type: String },
+  //   createdBy: { type: String, required: true }
 });
-
 module.exports = mongoose.model("Hero", hero);

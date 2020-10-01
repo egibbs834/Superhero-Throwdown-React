@@ -13,6 +13,10 @@ const Villain = require("./models/villains");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+}
+
 // =================== middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -42,19 +46,30 @@ require("./config/passportConfig")(passport);
 require("./routes/villainRoutes")(app);
 require("./routes/heroRoutes")(app);
 require("./routes/userRoutes")(app);
+require("./routes/heroRoutes")(app);
 
 // ===================== end of routes
+
+// mongoose.connect before linking Mongo Atlas database to deployed heroku app
+// mongoose
+//   .connect(process.env.MONGODB_URI || "mongodb://localhost/reactsuperhero", {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
 
 mongoose
   .connect(process.env.MONGODB_URI || "mongodb://localhost/reactsuperhero", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("🎯 connected to reactsuperhero mongodb");
+    useCreateIndex: true,
+    useFindAndModify: false,
+  });
+  
+  // .then(() => {
+    // console.log("🎯 connected to reactsuperhero mongodb");
     app.listen(PORT, () => {
       console.log(
         `🚀 blast off 🚀 =====> app listening on http://localhost:${PORT}`
       );
     });
-  });
+  // });

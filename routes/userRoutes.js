@@ -58,7 +58,9 @@ module.exports = (app) => {
     });
   });
 
-  // app.get("/api/user", (req, res) => {
-  //   res.send(req.user);
-  // });
+  app.get("/logout", (req, res) => {
+    req.logout();
+    console.log("req.user: ", req.user);
+    res.send();
+  });
 };
