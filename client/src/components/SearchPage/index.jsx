@@ -94,24 +94,24 @@ return (
                   <h1 className="h1-responsive font-weight-bold mt-sm-5">
                     Search over 700 comicbook superheroes and villains!
                     </h1>
-                          <hr className="hr-light" />
-                          <div className="active-pink-3 active-pink-4 mb-4">
-                            <input
-                              onChange={handleInputChange}
-                              value={searchName}
-                              className="form-control"
-                              type="text"
-                              placeholder="Search"
-                              aria-label="Search"
-                            />
-                            <MDBBtn
-                              onClick={handleFormSubmit}
-                              color="secondary"
-                              className="ml-0"
-                              size="sm"
-                              href="#searched"
-                            >
-                              Search
+                  <hr className="hr-light" />
+                  <div className="active-pink-3 active-pink-4 mb-4">
+                    <input
+                      onChange={handleInputChange}
+                      value={searchName}
+                      className="form-control"
+                      type="text"
+                      placeholder="Search"
+                      aria-label="Search"
+                    />
+                    <MDBBtn
+                      onClick={handleFormSubmit}
+                      color="secondary"
+                      className="ml-0"
+                      size="sm"
+                      href="#searched"
+                    >
+                      Search
                       </MDBBtn>
 
                    </div>
