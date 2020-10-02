@@ -18,6 +18,8 @@ import API from "../../utils/API";
 import ResultCard from "../Search-Result-Card";
 import AuthenticationContext from "../../context/authenticationContext";
 import UsernameContext from "../../context/usernameContext";
+import HeroContext from "../../context/heroContext";
+import HeroChart from "../Chart/index";
 
 function SearchPage(props) {
   console.log("(SearchPage) props: ", props);
@@ -43,6 +45,8 @@ function SearchPage(props) {
 
   const { username } = useContext(UsernameContext);
   console.log("username: ", username);
+
+  const { heroContext, setHeroContext } = useContext(HeroContext);
 
   function handleInputChange(event) {
     event.preventDefault();
@@ -81,6 +85,7 @@ function SearchPage(props) {
 
   function handleFormSubmit() {
     setIsLoading(true);
+    setHeroContext({});
     API.getSuperhero(searchName)
       .then((res) => {
         setIsLoading(false);
@@ -91,6 +96,14 @@ function SearchPage(props) {
           setErrorMessage("");
         }
         let character = res.data.results.map((character) => {
+          const total =
+            parseInt(character.powerstats.combat) +
+            parseInt(character.powerstats.durability) +
+            parseInt(character.powerstats.intelligence) +
+            parseInt(character.powerstats.power) +
+            parseInt(character.powerstats.speed) +
+            parseInt(character.powerstats.strength);
+
           return {
             img: character.image.url,
             name: character.name,
@@ -100,27 +113,15 @@ function SearchPage(props) {
             race: character.appearance.race,
             height: character.appearance.height[0],
             weight: character.appearance.weight[0],
-            tierList: tierList(
-              parseInt(character.powerstats.combat) +
-                parseInt(character.powerstats.durability) +
-                parseInt(character.powerstats.intelligence) +
-                parseInt(character.powerstats.power) +
-                parseInt(character.powerstats.speed) +
-                parseInt(character.powerstats.strength)
-            ),
-            totalPower:
-              parseInt(character.powerstats.combat) +
-              parseInt(character.powerstats.durability) +
-              parseInt(character.powerstats.intelligence) +
-              parseInt(character.powerstats.power) +
-              parseInt(character.powerstats.speed) +
-              parseInt(character.powerstats.strength),
+            tierList: tierList(total),
+            totalPower: total,
             combat: parseInt(character.powerstats.combat),
             durability: parseInt(character.powerstats.durability),
             intelligence: parseInt(character.powerstats.intelligence),
             power: parseInt(character.powerstats.power),
             speed: parseInt(character.powerstats.speed),
             strength: parseInt(character.powerstats.strength),
+            powerStats: character.powerstats,
           };
         });
         console.log("character: ", character);
@@ -193,11 +194,21 @@ function SearchPage(props) {
               <ResultCard
                 characters={results.characters}
                 errorMessage={errorMessage}
+                results={results.results}
               />
             )}
           </MDBRow>
         </MDBJumbotron>
       </MDBContainer>
+      {Object.keys(heroContext).length > 0 && (
+        <MDBContainer fluid className="justify-content-center">
+          <MDBJumbotron>
+            <MDBRow className="justify-content-center" id="chart">
+              <HeroChart results={results.results} />
+            </MDBRow>
+          </MDBJumbotron>
+        </MDBContainer>
+      )}
     </div>
   );
 }
