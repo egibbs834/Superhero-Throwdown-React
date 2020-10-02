@@ -23,7 +23,7 @@ import UsernameContext from "../../context/usernameContext";
 const ResultCard = (props) => {
   console.log("(ResultCard) props: ", props);
 
-  const[moreInfo,setMoreInfo] = useState({})
+  const[moreInfo,setMoreInfo] = useState(null)
 
   const { isAuthenticated } = useContext(AuthenticationContext);
   console.log("isAuthenticated: ", isAuthenticated);
@@ -68,13 +68,11 @@ function getMoreInfo(name){
           API.getMoreInfo(res2.data.results[0].id)
           .then((res3) => {
           console.log("res3:", res3);
-          setMoreInfo({
-            
-            moreInfo: res3.data.results
-          });
+          setMoreInfo(res3.data.results);
         })
       })
 }
+moreInfo && console.log(moreInfo)
   return (
     <MDBCol className="justify-content-center align-items-center text-center container-fluid">
       {props.characters.length ? (
@@ -94,7 +92,7 @@ function getMoreInfo(name){
                   />
                   <MDBCardBody
                     style={{
-                      height: "24rem",
+                      // height: "24rem",
                       padding: "none",
                       textTransform: "capitalize",
                     }}
@@ -208,6 +206,11 @@ function getMoreInfo(name){
                         More Info
                       </MDBBtn>
                     </div>
+                    {moreInfo && <h5>Enemies</h5>}
+                      {moreInfo && moreInfo.character_enemies.slice(0,4).map(enemy =>(
+                        <p>{enemy.name}
+                        </p>
+                      ))}
                   </MDBCardBody>
                 </MDBCard>
               </MDBView>
