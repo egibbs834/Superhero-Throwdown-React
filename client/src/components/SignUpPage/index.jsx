@@ -37,6 +37,8 @@ const SignUpPage = (props) => {
   const { username, setUsername } = useContext(UsernameContext);
   console.log("username: ", username);
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   function handleInputChangeUsername(event) {
     event.preventDefault();
     setRegisterUsername(event.target.value);
@@ -62,7 +64,12 @@ const SignUpPage = (props) => {
           setIsAuthenticated(true);
           props.history.push("/search");
         } else if (res.data === "User Already Exists") {
-          props.history.push("/signup");
+          setErrorMessage(res.data);
+        } else if (
+          res.data ===
+          "Error, all fields must be entered and password atleast 4 characters long"
+        ) {
+          setErrorMessage(res.data);
         }
       })
       .catch(console.error);
@@ -116,6 +123,11 @@ const SignUpPage = (props) => {
                         <span class="sr-only">Error:</span>{" "}
                         <span class="msg"></span>
                       </div>
+                      {errorMessage ? (
+                        <div className="alert alert-danger">{`${errorMessage}`}</div>
+                      ) : (
+                        <div></div>
+                      )}
                       <div className="text-center mt-4">
                         <MDBBtn
                           onClick={register}

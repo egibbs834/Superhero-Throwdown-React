@@ -18,7 +18,6 @@ import {
 import "./index.css";
 import AuthenticationContext from "../../context/authenticationContext";
 import UsernameContext from "../../context/usernameContext";
-import axios from "axios";
 import API from "../../utils/API";
 // useContext
 

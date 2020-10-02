@@ -26,6 +26,7 @@ function SearchPage(props) {
     results: [],
     characters: [],
   });
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Sets default state to display content is loading
   const [isLoading, setIsLoading] = useState(false);
@@ -84,6 +85,11 @@ function SearchPage(props) {
       .then((res) => {
         setIsLoading(false);
         console.log("res: ", res);
+        if (res.data.error) {
+          setErrorMessage(res.data.error);
+        } else {
+          setErrorMessage("");
+        }
         let character = res.data.results.map((character) => {
           return {
             img: character.image.url,
@@ -184,7 +190,10 @@ function SearchPage(props) {
             {isLoading ? (
               <LoadingSpinner />
             ) : (
-              <ResultCard characters={results.characters} />
+              <ResultCard
+                characters={results.characters}
+                errorMessage={errorMessage}
+              />
             )}
           </MDBRow>
         </MDBJumbotron>
