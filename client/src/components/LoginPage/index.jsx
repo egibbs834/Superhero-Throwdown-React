@@ -32,6 +32,8 @@ const LoginPage = (props) => {
   const { username, setUsername } = useContext(UsernameContext);
   console.log("username: ", username);
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   function handleInputChangeUsername(event) {
     event.preventDefault();
     setLoginUsername(event.target.value);
@@ -51,6 +53,7 @@ const LoginPage = (props) => {
           setIsAuthenticated(true);
           props.history.push("/search");
         } else {
+          setErrorMessage(res.data);
           throw Error(res.data);
         }
       })
@@ -94,7 +97,11 @@ const LoginPage = (props) => {
                           value={loginPassword}
                         />
                       </div>
-
+                      {errorMessage ? (
+                        <div className="alert alert-danger">{`${errorMessage}`}</div>
+                      ) : (
+                        <div></div>
+                      )}
                       <div className="text-center mt-4">
                         <MDBBtn
                           onClick={handleLogin}
