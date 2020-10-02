@@ -1,6 +1,8 @@
+
 import axios from "axios";
 console.log("process.env: ", process.env)
 const api_key = process.env.REACT_APP_API_KEY;
+
 
 console.log("api_key: ", api_key);
 
@@ -33,6 +35,18 @@ export default {
       url: "/api/hero_data",
     });
   },
+
+  getAllHeroes: function(username) {
+    console.log("GET /api/universe");
+    console.log("getAllHeroes username: ", username)
+    console.log(`api url: /api/universe/${username}`)
+    return axios({
+      method: "GET",
+      withCredentials: true,
+      url: `/api/universe/${username}`
+    })
+  },
+
   registerUsername: function (data) {
     console.log("POST /api/signup");
     console.log({ data });
