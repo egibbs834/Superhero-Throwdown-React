@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   MDBView,
   MDBBtn,
@@ -22,6 +22,8 @@ import UsernameContext from "../../context/usernameContext";
 
 const ResultCard = (props) => {
   console.log("(ResultCard) props: ", props);
+
+  const[moreInfo,setMoreInfo] = useState({})
 
   const { isAuthenticated } = useContext(AuthenticationContext);
   console.log("isAuthenticated: ", isAuthenticated);
@@ -59,7 +61,20 @@ const ResultCard = (props) => {
       return;
     }
   }
-
+function getMoreInfo(name){
+  API.getSuperheroID(name)
+        .then((res2) => {
+          console.log(res2.data.results[0].id)
+          API.getMoreInfo(res2.data.results[0].id)
+          .then((res3) => {
+          console.log("res3:", res3);
+          setMoreInfo({
+            
+            moreInfo: res3.data.results
+          });
+        })
+      })
+}
   return (
     <MDBCol className="justify-content-center align-items-center text-center container-fluid">
       {props.characters.length ? (
@@ -188,7 +203,8 @@ const ResultCard = (props) => {
                       >
                         Add To
                       </MDBBtn>
-                      <MDBBtn className="mr-auto" color="white" size="sm">
+                      <MDBBtn onClick={() => getMoreInfo(character.name)}
+                      className="mr-auto" color="white" size="sm">
                         More Info
                       </MDBBtn>
                     </div>

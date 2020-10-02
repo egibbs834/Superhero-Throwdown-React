@@ -25,7 +25,6 @@ function SearchPage(props) {
   const [results, setResults] = useState({
     results: [],
     characters: [],
-    moreInfo: []
   });
 
   // Sets default state to display content is loading
@@ -119,23 +118,14 @@ function SearchPage(props) {
           };
         });
         console.log("character: ", character);
-        API.getSuperheroID(searchName)
-        .then((res2) => {
-          console.log(res2.data.results[0].id)
-          API.getMoreInfo(res2.data.results[0].id)
-          .then((res3) => {
-          console.log("res3:", res3);
+        
           setResults({
             results: res.data.results,
             characters: character,
-            moreInfo: res3.data.results
           });
-        })
+        
       })
 
-        
-        
-      })
       .catch(console.error);
   }
 
