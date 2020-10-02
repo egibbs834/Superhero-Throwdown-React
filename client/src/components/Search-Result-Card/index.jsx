@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useMemo } from "react";
 import {
   MDBView,
   MDBBtn,
@@ -19,33 +19,16 @@ import "./index.css";
 import API from "../../utils/API";
 import AuthenticationContext from "../../context/authenticationContext";
 import UsernameContext from "../../context/usernameContext";
+import AddHeroModal from "../Modal/index";
 
 const ResultCard = (props) => {
   console.log("(ResultCard) props: ", props);
 
   const { isAuthenticated } = useContext(AuthenticationContext);
   console.log("isAuthenticated: ", isAuthenticated);
+
   const { username } = useContext(UsernameContext);
   console.log("username: ", username);
-
-  // hits our API to hit route to backend to add to datatbase
-  function addHeroToDatabase(character, username) {
-    console.log("MyCharacter: ", character);
-    const heroToBeAdded = { character, username };
-    console.log("heroToBeAdded: ", heroToBeAdded);
-    if (
-      window.confirm(
-        `Are you sure you want to add ${character.name} to your universe?`
-      )
-    ) {
-      console.log(`confirm to add ${character.name} to universe`);
-      API.addHero(heroToBeAdded)
-        .then((res) => {
-          console.log(`res: `, res);
-        })
-        .catch(console.error);
-    }
-  }
 
   // creates the colors in the dropdown menu in our card
   function statBarColor(value) {
@@ -62,7 +45,9 @@ const ResultCard = (props) => {
 
   return (
     <MDBCol className="justify-content-center align-items-center text-center container-fluid">
-      {props.characters.length ? (
+      {props.errorMessage ? (
+        <div className="alert alert-danger">{`${props.errorMessage}`}</div>
+      ) : props.characters.length ? (
         <div className="row justify-content-center align-items-center container-fluid">
           {props.characters.map((character, i) => {
             return (
@@ -179,18 +164,10 @@ const ResultCard = (props) => {
                       </MDBDropdownMenu>
                     </MDBDropdown>
                     <div className="row">
-                      <MDBBtn
-                        onClick={() => addHeroToDatabase(character, username)}
-                        className="ml-auto"
-                        color="white"
-                        size="sm"
-                        value={character}
-                      >
-                        Add To
-                      </MDBBtn>
-                      <MDBBtn className="mr-auto" color="white" size="sm">
+                      <AddHeroModal character={character} username={username} />
+                      {/* <MDBBtn className="mr-auto" color="white" size="sm">
                         More Info
-                      </MDBBtn>
+                      </MDBBtn> */}
                     </div>
                   </MDBCardBody>
                 </MDBCard>
