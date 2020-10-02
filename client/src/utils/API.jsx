@@ -1,10 +1,24 @@
 import axios from "axios";
 console.log("process.env: ", process.env)
 const api_key = process.env.REACT_APP_API_KEY;
+const apicv_key = process.env.REACT_APP_APICV_KEY;
 
 console.log("api_key: ", api_key);
 
 export default {
+  getSuperheroID: function (name) {
+    console.log("name", name);
+    console.log(apicv_key)
+    return axios.get(
+      `https://cors-anywhere.herokuapp.com/https://comicvine.gamespot.com/api/characters/?api_key=${apicv_key}&format=json&filter=name:${name}`
+    )
+  },
+  getMoreInfo: function (sh_id) {
+    console.log("getMoreInfo", sh_id);
+    return axios.get(
+      `https://cors-anywhere.herokuapp.com/https://comicvine.gamespot.com/api/character/4005-${sh_id}/?api_key=${apicv_key}&format=json`
+    )
+  },
   getSuperhero: function (name) {
     console.log("name", name);
     console.log(

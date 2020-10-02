@@ -25,6 +25,7 @@ function SearchPage(props) {
   const [results, setResults] = useState({
     results: [],
     characters: [],
+    moreInfo: []
   });
 
   // Sets default state to display content is loading
@@ -118,13 +119,73 @@ function SearchPage(props) {
           };
         });
         console.log("character: ", character);
-        setResults({
-          results: res.data.results,
-          characters: character,
-        });
+        API.getSuperheroID(searchName)
+        .then((res2) => {
+          console.log(res2.data.results[0].id)
+          API.getMoreInfo(res2.data.results[0].id)
+          .then((res3) => {
+          console.log("res3:", res3);
+          setResults({
+            results: res.data.results,
+            characters: character,
+            moreInfo: res3.data.results
+          });
+        })
+      })
+
+        
+        
       })
       .catch(console.error);
   }
+
+  
+    // const superHeroID = res2.data.results.map((superHeroID) => {
+  //     return {
+  //       id: superHeroID.id,
+  //       // if(superHeroID.id.length === 3, superHeroID.id = "0" + superHeroID.id
+  //       // else(superheroID.id = superHeroID.id)
+  // }
+    // })
+// })
+
+// const superHeroID = res3.data.results.map((moreInfo) => {
+// setResults({
+// results3: res3.data.results,
+// moreInfo: moreInfo,
+
+//         API.getSuperheroID(searchName)
+//           .then((res2) => {
+//             console.log("res2:", res2);
+//             const superHeroID = res2.data.results.map((superHeroID) => {
+//               return {
+//                 id: superHeroID.id;
+//                 // if(superHeroID.id.length === 3, superHeroID.id = "0" + superHeroID.id
+//                 // else(superheroID.id = superHeroID.id)
+//           }
+//             })
+//   }
+// )
+
+// })
+// }
+// )
+// })
+// })
+// API.getMoreInfo(superHeroID.id)
+//   .then((res3) => {
+//     console.log("res3:", res3);
+//     const superHeroID = res3.data.results.map((moreInfo) => {
+//       setResults({
+//         results3: res3.data.results,
+//         moreInfo: moreInfo,
+
+//   })
+// }
+// )
+// })
+
+
   return (
     <div>
       <div id="apppage">
