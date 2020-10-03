@@ -35,10 +35,10 @@ const Navbar = () => {
   const { heroContext, setHeroContext } = useContext(HeroContext);
 
   const handleTogglerClick = () => {
-    setCollapsed((prevState) => ({
-      // collapsed: !prevState.collapsed,
-      collapsed: (prevState.collapsed !== collapsed ? collapsed : '')
-    }));
+    // setCollapsed((prevState) => ({
+    //   collapsed: !prevState.collapsed,
+    // }));
+    setCollapsed(!collapsed);
   };
 
   // sets authentication and username back to false and empty string for next user to login and hits route to back end to hit a req.logout

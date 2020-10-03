@@ -9,6 +9,8 @@ import SignUp from "./pages/SignUp/index";
 import AuthenticationContext from "./context/authenticationContext";
 import UsernameContext from "./context/usernameContext";
 import HeroContext from "./context/heroContext";
+import FightPageHeroContext from "./context/fightPageHeroContext";
+import FightPageVillainContext from "./context/fightPageVillainContext"
 import Search from "./pages/Search/Search";
 import Universe from "./pages/Universe"
 
@@ -48,7 +50,7 @@ function App() {
       <AuthenticationContext.Provider value={isAuthenticatedValue}>
         <UsernameContext.Provider value={usernameValue}>
 
-   <Navbar />
+          <Navbar />
           <HeroContext.Provider value={heroValue}>
             <Navbar />
             <Switch>

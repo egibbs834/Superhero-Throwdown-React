@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { useContext, Fragment } from "react";
 import { Route} from "react-router-dom";
 import {
   MDBView,
@@ -18,8 +18,14 @@ import {
   MDBLink
 } from "mdbreact";
 import "./style.css";
+import HeroContext from "../../context/heroContext";
+
+
+
 export default function UniverseCardFront({ character, increment }) {
-  console.log("(UniverseCardFront) props: ", character);
+
+  const { heroContext, setHeroContext } = useContext(HeroContext);
+  // console.log("(UniverseCardFront) props: ", character);
   // creates the colors in the dropdown menu in our card
   function statBarColor(value) {
     if (value <= 50) {
@@ -35,6 +41,10 @@ export default function UniverseCardFront({ character, increment }) {
 
   // redirects the user to the fight page on button click
   function handleFight() {
+    console.log("(UniverseCardFront) HeroContext: ", heroContext)
+    console.log(`sending ${character.name} to fight!`)
+    setHeroContext(character);
+    
     console.log("Launching Fight Page");
   // setUsername("");
     // setHeroContext({});
