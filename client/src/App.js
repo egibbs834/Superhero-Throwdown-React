@@ -10,6 +10,8 @@ import AuthenticationContext from "./context/authenticationContext";
 import UsernameContext from "./context/usernameContext";
 import HeroContext from "./context/heroContext";
 import Search from "./pages/Search/Search";
+import Universe from "./pages/Universe"
+
 
 const dotenv = require("dotenv").config();
 
@@ -45,6 +47,8 @@ function App() {
     <Router>
       <AuthenticationContext.Provider value={isAuthenticatedValue}>
         <UsernameContext.Provider value={usernameValue}>
+
+   <Navbar />
           <HeroContext.Provider value={heroValue}>
             <Navbar />
             <Switch>
@@ -55,6 +59,7 @@ function App() {
                     path="/search"
                     render={(props) => <Search {...props} />}
                   />
+                  <Route exact path="/universe" component={Universe} />
                   <Route exact path="/fight" component={Fight} />
                 </Fragment>
               ) : (
