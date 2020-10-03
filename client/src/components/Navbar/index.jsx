@@ -18,6 +18,7 @@ import {
 import "./index.css";
 import AuthenticationContext from "../../context/authenticationContext";
 import UsernameContext from "../../context/usernameContext";
+import HeroContext from "../../context/heroContext";
 import API from "../../utils/API";
 // useContext
 
@@ -31,6 +32,8 @@ const Navbar = () => {
   const { username, setUsername } = useContext(UsernameContext);
   console.log("(Navbar) username: ", username);
 
+  const { heroContext, setHeroContext } = useContext(HeroContext);
+
   const handleTogglerClick = () => {
     setCollapsed((prevState) => ({
       collapsed: !prevState.collapsed,
@@ -41,6 +44,7 @@ const Navbar = () => {
   function handleLogout() {
     setIsAuthenticated(false);
     setUsername("");
+    setHeroContext({});
     API.handleLogout()
       .then((res) => {
         console.log("user logged out");
