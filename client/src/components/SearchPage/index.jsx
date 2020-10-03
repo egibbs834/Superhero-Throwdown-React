@@ -8,7 +8,6 @@ import {
   MDBContainer,
   MDBAnimation,
   MDBCard,
-  MDBCardBody,
   MDBJumbotron,
 } from "mdbreact";
 import LoadingSpinner from "../LoadSpinner";
@@ -122,6 +121,10 @@ function SearchPage(props) {
             speed: parseInt(character.powerstats.speed),
             strength: parseInt(character.powerstats.strength),
             powerStats: character.powerstats,
+            appearance: character.appearance,
+            biography: character.biography,
+            connections: character.connections,
+            work: character.work,
           };
         });
         console.log("character: ", character);
@@ -178,11 +181,13 @@ function SearchPage(props) {
       </div>
       <MDBRow className="justify-content-center mt-2">
         <MDBAnimation type="fadeInRight" delay=".3s">
-          <MDBCard className="bg-secondary text-white">
-            <MDBCardBody>
-              <h1>Searched Comic Book Characters</h1>
-            </MDBCardBody>
-          </MDBCard>
+          <MDBBtn
+            className="text-white text-center"
+            color="secondary"
+            style={{ width: "100%", height: "100%" }}
+          >
+            <h1>Searched Comic Book Characters</h1>
+          </MDBBtn>
         </MDBAnimation>
       </MDBRow>
       <MDBContainer fluid className="justify-content-center">
@@ -202,9 +207,11 @@ function SearchPage(props) {
       </MDBContainer>
       {Object.keys(heroContext).length > 0 && (
         <MDBContainer fluid className="justify-content-center">
-          <MDBJumbotron>
-            <MDBRow className="justify-content-center" id="chart">
-              <HeroChart results={results.results} />
+          <MDBJumbotron id="chart">
+            <MDBRow className="justify-content-center">
+              <MDBCard style={{ width: "100%", height: "100%" }}>
+                <HeroChart />
+              </MDBCard>
             </MDBRow>
           </MDBJumbotron>
         </MDBContainer>

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useMemo } from "react";
+import React, { useContext } from "react";
 import {
   MDBView,
   MDBBtn,
@@ -13,10 +13,10 @@ import {
   MDBDropdownToggle,
   MDBDropdownMenu,
   MDBDropdownItem,
+  MDBContainer,
 } from "mdbreact";
 import "./index.css";
 
-import AuthenticationContext from "../../context/authenticationContext";
 import UsernameContext from "../../context/usernameContext";
 import HeroContext from "../../context/heroContext";
 import AddHeroModal from "../Modal/index";
@@ -24,7 +24,6 @@ import AddHeroModal from "../Modal/index";
 const ResultCard = (props) => {
   console.log("(ResultCard) props: ", props);
 
-  const { isAuthenticated } = useContext(AuthenticationContext);
   const { username } = useContext(UsernameContext);
   const { heroContext, setHeroContext } = useContext(HeroContext);
   console.log("heroContext: ", heroContext);
@@ -66,7 +65,7 @@ const ResultCard = (props) => {
                   />
                   <MDBCardBody
                     style={{
-                      height: "24rem",
+                      height: "28rem",
                       padding: "none",
                       textTransform: "capitalize",
                     }}
@@ -75,7 +74,7 @@ const ResultCard = (props) => {
                       <strong>{character.name}</strong>
                     </MDBCardTitle>
                     <hr></hr>
-                    <div fluid style={{ height: "10rem" }}>
+                    <div fluid style={{ height: "11rem" }}>
                       <MDBCardText className="marginBtm mt-0">
                         <strong>
                           Tier Ranking:{" "}
@@ -167,15 +166,19 @@ const ResultCard = (props) => {
                     </MDBDropdown>
                     <div className="row">
                       <AddHeroModal character={character} username={username} />
-                      <MDBBtn
-                        className="mr-auto"
-                        color="white"
-                        size="sm"
-                        onClick={() => handleMoreInfo(character)}
-                        href="#chart"
-                      >
-                        More Info
-                      </MDBBtn>
+                    </div>
+                    <div className="row">
+                      <MDBContainer>
+                        <MDBBtn
+                          className="text-white"
+                          color="secondary"
+                          size="sm"
+                          onClick={() => handleMoreInfo(character)}
+                          href="#chart"
+                        >
+                          More Info
+                        </MDBBtn>
+                      </MDBContainer>
                     </div>
                   </MDBCardBody>
                 </MDBCard>
