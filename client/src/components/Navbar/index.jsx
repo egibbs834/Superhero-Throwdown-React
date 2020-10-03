@@ -36,7 +36,8 @@ const Navbar = () => {
 
   const handleTogglerClick = () => {
     setCollapsed((prevState) => ({
-      collapsed: !prevState.collapsed,
+      // collapsed: !prevState.collapsed,
+      collapsed: (prevState.collapsed !== collapsed ? collapsed : '')
     }));
   };
 
