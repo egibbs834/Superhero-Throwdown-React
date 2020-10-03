@@ -3,19 +3,25 @@ import { MDBCol, MDBRow, MDBContainer, MDBCard, MDBView, MDBMask } from "mdbreac
 import Jumbotron from "../../components/Jumbotron"
 import "./style.css"
 import parallaxImg from "./images/orangeNebula.jpg"
-import HeroContext from "../../context/heroContext";
+import FightPageHeroContext from "../../context/fightPageHeroContext";
+import FightPageVillainContext from "../../context/fightPageVillainContext"
 
 
 function Fight() {
 
     const [isLoading, setIsLoading] = useState(true);
-    const { heroContext, setHeroContext } = useContext(HeroContext);
+    const {fightPageHeroContext, setFightPageHeroContext} = useContext(FightPageHeroContext);
+    const {fightPageVillainContext, setFightPageVillainContext} = useContext(FightPageVillainContext);
+
 
     useEffect(() => {
-        const fightPageHero = heroContext;
-        setHeroContext({});
+        const fightPageHero = fightPageHeroContext;
+        const fightPageVillain = fightPageVillainContext;
+
         console.log("Welcome to the fight page");
-        console.log("(FightPage) heroContext: ", fightPageHero)
+        console.log("(FightPage) fightPageHeroContext: ", fightPageHero)
+        console.log("(FightPage) fightPageVillainContext: ", fightPageVillain)
+
 
       }, []);
 

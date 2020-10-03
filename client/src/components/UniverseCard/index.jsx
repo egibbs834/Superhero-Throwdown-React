@@ -37,8 +37,8 @@ import UniverseCardFront from "../UniverseCardFront";
             <MDBRow className="justify-content-center align-items-center  mx-5" id="rowWrapper">
             {props.characters.map((character, i) => {
                 return (
-                    <MDBCol className = "mt-5">
-                        <UniverseCardFront character={character} increment={i} />
+                    <MDBCol className = "mt-5" key={i}>
+                        <UniverseCardFront character={character} />
 
                         {/* <a.div className="c front"  onClick={() => set(state => !state)} style={{ opacity: opacity.interpolate(o => 1 - o), transform }}>
                         Front Card component here

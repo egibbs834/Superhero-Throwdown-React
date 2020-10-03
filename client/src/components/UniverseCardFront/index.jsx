@@ -18,13 +18,14 @@ import {
   MDBLink
 } from "mdbreact";
 import "./style.css";
-import HeroContext from "../../context/heroContext";
+import FightPageHeroContext from "../../context/fightPageHeroContext";
 
 
 
 export default function UniverseCardFront({ character, increment }) {
 
-  const { heroContext, setHeroContext } = useContext(HeroContext);
+  const {fightPageHeroContext, setFightPageHeroContext} = useContext(FightPageHeroContext);
+
   // console.log("(UniverseCardFront) props: ", character);
   // creates the colors in the dropdown menu in our card
   function statBarColor(value) {
@@ -41,9 +42,9 @@ export default function UniverseCardFront({ character, increment }) {
 
   // redirects the user to the fight page on button click
   function handleFight() {
-    console.log("(UniverseCardFront) HeroContext: ", heroContext)
+    console.log("(UniverseCardFront) FightPageHeroContext: ", fightPageHeroContext)
     console.log(`sending ${character.name} to fight!`)
-    setHeroContext(character);
+    setFightPageHeroContext(character);
     
     console.log("Launching Fight Page");
   // setUsername("");
@@ -57,7 +58,7 @@ export default function UniverseCardFront({ character, increment }) {
 
   return (
     <Fragment>
-      <MDBView hover zoom key={increment}>
+      <MDBView hover zoom>
         <MDBCard style={{ width: "17rem" }} className="m-2">
           <MDBCardImage
             className="img-thumbnail"
@@ -79,7 +80,7 @@ export default function UniverseCardFront({ character, increment }) {
               <strong>{character.name}</strong>
             </MDBCardTitle>
             <hr></hr>
-            <div fluid style={{ height: "10rem" }}>
+            <div style={{ height: "10rem" }}>
               <MDBCardText className="marginBtm mt-0">
                 <strong>
                   Tier Ranking:{" "}
