@@ -1,4 +1,4 @@
-import React, { useContext, useState, useMemo } from "react";
+import React, { useContext, useState, useMemo, useEffect } from "react";
 import {
   MDBView,
   MDBBtn,
@@ -23,15 +23,14 @@ import AddHeroModal from "../Modal/index";
 
 const ResultCard = (props) => {
   console.log("(ResultCard) props: ", props);
-
-  const[moreInfo,setMoreInfo] = useState(null)
+  const[moreInfo,setMoreInfo] = useState(null);
 
   const { isAuthenticated } = useContext(AuthenticationContext);
   console.log("isAuthenticated: ", isAuthenticated);
 
   const { username } = useContext(UsernameContext);
   console.log("username: ", username);
-
+    
   // creates the colors in the dropdown menu in our card
   function statBarColor(value) {
     if (value <= 50) {
@@ -44,17 +43,21 @@ const ResultCard = (props) => {
       return;
     }
   }
-function getMoreInfo(name){
+
+function getMoreInfo(name, i){
   API.getSuperheroID(name)
         .then((res2) => {
-          console.log(res2.data.results[0].id)
-          API.getMoreInfo(res2.data.results[0].id)
+          const match = res2.data.results.filter(character=>character.name.length === name.length)
+          console.log(match)
+          API.getMoreInfo(match[0].id)
           .then((res3) => {
           console.log("res3:", res3);
           setMoreInfo(res3.data.results);
-        })
+        
       })
+    })
 }
+
 moreInfo && console.log(moreInfo)
   return (
     <MDBCol className="justify-content-center align-items-center text-center container-fluid">
@@ -178,11 +181,11 @@ moreInfo && console.log(moreInfo)
                     </MDBDropdown>
                     <div className="row">
                       <AddHeroModal character={character} username={username} />
-                      <MDBBtn onClick = {()=>getMoreInfo(character.name)} className="mr-auto" color="white" size="sm">
+                      <MDBBtn onClick = {()=>getMoreInfo(character.name, i)} className="mr-auto" color="white" size="sm">
                         More Info
                       </MDBBtn>
                     </div>
-                    {moreInfo && <h5>Enemies</h5>}
+                    {moreInfo && <h5>Real Name</h5>}
                       {moreInfo && moreInfo.character_enemies.slice(0,4).map(enemy =>(
                         <p>{enemy.name}
                         </p>
