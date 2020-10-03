@@ -1,4 +1,4 @@
-import React, { useContext, useState, useMemo } from "react";
+import React, { useContext } from "react";
 import {
   MDBView,
   MDBBtn,
@@ -13,22 +13,20 @@ import {
   MDBDropdownToggle,
   MDBDropdownMenu,
   MDBDropdownItem,
+  MDBContainer,
 } from "mdbreact";
 import "./index.css";
 
-import API from "../../utils/API";
-import AuthenticationContext from "../../context/authenticationContext";
 import UsernameContext from "../../context/usernameContext";
+import HeroContext from "../../context/heroContext";
 import AddHeroModal from "../Modal/index";
 
 const ResultCard = (props) => {
   console.log("(ResultCard) props: ", props);
 
-  const { isAuthenticated } = useContext(AuthenticationContext);
-  console.log("isAuthenticated: ", isAuthenticated);
-
   const { username } = useContext(UsernameContext);
-  console.log("username: ", username);
+  const { heroContext, setHeroContext } = useContext(HeroContext);
+  console.log("heroContext: ", heroContext);
 
   // creates the colors in the dropdown menu in our card
   function statBarColor(value) {
@@ -42,7 +40,10 @@ const ResultCard = (props) => {
       return;
     }
   }
-
+  function handleMoreInfo(character) {
+    console.log({ character });
+    setHeroContext(character);
+  }
   return (
     <MDBCol className="justify-content-center align-items-center text-center container-fluid">
       {props.errorMessage ? (
@@ -64,7 +65,7 @@ const ResultCard = (props) => {
                   />
                   <MDBCardBody
                     style={{
-                      height: "24rem",
+                      height: "28rem",
                       padding: "none",
                       textTransform: "capitalize",
                     }}
@@ -73,7 +74,7 @@ const ResultCard = (props) => {
                       <strong>{character.name}</strong>
                     </MDBCardTitle>
                     <hr></hr>
-                    <div fluid style={{ height: "10rem" }}>
+                    <div fluid style={{ height: "11rem" }}>
                       <MDBCardText className="marginBtm mt-0">
                         <strong>
                           Tier Ranking:{" "}
@@ -165,9 +166,19 @@ const ResultCard = (props) => {
                     </MDBDropdown>
                     <div className="row">
                       <AddHeroModal character={character} username={username} />
-                      {/* <MDBBtn className="mr-auto" color="white" size="sm">
-                        More Info
-                      </MDBBtn> */}
+                    </div>
+                    <div className="row">
+                      <MDBContainer>
+                        <MDBBtn
+                          className="text-white"
+                          color="secondary"
+                          size="sm"
+                          onClick={() => handleMoreInfo(character)}
+                          href="#chart"
+                        >
+                          More Info
+                        </MDBBtn>
+                      </MDBContainer>
                     </div>
                   </MDBCardBody>
                 </MDBCard>
