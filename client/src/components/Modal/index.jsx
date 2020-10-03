@@ -4,12 +4,11 @@ import {
   MDBBtn,
   MDBModal,
   MDBModalBody,
-  MDBCol,
-  MDBRow,
   MDBModalHeader,
   MDBModalFooter,
   MDBIcon,
 } from "mdbreact";
+
 import API from "../../utils/API";
 
 function AddHeroModal(props) {
@@ -52,7 +51,7 @@ function AddHeroModal(props) {
         className="text-white"
         size="sm"
         centered
-        backdrop={false}
+        backdrop={true}
         isOpen={state.modal6}
         toggle={toggle(6)}
       >

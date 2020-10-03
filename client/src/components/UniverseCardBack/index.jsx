@@ -1,35 +1,27 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
-  MDBView,
-  MDBBtn,
-  MDBCard,
-  MDBCardBody,
-  MDBCardImage,
-  MDBCardTitle,
-  MDBCardText,
-  MDBCol,
-  MDBProgress,
-  MDBDropdown,
-  MDBDropdownToggle,
-  MDBDropdownMenu,
-  MDBDropdownItem,
-  MDBContainer,
-} from "mdbreact";
-import "./index.css";
+    MDBView,
+    MDBBtn,
+    MDBCard,
+    MDBCardBody,
+    MDBCardImage,
+    MDBCardTitle,
+    MDBCardText,
+    MDBCol,
+    MDBRow,
+    MDBProgress,
+    MDBDropdown,
+    MDBDropdownToggle,
+    MDBDropdownMenu,
+    MDBDropdownItem,
+  } from "mdbreact";
+  import "./style.css"
 
-import UsernameContext from "../../context/usernameContext";
-import HeroContext from "../../context/heroContext";
-import AddHeroModal from "../Modal/index";
+export default function UniverseCardBack(props) {
 
-const ResultCard = (props) => {
-  console.log("(ResultCard) props: ", props);
-
-  const { username } = useContext(UsernameContext);
-  const { heroContext, setHeroContext } = useContext(HeroContext);
-  console.log("heroContext: ", heroContext);
-
-  // creates the colors in the dropdown menu in our card
-  function statBarColor(value) {
+    console.log("(UniverseCardBack) props: ", props);
+    // creates the colors in the dropdown menu in our card
+    function statBarColor(value) {
     if (value <= 50) {
       return "warning";
     } else if (value > 50 && value <= 75) {
@@ -40,23 +32,17 @@ const ResultCard = (props) => {
       return;
     }
   }
-  function handleMoreInfo(character) {
-    console.log({ character });
-    setHeroContext(character);
-  }
+
   return (
-    <MDBCol className="justify-content-center align-items-center text-center container-fluid">
-      {props.errorMessage ? (
-        <div className="alert alert-danger">{`${props.errorMessage}`}</div>
-      ) : props.characters.length ? (
-        <div className="row justify-content-center align-items-center container-fluid">
-          {props.characters.map((character, i) => {
-            return (
+        // <MDBRow className="justify-content-center align-items-center row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 mx-5" id="rowWrapper">
+          // {props.characters.characters.map((character, i) => {
+            // return (
+            <MDBCol className="mt-5">
               <MDBView hover zoom key={i}>
-                <MDBCard style={{ width: "16rem" }} className="m-2">
+                <MDBCard style={{ maxWidth: "100%" }} className="m-2">
                   <MDBCardImage
                     className="img-thumbnail"
-                    src={character.img}
+                    src={character.img_url}
                     style={{
                       width: "100%",
                       maxHeight: "338px",
@@ -65,7 +51,7 @@ const ResultCard = (props) => {
                   />
                   <MDBCardBody
                     style={{
-                      height: "28rem",
+                      maxHeight: "24rem",
                       padding: "none",
                       textTransform: "capitalize",
                     }}
@@ -74,15 +60,15 @@ const ResultCard = (props) => {
                       <strong>{character.name}</strong>
                     </MDBCardTitle>
                     <hr></hr>
-                    <div fluid style={{ height: "11rem" }}>
+                    <div fluid style={{ height: "10rem" }}>
                       <MDBCardText className="marginBtm mt-0">
                         <strong>
                           Tier Ranking:{" "}
-                          <span className="myColor">{character.tierList}</span>{" "}
+                          <span className="myColor">{character.tier_list}</span>{" "}
                         </strong>
                       </MDBCardText>
                       <MDBCardText>
-                        <strong>Total Power: {character.totalPower}</strong>{" "}
+                        <strong>Total Power: {character.total_power}</strong>{" "}
                       </MDBCardText>
                       <MDBCardText className="marginBtm">
                         Alignment: {character.alignment}
@@ -164,32 +150,19 @@ const ResultCard = (props) => {
                         </MDBDropdownItem>
                       </MDBDropdownMenu>
                     </MDBDropdown>
-                    <div className="row">
-                      <AddHeroModal character={character} username={username} />
-                    </div>
-                    <div className="row">
-                      <MDBContainer>
-                        <MDBBtn
-                          className="text-white"
-                          color="secondary"
-                          size="sm"
-                          onClick={() => handleMoreInfo(character)}
-                          href="#chart"
-                        >
-                          More Info
+                    <MDBRow>
+                      <MDBCol className="text-center">
+                        <MDBBtn className="mb-1" color="danger" size="sm">
+                          FIGHT!
                         </MDBBtn>
-                      </MDBContainer>
-                    </div>
+                      </MDBCol>
+                    </MDBRow>
                   </MDBCardBody>
                 </MDBCard>
               </MDBView>
+              </MDBCol>
             );
-          })}
-        </div>
-      ) : (
-        <h3>No Searches Yet</h3>
-      )}
-    </MDBCol>
-  );
-};
-export default ResultCard;
+          // })}
+          // </MDBRow>
+  // )
+}
