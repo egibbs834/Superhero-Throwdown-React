@@ -24,9 +24,9 @@ export default function FightPageHeroCard({ hero }) {
 
   console.log("(FightPageHeroCard) hero: ", hero)
   const totalHeroHealth = hero.strength + hero.speed + hero.durability;
-  const heroAttack = hero.intelligence + hero.power + hero.combat;
+  const heroAttackPower = hero.intelligence + hero.power + hero.combat;
   console.log("totalHeroHealth: ", totalHeroHealth);
-  console.log("heroAttack: ", heroAttack);
+  console.log("heroAttackPower: ", heroAttackPower);
   var currentHeroHealth = totalHeroHealth;
   var lastAttack = 10;
   currentHeroHealth = currentHeroHealth - lastAttack;

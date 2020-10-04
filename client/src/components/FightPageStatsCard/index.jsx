@@ -65,13 +65,10 @@ export default function FightPageStatsCard({ villain }) {
             </MDBCardTitle>
             <hr></hr>
             <div style={{ height: "10rem" }}>
-              {/* <MDBCardText className="marginBtm mt-0">
-                <strong>
-                  Tier Ranking:{" "}
-                  <span className="myColor">{villain.tier_list}</span>{" "}
-                </strong>
+               <MDBCardText className="marginBtm mt-0">
+                Fight instructions here
               </MDBCardText>
-              <MDBCardText>
+             {/* <MDBCardText>
                 <strong>Total Power: {villain.total_power}</strong>{" "}
               </MDBCardText>
               <MDBCardText className="marginBtm">

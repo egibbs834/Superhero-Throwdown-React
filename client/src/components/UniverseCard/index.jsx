@@ -40,9 +40,8 @@ import UniverseCardFront from "../UniverseCardFront";
                     <MDBCol className = "mt-5" key={i}>
                         <UniverseCardFront character={character} />
 
-                        {/* <a.div className="c front"  onClick={() => set(state => !state)} style={{ opacity: opacity.interpolate(o => 1 - o), transform }}>
-                        Front Card component here
-                            <UniverseCardFront character={character} increment={i}/>
+                        {/* <a.div  onClick={() => set(state => !state)} style={{ opacity: opacity.interpolate(o => 1 - o), transform }}>
+                            <UniverseCardFront character={character}/>
                         </a.div> */}
                         {/* <a.div className="c back" style={{ opacity, transform: transform.interpolate(t => `${t} rotateY(180deg)`) }}>
                             Back Card component here 
