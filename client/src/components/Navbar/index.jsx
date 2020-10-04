@@ -23,7 +23,9 @@ import API from "../../utils/API";
 // useContext
 
 const Navbar = () => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState({
+    collapsed: false,
+  });
   console.log("collapsed: ", collapsed);
   const { isAuthenticated, setIsAuthenticated } = useContext(
     AuthenticationContext
@@ -39,6 +41,7 @@ const Navbar = () => {
       collapsed: !prevState.collapsed,
     }));
   };
+  // hello
 
   // sets authentication and username back to false and empty string for next user to login and hits route to back end to hit a req.logout
   function handleLogout() {
@@ -52,6 +55,10 @@ const Navbar = () => {
       .catch(console.error);
   }
 
+  function handleHeroContext() {
+    setHeroContext({});
+  }
+  // hello
   const overlay = (
     <div
       id="sidenav-overlay"
@@ -80,7 +87,9 @@ const Navbar = () => {
               {isAuthenticated && (
                 <Fragment>
                   <MDBNavItem>
-                    <MDBLink to="/search">Search</MDBLink>
+                    <MDBLink to="/search" onClick={handleHeroContext}>
+                      Search
+                    </MDBLink>
                   </MDBNavItem>
                   <MDBNavItem>
                     <MDBLink to="/universe">Universe</MDBLink>
@@ -91,7 +100,7 @@ const Navbar = () => {
             <MDBNavbarNav right>
               {isAuthenticated && (
                 <MDBDropdown size="sm" hover>
-                  <MDBDropdownToggle>
+                  <MDBDropdownToggle onClick={handleTogglerClick}>
                     {`${username.toUpperCase()} `}
                     <MDBIcon icon="user"></MDBIcon>
                   </MDBDropdownToggle>
