@@ -55,5 +55,14 @@ module.exports = (app) => {
         }
       }
     );
+  }),
+
+  app.get("/api/universe/:username", (req, res) => {
+    console.log("username in heroRoutes: ", req.params.username);
+    Hero.find({ createdBy: req.params.username } ).then((result) => {
+      console.log("result: ", result)
+      res.send(result);
+    });
+
   });
 };
