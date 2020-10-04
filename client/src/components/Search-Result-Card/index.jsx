@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import API from "../../utils/API";
 import {
   MDBView,
@@ -17,6 +17,7 @@ import {
   MDBContainer,
 } from "mdbreact";
 import "./index.css";
+import { useSpring, animated as a } from 'react-spring';
 
 import UsernameContext from "../../context/usernameContext";
 import HeroContext from "../../context/heroContext";
@@ -29,6 +30,13 @@ const ResultCard = ({character}) => {
   const { username } = useContext(UsernameContext);
   const { heroContext, setHeroContext } = useContext(HeroContext);
   console.log("heroContext: ", heroContext);
+
+  const [flipped, setFlipped] = useState(false)
+  const { transform, opacity } = useSpring({
+    opacity: flipped ? 1 : 0,
+    transform: `perspective(600px) rotateX(${flipped ? 180 : 0}deg)`,
+    config: { mass: 5, tension: 500, friction: 80 }
+  })
 
   // creates the colors in the dropdown menu in our card
   function statBarColor(value) {
@@ -43,7 +51,11 @@ const ResultCard = ({character}) => {
     }
   }
 
-function getMoreInfo(name, i){
+useEffect(()=>{
+  getMoreInfo(character.name)
+},[])
+
+function getMoreInfo(name){
   API.getSuperheroID(name)
         .then((res2) => {
           console.log(res2)
@@ -53,10 +65,10 @@ function getMoreInfo(name, i){
           .then((res3) => {
           console.log("res3:", res3);
           setMoreInfo(res3.data.results);
-        
       })
     })
 }
+
 
 moreInfo && console.log(moreInfo)
   // function handleMoreInfo(character) {
@@ -77,7 +89,6 @@ moreInfo && console.log(moreInfo)
                   />
                   <MDBCardBody
                     style={{
-                      height: "28rem",
                       padding: "none",
                       textTransform: "capitalize",
                     }}
@@ -86,7 +97,16 @@ moreInfo && console.log(moreInfo)
                       <strong>{character.name}</strong>
                     </MDBCardTitle>
                     <hr></hr>
-                    <div fluid style={{ height: "11rem" }}>
+                    <div className="flipCtn">
+                    <a.div className="moreInfoDiv" style={{ opacity, transform: transform.interpolate(t => `${t} rotateX(180deg)`),willChange: "transform, opacity",postion:"absolute" }}>
+                      {moreInfo && <h6>Powers</h6>}
+                      {moreInfo && moreInfo.powers.slice(0,10).map((power, i) =>(
+                        <MDBCardText className="marginBtm mt-0" key={i}>
+                          {power.name}
+                        </MDBCardText>
+                      ))}
+                    </a.div>
+                    <a.div fluid style={{ opacity: opacity.interpolate(o => 1 - o), transform, willChange: "transform, opacity",position: "absolute"  }} onClick={()=>setFlipped(state => !state)}>
                       <MDBCardText className="marginBtm mt-0">
                         <strong>
                           Tier Ranking:{" "}
@@ -111,6 +131,7 @@ moreInfo && console.log(moreInfo)
                       <MDBCardText className="">
                         Publisher: <strong>{character.publisher}</strong>
                       </MDBCardText>
+                    </a.div>
                     </div>
                     <hr></hr>
                     <MDBDropdown className="text-center" size="sm" hover dropup>
@@ -185,19 +206,14 @@ moreInfo && console.log(moreInfo)
                           className="text-white"
                           color="secondary"
                           size="sm"
-                          // onClick={() => handleMoreInfo(character)}
-                          onClick={() => getMoreInfo(character.name)}
+                          onClick={() => setFlipped(state => !state)}
                           href="#chart"
                         >
                           More Info
                         </MDBBtn>
                       </MDBContainer>
                     </div>
-                    {moreInfo && <h5>Real Name</h5>}
-                      {moreInfo && moreInfo.character_enemies.slice(0,4).map((enemy, i) =>(
-                        <p key={i}>{enemy.name}
-                        </p>
-                      ))}
+                    
                   </MDBCardBody>
                 </MDBCard>
               </MDBView>      
