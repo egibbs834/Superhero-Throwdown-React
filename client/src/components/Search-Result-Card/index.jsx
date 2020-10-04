@@ -99,7 +99,14 @@ moreInfo && console.log(moreInfo)
                     <hr></hr>
                     <div className="flipCtn">
                     <a.div className="moreInfoDiv" style={{ opacity, transform: transform.interpolate(t => `${t} rotateX(180deg)`),willChange: "transform, opacity",postion:"absolute" }}>
-                      {moreInfo && <h6>Powers</h6>}
+                      {moreInfo && <h6>Real Name:</h6>}
+                      {moreInfo && 
+                        <MDBCardText className="marginBtm mt-0">
+                          {moreInfo.real_name}
+                        </MDBCardText>
+                      }
+                      <hr></hr>
+                      {moreInfo && <h6>Powers:</h6>}
                       {moreInfo && moreInfo.powers.slice(0,10).map((power, i) =>(
                         <MDBCardText className="marginBtm mt-0" key={i}>
                           {power.name}
