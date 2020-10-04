@@ -23,9 +23,7 @@ import API from "../../utils/API";
 // useContext
 
 const Navbar = () => {
-  const [collapsed, setCollapsed] = useState({
-    collapsed: false,
-  });
+  const [collapsed, setCollapsed] = useState(false);
   console.log("collapsed: ", collapsed);
   const { isAuthenticated, setIsAuthenticated } = useContext(
     AuthenticationContext
@@ -56,10 +54,6 @@ const Navbar = () => {
       .catch(console.error);
   }
 
-  function handleHeroContext() {
-    setHeroContext({});
-  }
-  // hello
   const overlay = (
     <div
       id="sidenav-overlay"
