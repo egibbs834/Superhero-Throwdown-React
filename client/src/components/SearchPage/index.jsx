@@ -19,7 +19,9 @@ import AuthenticationContext from "../../context/authenticationContext";
 import UsernameContext from "../../context/usernameContext";
 import HeroContext from "../../context/heroContext";
 import HeroChart from "../Chart/index";
+import Counter from "../FightBtnClicker/index";
 import FightPageVillainContext from "../../context/fightPageVillainContext"
+
 
 function SearchPage(props) {
   console.log("(SearchPage) props: ", props);
@@ -224,6 +226,11 @@ function SearchPage(props) {
           </MDBJumbotron>
         </MDBContainer>
       )}
+      <MDBContainer>
+        <MDBJumbotron>
+          <Counter />
+        </MDBJumbotron>
+      </MDBContainer>
     </div>
   );
 }

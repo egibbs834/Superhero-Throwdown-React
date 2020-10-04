@@ -66,7 +66,6 @@ function App() {
     <Router>
       <AuthenticationContext.Provider value={isAuthenticatedValue}>
         <UsernameContext.Provider value={usernameValue}>
-          <Navbar />
           <HeroContext.Provider value={heroValue}>
             <FightPageVillainContext.Provider value={fightPageVillainValue}>
               <FightPageHeroContext.Provider value={fightPageHeroValue}>

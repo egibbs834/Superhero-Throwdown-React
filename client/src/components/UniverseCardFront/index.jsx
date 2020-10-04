@@ -39,7 +39,6 @@ export default function UniverseCardFront({ character, increment }) {
       return;
     }
   }
-
   // redirects the user to the fight page on button click
   function handleFight() {
     console.log("(UniverseCardFront) FightPageHeroContext: ", fightPageHeroContext)
