@@ -223,17 +223,17 @@ moreInfo && console.log(moreInfo)
             <AddHeroModal character={character} username={username} />
           </div>
           <div className="row">
-            <MDBContainer>
+            {/* <MDBContainer>
               <MDBBtn
                 className="text-white"
                 color="secondary"
                 size="sm"
-                onClick={() => setFlipped(state => !state)}
+                // onClick={() => setFlipped(state => !state)}
                 href="#chart"
               >
                 More Info
               </MDBBtn>
-            </MDBContainer>
+            </MDBContainer> */}
           </div>
           
         </MDBCardBody>
