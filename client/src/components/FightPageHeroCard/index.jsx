@@ -17,44 +17,34 @@ import {
   MDBDropdownItem,
   MDBLink
 } from "mdbreact";
-import "./style.css";
-import FightPageHeroContext from "../../context/fightPageHeroContext";
+// import "./style.css";
 
 
+export default function FightPageHeroCard({ hero }) {
 
-export default function UniverseCardFront({ character, increment }) {
-
-  const {fightPageHeroContext, setFightPageHeroContext} = useContext(FightPageHeroContext);
-
-  // console.log("(UniverseCardFront) props: ", character);
+  console.log("(FightPageHeroCard) hero: ", hero)
+  const totalHeroHealth = hero.strength + hero.speed + hero.durability;
+  const heroAttack = hero.intelligence + hero.power + hero.combat;
+  console.log("totalHeroHealth: ", totalHeroHealth);
+  console.log("heroAttack: ", heroAttack);
+  var currentHeroHealth = totalHeroHealth;
+  var lastAttack = 10;
+  currentHeroHealth = currentHeroHealth - lastAttack;
+  var healthbarValPercent = Math.floor((currentHeroHealth/totalHeroHealth)*100 )
+  // console.log("(FightPageHeroCard) props: ", hero);
   // creates the colors in the dropdown menu in our card
   function statBarColor(value) {
     if (value <= 50) {
-      return "warning";
-    } else if (value > 50 && value <= 75) {
-      return "success";
-    } else if (value > 75 && value <= 100) {
       return "danger";
+    } else if (value > 50 && value <= 75) {
+      return "warning";
+    } else if (value > 75 && value <= 100) {
+      return "success";
     } else {
       return;
     }
   }
 
-  // redirects the user to the fight page on button click
-  function handleFight() {
-    console.log("(UniverseCardFront) FightPageHeroContext: ", fightPageHeroContext)
-    console.log(`sending ${character.name} to fight!`)
-    setFightPageHeroContext(character);
-    
-    console.log("Launching Fight Page");
-  // setUsername("");
-    // setHeroContext({});
-    // API.handleLogout()
-    //   .then((res) => {
-    //     console.log("user logged out");
-    //   })
-    //   .catch(console.error);
-  }
 
   return (
     <Fragment>
@@ -62,12 +52,12 @@ export default function UniverseCardFront({ character, increment }) {
         <MDBCard style={{ width: "17rem" }} className="m-2">
           <MDBCardImage
             className="img-thumbnail"
-            src={character.img_url}
+            src={hero.img_url}
             style={{
               width: "100%",
               maxHeight: "338px",
             }}
-            alt={`picture of ${character.name}`}
+            alt={`picture of ${hero.name}`}
           />
           <MDBCardBody
             style={{
@@ -77,33 +67,44 @@ export default function UniverseCardFront({ character, increment }) {
             }}
           >
             <MDBCardTitle className="align-text-center myColor">
-              <strong>{character.name}</strong>
+              <strong>{hero.name}</strong>
             </MDBCardTitle>
             <hr></hr>
             <div style={{ height: "10rem" }}>
               <MDBCardText className="marginBtm mt-0">
                 <strong>
                   Tier Ranking:{" "}
-                  <span className="myColor">{character.tier_list}</span>{" "}
+                  <span className="myColor">{hero.tier_list}</span>{" "}
                 </strong>
               </MDBCardText>
               <MDBCardText>
-                <strong>Total Power: {character.total_power}</strong>{" "}
+                <strong>Total Power: {hero.total_power}</strong>{" "}
+              </MDBCardText>
+              {/* <MDBCardText className="marginBtm">
+                Alignment: {hero.alignment}
               </MDBCardText>
               <MDBCardText className="marginBtm">
-                Alignment: {character.alignment}
+                Race: {hero.race}
               </MDBCardText>
               <MDBCardText className="marginBtm">
-                Race: {character.race}
+                Height: {hero.height}
               </MDBCardText>
               <MDBCardText className="marginBtm">
-                Height: {character.height}
-              </MDBCardText>
-              <MDBCardText className="marginBtm">
-                Weight: {character.weight}{" "}
+                Weight: {hero.weight}{" "}
               </MDBCardText>
               <MDBCardText className="">
-                Publisher: <strong>{character.publisher}</strong>
+                Publisher: <strong>{hero.publisher}</strong>
+              </MDBCardText> */}
+              <MDBCardText>
+                Health:
+                <MDBProgress
+                    className="my-2"
+                    material
+                    value={ healthbarValPercent }
+                    color={statBarColor(parseInt(healthbarValPercent))}
+                    animated>
+                    { healthbarValPercent + "%"}   
+                </MDBProgress>
               </MDBCardText>
             </div>
             <hr></hr>
@@ -113,57 +114,57 @@ export default function UniverseCardFront({ character, increment }) {
               </MDBDropdownToggle>
               <MDBDropdownMenu color="secondary" basic>
                 <MDBDropdownItem>
-                  Combat: {character.combat}
+                  Combat: {hero.combat}
                   <MDBProgress
                     className="my-2"
                     material
-                    value={character.combat}
-                    color={statBarColor(parseInt(character.combat))}
+                    value={hero.combat}
+                    color={statBarColor(parseInt(hero.combat))}
                   />
                 </MDBDropdownItem>
                 <MDBDropdownItem>
-                  Durability: {character.durability}
+                  Durability: {hero.durability}
                   <MDBProgress
                     className="my-2"
                     material
-                    value={character.durability}
-                    color={statBarColor(parseInt(character.durability))}
+                    value={hero.durability}
+                    color={statBarColor(parseInt(hero.durability))}
                   />
                 </MDBDropdownItem>
                 <MDBDropdownItem>
-                  Intelligence: {character.intelligence}
+                  Intelligence: {hero.intelligence}
                   <MDBProgress
                     className="my-2"
                     material
-                    value={character.intelligence}
-                    color={statBarColor(parseInt(character.intelligence))}
+                    value={hero.intelligence}
+                    color={statBarColor(parseInt(hero.intelligence))}
                   />
                 </MDBDropdownItem>
                 <MDBDropdownItem>
-                  Power: {character.power}
+                  Power: {hero.power}
                   <MDBProgress
                     className="my-2"
                     material
-                    value={character.power}
-                    color={statBarColor(parseInt(character.power))}
+                    value={hero.power}
+                    color={statBarColor(parseInt(hero.power))}
                   />
                 </MDBDropdownItem>
                 <MDBDropdownItem>
-                  Speed: {character.speed}
+                  Speed: {hero.speed}
                   <MDBProgress
                     className="my-2"
                     material
-                    value={character.speed}
-                    color={statBarColor(parseInt(character.speed))}
+                    value={hero.speed}
+                    color={statBarColor(parseInt(hero.speed))}
                   />
                 </MDBDropdownItem>
                 <MDBDropdownItem>
-                  Strength: {character.strength}
+                  Strength: {hero.strength}
                   <MDBProgress
                     className="my-2"
                     material
-                    value={character.strength}
-                    color={statBarColor(parseInt(character.strength))}
+                    value={hero.strength}
+                    color={statBarColor(parseInt(hero.strength))}
                   />
                 </MDBDropdownItem>
               </MDBDropdownMenu>
@@ -171,7 +172,7 @@ export default function UniverseCardFront({ character, increment }) {
             <MDBRow>
               <MDBCol className="text-center"> 
                 <MDBLink to="/fight">
-                  <MDBBtn className="mb-1" color="danger" size="sm" onClick={handleFight}>
+                  <MDBBtn className="mb-1" color="danger" size="sm" >
                   Fight!</MDBBtn>
                 </MDBLink>  
               </MDBCol>

@@ -17,17 +17,13 @@ import {
   MDBDropdownItem,
   MDBLink
 } from "mdbreact";
-import "./style.css";
-import FightPageHeroContext from "../../context/fightPageHeroContext";
+// import "./style.css";
+import tempImg from "../../pages/Fight/images/conflictEarthImg.jpg"
 
 
 
-export default function UniverseCardFront({ character, increment }) {
+export default function FightPageStatsCard({ villain }) {
 
-  const {fightPageHeroContext, setFightPageHeroContext} = useContext(FightPageHeroContext);
-
-  // console.log("(UniverseCardFront) props: ", character);
-  // creates the colors in the dropdown menu in our card
   function statBarColor(value) {
     if (value <= 50) {
       return "warning";
@@ -40,21 +36,7 @@ export default function UniverseCardFront({ character, increment }) {
     }
   }
 
-  // redirects the user to the fight page on button click
-  function handleFight() {
-    console.log("(UniverseCardFront) FightPageHeroContext: ", fightPageHeroContext)
-    console.log(`sending ${character.name} to fight!`)
-    setFightPageHeroContext(character);
-    
-    console.log("Launching Fight Page");
-  // setUsername("");
-    // setHeroContext({});
-    // API.handleLogout()
-    //   .then((res) => {
-    //     console.log("user logged out");
-    //   })
-    //   .catch(console.error);
-  }
+
 
   return (
     <Fragment>
@@ -62,12 +44,13 @@ export default function UniverseCardFront({ character, increment }) {
         <MDBCard style={{ width: "17rem" }} className="m-2">
           <MDBCardImage
             className="img-thumbnail"
-            src={character.img_url}
+            // src={villain.img_url}
+            src={tempImg}
             style={{
               width: "100%",
               maxHeight: "338px",
             }}
-            alt={`picture of ${character.name}`}
+            // alt={`picture of ${villain.name}`}
           />
           <MDBCardBody
             style={{
@@ -77,101 +60,102 @@ export default function UniverseCardFront({ character, increment }) {
             }}
           >
             <MDBCardTitle className="align-text-center myColor">
-              <strong>{character.name}</strong>
+              {/* <strong>{villain.name}</strong> */}
+              <strong>Temp stats Card</strong>
             </MDBCardTitle>
             <hr></hr>
             <div style={{ height: "10rem" }}>
-              <MDBCardText className="marginBtm mt-0">
+              {/* <MDBCardText className="marginBtm mt-0">
                 <strong>
                   Tier Ranking:{" "}
-                  <span className="myColor">{character.tier_list}</span>{" "}
+                  <span className="myColor">{villain.tier_list}</span>{" "}
                 </strong>
               </MDBCardText>
               <MDBCardText>
-                <strong>Total Power: {character.total_power}</strong>{" "}
+                <strong>Total Power: {villain.total_power}</strong>{" "}
               </MDBCardText>
               <MDBCardText className="marginBtm">
-                Alignment: {character.alignment}
+                Alignment: {villain.alignment}
               </MDBCardText>
               <MDBCardText className="marginBtm">
-                Race: {character.race}
+                Race: {villain.race}
               </MDBCardText>
               <MDBCardText className="marginBtm">
-                Height: {character.height}
+                Height: {villain.height}
               </MDBCardText>
               <MDBCardText className="marginBtm">
-                Weight: {character.weight}{" "}
+                Weight: {villain.weight}{" "}
               </MDBCardText>
               <MDBCardText className="">
-                Publisher: <strong>{character.publisher}</strong>
-              </MDBCardText>
+                Publisher: <strong>{villain.publisher}</strong>
+              </MDBCardText> */}
             </div>
             <hr></hr>
-            <MDBDropdown className="text-center" size="sm" hover dropup>
+            {/* <MDBDropdown className="text-center" size="sm" hover dropup>
               <MDBDropdownToggle color="secondary">
                 Power Stats
               </MDBDropdownToggle>
               <MDBDropdownMenu color="secondary" basic>
                 <MDBDropdownItem>
-                  Combat: {character.combat}
+                  Combat: {villain.combat}
                   <MDBProgress
                     className="my-2"
                     material
-                    value={character.combat}
-                    color={statBarColor(parseInt(character.combat))}
+                    value={villain.combat}
+                    color={statBarColor(parseInt(villain.combat))}
                   />
                 </MDBDropdownItem>
                 <MDBDropdownItem>
-                  Durability: {character.durability}
+                  Durability: {villain.durability}
                   <MDBProgress
                     className="my-2"
                     material
-                    value={character.durability}
-                    color={statBarColor(parseInt(character.durability))}
+                    value={villain.durability}
+                    color={statBarColor(parseInt(villain.durability))}
                   />
                 </MDBDropdownItem>
                 <MDBDropdownItem>
-                  Intelligence: {character.intelligence}
+                  Intelligence: {villain.intelligence}
                   <MDBProgress
                     className="my-2"
                     material
-                    value={character.intelligence}
-                    color={statBarColor(parseInt(character.intelligence))}
+                    value={villain.intelligence}
+                    color={statBarColor(parseInt(villain.intelligence))}
                   />
                 </MDBDropdownItem>
                 <MDBDropdownItem>
-                  Power: {character.power}
+                  Power: {villain.power}
                   <MDBProgress
                     className="my-2"
                     material
-                    value={character.power}
-                    color={statBarColor(parseInt(character.power))}
+                    value={villain.power}
+                    color={statBarColor(parseInt(villain.power))}
                   />
                 </MDBDropdownItem>
                 <MDBDropdownItem>
-                  Speed: {character.speed}
+                  Speed: {villain.speed}
                   <MDBProgress
                     className="my-2"
                     material
-                    value={character.speed}
-                    color={statBarColor(parseInt(character.speed))}
+                    value={villain.speed}
+                    color={statBarColor(parseInt(villain.speed))}
                   />
                 </MDBDropdownItem>
                 <MDBDropdownItem>
-                  Strength: {character.strength}
+                  Strength: {villain.strength}
                   <MDBProgress
                     className="my-2"
                     material
-                    value={character.strength}
-                    color={statBarColor(parseInt(character.strength))}
+                    value={villain.strength}
+                    color={statBarColor(parseInt(villain.strength))}
                   />
                 </MDBDropdownItem>
               </MDBDropdownMenu>
-            </MDBDropdown>
+            </MDBDropdown> */}
             <MDBRow>
               <MDBCol className="text-center"> 
                 <MDBLink to="/fight">
-                  <MDBBtn className="mb-1" color="danger" size="sm" onClick={handleFight}>
+                  <MDBBtn className="mb-1" color="danger" size="sm" >
                   Fight!</MDBBtn>
                 </MDBLink>  
               </MDBCol>

@@ -19,6 +19,7 @@ import AuthenticationContext from "../../context/authenticationContext";
 import UsernameContext from "../../context/usernameContext";
 import HeroContext from "../../context/heroContext";
 import HeroChart from "../Chart/index";
+import FightPageVillainContext from "../../context/fightPageVillainContext"
 
 function SearchPage(props) {
   console.log("(SearchPage) props: ", props);
@@ -32,8 +33,11 @@ function SearchPage(props) {
   // Sets default state to display content is loading
   const [isLoading, setIsLoading] = useState(false);
 
-  const [randomVillain, setRandomVillain] = useState("");
-  console.log("randomVillain: ", randomVillain);
+  const {fightPageVillainContext, setFightPageVillainContext} = useContext(FightPageVillainContext);
+  console.log("fightPageVillainContext: ", fightPageVillainContext);
+
+  // const [randomVillain, setRandomVillain] = useState("");
+  // console.log("randomVillain: ", randomVillain);
 
   const { isAuthenticated } = useContext(AuthenticationContext);
   console.log("isAuthenticated: ", isAuthenticated);
@@ -54,12 +58,16 @@ function SearchPage(props) {
   function getRandomVillain() {
     API.getRandomVillain().then((res) => {
       console.log("res: ", res);
-      setRandomVillain(res);
+      setFightPageVillainContext(res.data[0]);
     });
   }
 
-  if (!randomVillain) {
+
+  // check if there are no keys in our object, meanign we have an empty object
+  console.log("Number of keys in fightPageVillainContext: ", Object.keys(fightPageVillainContext).length);
+  if (Object.keys(fightPageVillainContext).length === 0) {
     getRandomVillain();
+
   }
 
   function tierList(value) {
