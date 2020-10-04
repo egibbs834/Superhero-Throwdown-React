@@ -20,19 +20,26 @@ import {
 // import "./style.css";
 
 
-
 export default function FightPageHeroCard({ hero }) {
 
-
+  console.log("(FightPageHeroCard) hero: ", hero)
+  const totalHeroHealth = hero.strength + hero.speed + hero.durability;
+  const heroAttack = hero.intelligence + hero.power + hero.combat;
+  console.log("totalHeroHealth: ", totalHeroHealth);
+  console.log("heroAttack: ", heroAttack);
+  var currentHeroHealth = totalHeroHealth;
+  var lastAttack = 10;
+  currentHeroHealth = currentHeroHealth - lastAttack;
+  var healthbarValPercent = Math.floor((currentHeroHealth/totalHeroHealth)*100 )
   // console.log("(FightPageHeroCard) props: ", hero);
   // creates the colors in the dropdown menu in our card
   function statBarColor(value) {
     if (value <= 50) {
-      return "warning";
-    } else if (value > 50 && value <= 75) {
-      return "success";
-    } else if (value > 75 && value <= 100) {
       return "danger";
+    } else if (value > 50 && value <= 75) {
+      return "warning";
+    } else if (value > 75 && value <= 100) {
+      return "success";
     } else {
       return;
     }
@@ -73,7 +80,7 @@ export default function FightPageHeroCard({ hero }) {
               <MDBCardText>
                 <strong>Total Power: {hero.total_power}</strong>{" "}
               </MDBCardText>
-              <MDBCardText className="marginBtm">
+              {/* <MDBCardText className="marginBtm">
                 Alignment: {hero.alignment}
               </MDBCardText>
               <MDBCardText className="marginBtm">
@@ -87,6 +94,17 @@ export default function FightPageHeroCard({ hero }) {
               </MDBCardText>
               <MDBCardText className="">
                 Publisher: <strong>{hero.publisher}</strong>
+              </MDBCardText> */}
+              <MDBCardText>
+                Health:
+                <MDBProgress
+                    className="my-2"
+                    material
+                    value={ healthbarValPercent }
+                    color={statBarColor(parseInt(healthbarValPercent))}
+                    animated>
+                    { healthbarValPercent + "%"}   
+                </MDBProgress>
               </MDBCardText>
             </div>
             <hr></hr>
