@@ -128,64 +128,19 @@ function SearchPage(props) {
           };
         });
         console.log("character: ", character);
-        
-          setResults({
-            results: res.data.results,
-            characters: character,
-          });
-        
+
+        setResults({
+          results: res.data.results,
+          characters: character,
+        });
       })
 
       .catch(console.error);
   }
 
   
-    // const superHeroID = res2.data.results.map((superHeroID) => {
-  //     return {
-  //       id: superHeroID.id,
-  //       // if(superHeroID.id.length === 3, superHeroID.id = "0" + superHeroID.id
-  //       // else(superheroID.id = superHeroID.id)
-  // }
-    // })
-// })
 
-// const superHeroID = res3.data.results.map((moreInfo) => {
-// setResults({
-// results3: res3.data.results,
-// moreInfo: moreInfo,
-
-//         API.getSuperheroID(searchName)
-//           .then((res2) => {
-//             console.log("res2:", res2);
-//             const superHeroID = res2.data.results.map((superHeroID) => {
-//               return {
-//                 id: superHeroID.id;
-//                 // if(superHeroID.id.length === 3, superHeroID.id = "0" + superHeroID.id
-//                 // else(superheroID.id = superHeroID.id)
-//           }
-//             })
-//   }
-// )
-
-// })
-// }
-// )
-// })
-// })
-// API.getMoreInfo(superHeroID.id)
-//   .then((res3) => {
-//     console.log("res3:", res3);
-//     const superHeroID = res3.data.results.map((moreInfo) => {
-//       setResults({
-//         results3: res3.data.results,
-//         moreInfo: moreInfo,
-
-//   })
-// }
-// )
-// })
-
-
+  
   return (
     <div>
       <div id="apppage">
@@ -247,11 +202,19 @@ function SearchPage(props) {
             {isLoading ? (
               <LoadingSpinner />
             ) : (
-              <ResultCard
-                characters={results.characters}
-                errorMessage={errorMessage}
-                results={results.results}
-              />
+              <MDBCol className="justify-content-center align-items-center text-center container-fluid">
+                {errorMessage ? (
+                  <div className="alert alert-danger">{`${errorMessage}`}</div>
+                ) : results.characters.length ? (
+                  <div className="row justify-content-center align-items-center container-fluid">
+                    {results.characters.map((character, i) => (
+                      <ResultCard key={i}character={character} results={results.results}/>
+                    ))}
+                  </div>
+                ) : (
+                  <h3>No Searches Yet</h3>
+                )}
+              </MDBCol>
             )}
           </MDBRow>
         </MDBJumbotron>

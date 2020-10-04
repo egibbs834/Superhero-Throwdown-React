@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import API from "../../utils/API";
 import {
   MDBView,
   MDBBtn,
@@ -21,8 +22,8 @@ import UsernameContext from "../../context/usernameContext";
 import HeroContext from "../../context/heroContext";
 import AddHeroModal from "../Modal/index";
 
-const ResultCard = (props) => {
-  console.log("(ResultCard) props: ", props);
+const ResultCard = ({character}) => {
+  console.log("(ResultCard) props: ", character);
   const[moreInfo,setMoreInfo] = useState(null);
 
   const { username } = useContext(UsernameContext);
@@ -45,9 +46,10 @@ const ResultCard = (props) => {
 function getMoreInfo(name, i){
   API.getSuperheroID(name)
         .then((res2) => {
+          console.log(res2)
           const match = res2.data.results.filter(character=>character.name.length === name.length)
           console.log(match)
-          API.getMoreInfo(match[0].id)
+          match.length > 0 && API.getMoreInfo(match[0].id)
           .then((res3) => {
           console.log("res3:", res3);
           setMoreInfo(res3.data.results);
@@ -62,14 +64,7 @@ moreInfo && console.log(moreInfo)
   //   setHeroContext(character);
   // }
   return (
-    <MDBCol className="justify-content-center align-items-center text-center container-fluid">
-      {props.errorMessage ? (
-        <div className="alert alert-danger">{`${props.errorMessage}`}</div>
-      ) : props.characters.length ? (
-        <div className="row justify-content-center align-items-center container-fluid">
-          {props.characters.map((character, i) => {
-            return (
-              <MDBView hover zoom key={i}>
+              <MDBView hover zoom>
                 <MDBCard style={{ width: "16rem" }} className="m-2">
                   <MDBCardImage
                     className="img-thumbnail"
@@ -199,20 +194,13 @@ moreInfo && console.log(moreInfo)
                       </MDBContainer>
                     </div>
                     {moreInfo && <h5>Real Name</h5>}
-                      {moreInfo && moreInfo.character_enemies.slice(0,4).map(enemy =>(
-                        <p>{enemy.name}
+                      {moreInfo && moreInfo.character_enemies.slice(0,4).map((enemy, i) =>(
+                        <p key={i}>{enemy.name}
                         </p>
                       ))}
                   </MDBCardBody>
                 </MDBCard>
-              </MDBView>
-            );
-          })}
-        </div>
-      ) : (
-        <h3>No Searches Yet</h3>
-      )}
-    </MDBCol>
+              </MDBView>      
   );
 };
 export default ResultCard;
