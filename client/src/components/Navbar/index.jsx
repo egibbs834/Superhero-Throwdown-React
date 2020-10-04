@@ -37,9 +37,10 @@ const Navbar = () => {
   const { heroContext, setHeroContext } = useContext(HeroContext);
 
   const handleTogglerClick = () => {
-    setCollapsed((prevState) => ({
-      collapsed: !prevState.collapsed,
-    }));
+    // setCollapsed((prevState) => ({
+    //   collapsed: !prevState.collapsed,
+    // }));
+    setCollapsed(!collapsed);
   };
   // hello
 

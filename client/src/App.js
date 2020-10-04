@@ -9,6 +9,8 @@ import SignUp from "./pages/SignUp/index";
 import AuthenticationContext from "./context/authenticationContext";
 import UsernameContext from "./context/usernameContext";
 import HeroContext from "./context/heroContext";
+import FightPageHeroContext from "./context/fightPageHeroContext";
+import FightPageVillainContext from "./context/fightPageVillainContext";
 import Search from "./pages/Search/Search";
 import Universe from "./pages/Universe";
 
@@ -18,6 +20,24 @@ const dotenv = require("dotenv").config();
 // update context to let the app know you've been signed in
 
 function App() {
+  const [fightPageHeroContext, setFightPageHeroContext] = useState({});
+  const fightPageHeroValue = useMemo(
+    () => ({
+      fightPageHeroContext,
+      setFightPageHeroContext,
+    }),
+    [fightPageHeroContext, setFightPageHeroContext]
+  );
+
+  const [fightPageVillainContext, setFightPageVillainContext] = useState({});
+  const fightPageVillainValue = useMemo(
+    () => ({
+      fightPageVillainContext,
+      setFightPageVillainContext,
+    }),
+    [fightPageVillainContext, setFightPageVillainContext]
+  );
+
   const [heroContext, setHeroContext] = useState({});
   const heroValue = useMemo(
     () => ({
@@ -47,34 +67,38 @@ function App() {
       <AuthenticationContext.Provider value={isAuthenticatedValue}>
         <UsernameContext.Provider value={usernameValue}>
           <HeroContext.Provider value={heroValue}>
-            <Navbar />
-            <Switch>
-              {isAuthenticated ? (
-                <Fragment>
-                  <Route
-                    exact
-                    path="/search"
-                    render={(props) => <Search {...props} />}
-                  />
-                  <Route exact path="/universe" component={Universe} />
-                  <Route exact path="/fight" component={Fight} />
-                </Fragment>
-              ) : (
-                <Fragment>
-                  <Route
-                    exact
-                    path={["/", "/login"]}
-                    render={(props) => <Login {...props} />}
-                  />
-                  <Route
-                    exact
-                    path="/signup"
-                    render={(props) => <SignUp {...props} />}
-                  />
-                </Fragment>
-              )}
-              <Route exact path="*" component={NoMatch} />
-            </Switch>
+            <FightPageVillainContext.Provider value={fightPageVillainValue}>
+              <FightPageHeroContext.Provider value={fightPageHeroValue}>
+                <Navbar />
+                <Switch>
+                  {isAuthenticated ? (
+                    <Fragment>
+                      <Route
+                        exact
+                        path="/search"
+                        render={(props) => <Search {...props} />}
+                      />
+                      <Route exact path="/universe" component={Universe} />
+                      <Route exact path="/fight" component={Fight} />
+                    </Fragment>
+                  ) : (
+                    <Fragment>
+                      <Route
+                        exact
+                        path={["/", "/login"]}
+                        render={(props) => <Login {...props} />}
+                      />
+                      <Route
+                        exact
+                        path="/signup"
+                        render={(props) => <SignUp {...props} />}
+                      />
+                    </Fragment>
+                  )}
+                  <Route exact path="*" component={NoMatch} />
+                </Switch>
+              </FightPageHeroContext.Provider>
+            </FightPageVillainContext.Provider>
           </HeroContext.Provider>
         </UsernameContext.Provider>
       </AuthenticationContext.Provider>

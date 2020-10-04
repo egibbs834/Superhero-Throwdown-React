@@ -22,24 +22,23 @@ import "./style.css";
 import UniverseCardFront from "../UniverseCardFront";
 // import UniverseCardBack from "../UniverseCardBack";
 
-export default function UniverseCard(props) {
-  const [flipped, set] = useState(false);
-  const { transform, opacity } = useSpring({
-    opacity: flipped ? 1 : 0,
-    transform: `perspective(600px) rotateY(${flipped ? 180 : 0}deg)`,
-    config: { mass: 5, tension: 500, friction: 80 },
-  });
-  console.log("universe card props: ", props);
-  return (
-    <div>
-      <MDBRow
-        className="justify-content-center align-items-center"
-        id="rowWrapper"
-      >
-        {props.characters.map((character, i) => {
-          return (
-            <MDBCol className="mt-5 justify-content-center">
-              <UniverseCardFront character={character} increment={i} />
+  export default function UniverseCard(props) {
+    const [flipped, set] = useState(false)
+    const { transform, opacity } = useSpring({
+      opacity: flipped ? 1 : 0,
+      transform: `perspective(600px) rotateY(${flipped ? 180 : 0}deg)`,
+      config: { mass: 5, tension: 500, friction: 80 }
+    })
+    console.log("universe card props: ", props)
+
+
+    return(
+        <div >
+            <MDBRow className="justify-content-center align-items-center  mx-5" id="rowWrapper">
+            {props.characters.map((character, i) => {
+                return (
+                    <MDBCol className = "mt-5" key={i}>
+                        <UniverseCardFront character={character} />
 
               {/* <a.div className="c front"  onClick={() => set(state => !state)} style={{ opacity: opacity.interpolate(o => 1 - o), transform }}>
                         Front Card component here
