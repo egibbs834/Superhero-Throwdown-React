@@ -83,10 +83,7 @@ const Navbar = () => {
                 <Fragment>
                   <MDBNavItem>
                     {/* <MDBLink to="/search" onClick={handleHeroContext}> */}
-                    <MDBLink to="/search">
-
-                      Search
-                    </MDBLink>
+                    <MDBLink to="/search">Search</MDBLink>
                   </MDBNavItem>
                   <MDBNavItem>
                     <MDBLink to="/universe">Universe</MDBLink>
@@ -97,7 +94,7 @@ const Navbar = () => {
             <MDBNavbarNav right>
               {isAuthenticated && (
                 <MDBDropdown size="sm" hover>
-                  <MDBDropdownToggle onClick={handleTogglerClick}>
+                  <MDBDropdownToggle>
                     {`${username.toUpperCase()} `}
                     <MDBIcon icon="user"></MDBIcon>
                   </MDBDropdownToggle>
