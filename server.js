@@ -51,7 +51,6 @@ require("./routes/userRoutes")(app);
 
 // mongoose.connect before linking Mongo Atlas database to deployed heroku app
 
-
 mongoose.connect(
   process.env.MONGODB_URI || "mongodb://localhost/reactsuperhero",
   {
@@ -60,13 +59,11 @@ mongoose.connect(
     useCreateIndex: true,
     useFindAndModify: false,
   }
-);
-
-then(() => {
-console.log("🎯 connected to reactsuperhero mongodb");
-app.listen(PORT, () => {
-  console.log(
-    `🚀 blast off 🚀 =====> app listening on http://localhost:${PORT}`
-  );
-});
+).then(() => {
+  console.log("🎯 connected to reactsuperhero mongodb");
+  app.listen(PORT, () => {
+    console.log(
+      `🚀 blast off 🚀 =====> app listening on http://localhost:${PORT}`
+    );
+  });
 });
