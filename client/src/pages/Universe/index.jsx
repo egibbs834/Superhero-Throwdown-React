@@ -20,7 +20,7 @@ import LoadingSpinner from "../../components/LoadSpinner";
 import { useSpring, animated as a } from "react-spring";
 import UniverseCardFront from "../../components/UniverseCardFront";
 
-export default function Universe() {
+export default function Universe(props) {
   const [heroes, setHeroes] = useState({});
   const { username, setUsername } = useContext(UsernameContext);
   const [isLoading, setIsLoading] = useState(true);
