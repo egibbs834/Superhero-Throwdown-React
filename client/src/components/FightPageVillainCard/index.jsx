@@ -41,9 +41,7 @@ export default function FightPageVillainCard({ villain }) {
     (currentVillainHealth / totalVillainHealth) * 100
   );
 
-  console.log("(FightPageVillainCard) villain: ", villain)
-  const totalVillainHealth = villain.strength + villain.speed + villain.durability;
-  const villainAttackPower = villain.intelligence + villain.power + villain.combat;
+
   console.log("totalVillainHealth: ", totalVillainHealth);
   console.log("villainAttackPower: ", villainAttackPower);
   var currentVillainHealth = totalVillainHealth;
