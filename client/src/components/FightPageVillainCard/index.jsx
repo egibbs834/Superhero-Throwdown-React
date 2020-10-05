@@ -41,15 +41,22 @@ export default function FightPageVillainCard({ villain }) {
     (currentVillainHealth / totalVillainHealth) * 100
   );
 
-  // console.log("(FightPageHeroCard) props: ", villain);
+
+  console.log("totalVillainHealth: ", totalVillainHealth);
+  console.log("villainAttackPower: ", villainAttackPower);
+  var currentVillainHealth = totalVillainHealth;
+  var lastAttack = 10;
+  currentVillainHealth = currentVillainHealth - lastAttack;
+  var healthbarValPercent = Math.floor((currentVillainHealth/totalVillainHealth)*100 )
+  // console.log("(FightPageVillainCard) props: ", Villain);
   // creates the colors in the dropdown menu in our card
   function statBarColor(value) {
     if (value <= 50) {
-      return "warning";
-    } else if (value > 50 && value <= 75) {
-      return "success";
-    } else if (value > 75 && value <= 100) {
       return "danger";
+    } else if (value > 50 && value <= 75) {
+      return "warning";
+    } else if (value > 75 && value <= 100) {
+      return "success";
     } else {
       return;
     }
