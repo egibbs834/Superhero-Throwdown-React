@@ -1,23 +1,23 @@
-import { render } from 'react-dom'
-import React, { useState } from 'react'
-import { useSpring, animated as a } from 'react-spring'
-import "./style.css"
+import { render } from "react-dom";
+import React, { useState } from "react";
+import { useSpring, animated as a } from "react-spring";
+import "./style.css";
 import {
-    MDBView,
-    MDBBtn,
-    MDBCard,
-    MDBCardBody,
-    MDBCardImage,
-    MDBCardTitle,
-    MDBCardText,
-    MDBCol,
-    MDBRow,
-    MDBProgress,
-    MDBDropdown,
-    MDBDropdownToggle,
-    MDBDropdownMenu,
-    MDBDropdownItem,
-  } from "mdbreact";
+  MDBView,
+  MDBBtn,
+  MDBCard,
+  MDBCardBody,
+  MDBCardImage,
+  MDBCardTitle,
+  MDBCardText,
+  MDBCol,
+  MDBRow,
+  MDBProgress,
+  MDBDropdown,
+  MDBDropdownToggle,
+  MDBDropdownMenu,
+  MDBDropdownItem,
+} from "mdbreact";
 import "./style.css";
 import UniverseCardFront from "../UniverseCardFront";
 // import UniverseCardBack from "../UniverseCardBack";
@@ -40,18 +40,18 @@ import UniverseCardFront from "../UniverseCardFront";
                     <MDBCol className = "mt-5" key={i}>
                         <UniverseCardFront character={character} />
 
-                        {/* <a.div className="c front"  onClick={() => set(state => !state)} style={{ opacity: opacity.interpolate(o => 1 - o), transform }}>
+              {/* <a.div className="c front"  onClick={() => set(state => !state)} style={{ opacity: opacity.interpolate(o => 1 - o), transform }}>
                         Front Card component here
                             <UniverseCardFront character={character} increment={i}/>
                         </a.div> */}
-                        {/* <a.div className="c back" style={{ opacity, transform: transform.interpolate(t => `${t} rotateY(180deg)`) }}>
+              {/* <a.div className="c back" style={{ opacity, transform: transform.interpolate(t => `${t} rotateY(180deg)`) }}>
                             Back Card component here 
                              <UniverseCardBack character={character} />
                         </a.div> */}
-                    </MDBCol>
-                )
-             })}
-            </MDBRow>
-        </div> 
-    )
-  }
+            </MDBCol>
+          );
+        })}
+      </MDBRow>
+    </div>
+  );
+}

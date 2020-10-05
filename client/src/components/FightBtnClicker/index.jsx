@@ -13,6 +13,7 @@ function Counter() {
     setTimeout();
   }
 
+
   return (
     <>
       <MDBBtn color="secondary" onClick={handleIncrement}>
