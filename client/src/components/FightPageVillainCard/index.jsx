@@ -1,5 +1,5 @@
-import React, { useContext, Fragment } from "react";
-import { Route} from "react-router-dom";
+import React, { useContext, Fragment, useEffect } from "react";
+import { Route } from "react-router-dom";
 import {
   MDBView,
   MDBBtn,
@@ -15,14 +15,31 @@ import {
   MDBDropdownToggle,
   MDBDropdownMenu,
   MDBDropdownItem,
-  MDBLink
+  MDBLink,
 } from "mdbreact";
 // import "./style.css";
 
-
+import FightPageHeroContext from "../../context/fightPageHeroContext";
+import FightPageVillainContext from "../../context/fightPageVillainContext";
 
 export default function FightPageVillainCard({ villain }) {
+  const { fightPageVillainContext, setFightPageVillainContext } = useContext(
+    FightPageVillainContext
+  );
+  console.log({ fightPageVillainContext });
 
+  console.log("(FightPageVillainCard) villain: ", villain);
+  const totalVillainHealth =
+    villain.strength + villain.speed + villain.durability;
+  const villainAttackPower =
+    villain.intelligence + villain.power + villain.combat;
+
+  var currentVillainHealth = totalVillainHealth;
+  var lastAttack = 10;
+  currentVillainHealth = currentVillainHealth - lastAttack;
+  var healthbarValPercent = Math.floor(
+    (currentVillainHealth / totalVillainHealth) * 100
+  );
 
   console.log("(FightPageVillainCard) villain: ", villain)
   const totalVillainHealth = villain.strength + villain.speed + villain.durability;
@@ -46,12 +63,10 @@ export default function FightPageVillainCard({ villain }) {
       return;
     }
   }
-  
-
 
   return (
     <Fragment>
-      <MDBView hover zoom >
+      <MDBView hover zoom>
         <MDBCard style={{ width: "17rem" }} className="m-2">
           <MDBCardImage
             className="img-thumbnail"
@@ -104,12 +119,13 @@ export default function FightPageVillainCard({ villain }) {
               <MDBCardText>
                 Health:
                 <MDBProgress
-                    className="my-2"
-                    material
-                    value={ healthbarValPercent }
-                    color={statBarColor(parseInt(healthbarValPercent))}
-                    animated>
-                    { healthbarValPercent + "%"}   
+                  className="my-2"
+                  material
+                  value={healthbarValPercent}
+                  color={statBarColor(parseInt(healthbarValPercent))}
+                  animated
+                >
+                  {healthbarValPercent + "%"}
                 </MDBProgress>
               </MDBCardText>
             </div>
@@ -176,7 +192,7 @@ export default function FightPageVillainCard({ villain }) {
               </MDBDropdownMenu>
             </MDBDropdown>
             <MDBRow>
-              <MDBCol className="text-center"> 
+              <MDBCol className="text-center">
                 {/* <MDBLink to="/fight">
                   <MDBBtn className="mb-1" color="danger" size="sm" >
                   Fight!</MDBBtn>
