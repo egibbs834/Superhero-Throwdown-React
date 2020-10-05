@@ -18,6 +18,7 @@ import "./style.css";
 import parallaxImg from "./images/blueVredCloudsNebula.jpg";
 import LoadingSpinner from "../../components/LoadSpinner";
 import { useSpring, animated as a } from "react-spring";
+import UniverseCardFront from "../../components/UniverseCardFront";
 
 export default function Universe(props) {
   const [heroes, setHeroes] = useState({});
@@ -25,12 +26,12 @@ export default function Universe(props) {
   const [isLoading, setIsLoading] = useState(true);
 
   // Handles state for card flips
-  const [flipped, set] = useState(false);
-  const { transform, opacity } = useSpring({
-    opacity: flipped ? 1 : 0,
-    transform: `perspective(600px) rotateY(${flipped ? 180 : 0}deg)`,
-    config: { mass: 5, tension: 500, friction: 80 },
-  });
+  // const [flipped, set] = useState(false);
+  // const { transform, opacity } = useSpring({
+  //   opacity: flipped ? 1 : 0,
+  //   transform: `perspective(600px) rotateY(${flipped ? 180 : 0}deg)`,
+  //   config: { mass: 5, tension: 500, friction: 80 },
+  // });
 
   console.log("Universe username: ", username);
 
@@ -60,7 +61,8 @@ export default function Universe(props) {
       {/* <MDBJumbotron>Welcome to our universe</MDBJumbotron> */}
       <MDBView src={parallaxImg} fixed className="universeBackground">
         <MDBMask overlay="grey-light" className="flex-center"></MDBMask>
-        <MDBContainer fluid className="mt-3">
+
+        <MDBContainer fluid className="mt-3 justify-content-center">
           {isLoading ? (
             <MDBRow>
               <MDBCol className="text-center align-items-center">
@@ -69,7 +71,30 @@ export default function Universe(props) {
             </MDBRow>
           ) : (
             <MDBAnimation type="fadeInDown" delay="1s">
-              <UniverseCard characters={heroes} />
+              <MDBRow
+                className="justify-content-center align-items-center  mx-5"
+                id="rowWrapper"
+              >
+                {heroes.map((character, i) => {
+                  return (
+                    <MDBCol className="mt-5" key={i}>
+                      <UniverseCard character={character} />
+
+                      {/* <a.div
+                        className="c front" style=
+                        {{ opacity: opacity.interpolate((o) => 1 - o),transform }}
+                        >
+                          <MDBView hover zoom>
+                            <MDBCard style={{ width: "17rem" }} className="m-2">
+                              <UniverseCardFront character={character} />
+                              <UniverseCard characters={character} />
+                            </MDBCard>
+                          </MDBView>
+                      </a.div> */}
+                    </MDBCol>
+                  );
+                })}
+              </MDBRow>
             </MDBAnimation>
           )}
         </MDBContainer>

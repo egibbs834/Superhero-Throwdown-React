@@ -60,7 +60,6 @@ mongoose.connect(
     useFindAndModify: false,
   }
 ).then(() => {
-
   console.log("🎯 connected to reactsuperhero mongodb");
   app.listen(PORT, () => {
     console.log(
