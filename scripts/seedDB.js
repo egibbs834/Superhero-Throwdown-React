@@ -149,7 +149,7 @@ const villainSeed = [
     combat: 80,
     total_power: 513,
     alignment: "bad",
-    img_url: "https://www.superherodb.com/pictures2/portraits/10/100/837.jpg",
+    img_url: "https://www.superherodb.com/pictures2/portraits/10/100/1305.jpg",
     date: new Date(Date.now()),
   },
 
@@ -301,7 +301,7 @@ const villainSeed = [
   },
 
   {
-    name: "Apocalyps",
+    name: "Apocalypse",
     hero_id: 35,
     intel: 100,
     strength: 100,
@@ -386,7 +386,7 @@ const villainSeed = [
     date: new Date(Date.now()),
   },
   {
-    name: "Galactu",
+    name: "Galactus",
     hero_id: 273,
     intel: 100,
     strength: 100,
