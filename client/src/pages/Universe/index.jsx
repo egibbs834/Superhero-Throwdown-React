@@ -3,6 +3,8 @@ import {
   MDBContainer,
   MDBCol,
   MDBRow,
+  MDBBtn,
+  MDBIcon,
   MDBCard,
   MDBCardBody,
   MDBCardText,
@@ -11,6 +13,8 @@ import {
   MDBAnimation,
   MDBMask,
 } from "mdbreact";
+
+import FightPageVillainContext from "../../context/fightPageVillainContext";
 import UniverseCard from "../../components/UniverseCard";
 import API from "../../utils/API";
 import UsernameContext from "../../context/usernameContext";
@@ -20,10 +24,11 @@ import LoadingSpinner from "../../components/LoadSpinner";
 import { useSpring, animated as a } from "react-spring";
 import UniverseCardFront from "../../components/UniverseCardFront";
 
-export default function Universe() {
+export default function Universe(props) {
   const [heroes, setHeroes] = useState({});
   const { username, setUsername } = useContext(UsernameContext);
   const [isLoading, setIsLoading] = useState(true);
+  const { fightPageVillainContext } = useContext(FightPageVillainContext);
 
   // Handles state for card flips
   // const [flipped, set] = useState(false);
@@ -71,6 +76,17 @@ export default function Universe() {
             </MDBRow>
           ) : (
             <MDBAnimation type="fadeInDown" delay="1s">
+              <MDBContainer className="marginTop">
+                <MDBRow>
+                  <MDBBtn
+                    className="text-white text-center"
+                    color="secondary"
+                    style={{ width: "100%", height: "50%" }}
+                  >
+                    <MDBCardText className="text-white lead">{`${fightPageVillainContext.name} is still approaching... choose from the heroes you have assembled or go back and do some more research. A warrior can never be too prepared...`}</MDBCardText>
+                  </MDBBtn>
+                </MDBRow>
+              </MDBContainer>
               <MDBRow
                 className="justify-content-center align-items-center  mx-5"
                 id="rowWrapper"

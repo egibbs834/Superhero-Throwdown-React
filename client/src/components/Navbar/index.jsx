@@ -17,6 +17,7 @@ import {
 
 import "./index.css";
 import AuthenticationContext from "../../context/authenticationContext";
+import FightPageVillainContext from "../../context/fightPageVillainContext";
 import UsernameContext from "../../context/usernameContext";
 import HeroContext from "../../context/heroContext";
 import API from "../../utils/API";
@@ -34,6 +35,10 @@ const Navbar = () => {
 
   const { heroContext, setHeroContext } = useContext(HeroContext);
 
+  const { fightPageVillainContext, setFightPageVillainContext } = useContext(
+    FightPageVillainContext
+  );
+
   const handleTogglerClick = () => {
     // setCollapsed((prevState) => ({
     //   collapsed: !prevState.collapsed,
@@ -42,11 +47,16 @@ const Navbar = () => {
   };
   // hello
 
+  function handleHeroContext() {
+    setHeroContext({});
+  }
+
   // sets authentication and username back to false and empty string for next user to login and hits route to back end to hit a req.logout
   function handleLogout() {
     setIsAuthenticated(false);
     setUsername("");
     setHeroContext({});
+    setFightPageVillainContext({});
     API.handleLogout()
       .then((res) => {
         console.log("user logged out");
@@ -83,8 +93,7 @@ const Navbar = () => {
                 <Fragment>
                   <MDBNavItem>
                     {/* <MDBLink to="/search" onClick={handleHeroContext}> */}
-                    <MDBLink to="/search">
-
+                    <MDBLink to="/search" onClick={handleHeroContext}>
                       Search
                     </MDBLink>
                   </MDBNavItem>
@@ -97,7 +106,7 @@ const Navbar = () => {
             <MDBNavbarNav right>
               {isAuthenticated && (
                 <MDBDropdown size="sm" hover>
-                  <MDBDropdownToggle onClick={handleTogglerClick}>
+                  <MDBDropdownToggle>
                     {`${username.toUpperCase()} `}
                     <MDBIcon icon="user"></MDBIcon>
                   </MDBDropdownToggle>
