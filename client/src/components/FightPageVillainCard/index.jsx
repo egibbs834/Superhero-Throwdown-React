@@ -1,5 +1,5 @@
-import React, { useContext, Fragment } from "react";
-import { Route} from "react-router-dom";
+import React, { useContext, Fragment, useEffect } from "react";
+import { Route } from "react-router-dom";
 import {
   MDBView,
   MDBBtn,
@@ -15,35 +15,56 @@ import {
   MDBDropdownToggle,
   MDBDropdownMenu,
   MDBDropdownItem,
-  MDBLink
+  MDBLink,
 } from "mdbreact";
 // import "./style.css";
 
-
+import FightPageHeroContext from "../../context/fightPageHeroContext";
+import FightPageVillainContext from "../../context/fightPageVillainContext";
 
 export default function FightPageVillainCard({ villain }) {
+  const { fightPageVillainContext, setFightPageVillainContext } = useContext(
+    FightPageVillainContext
+  );
+  console.log({ fightPageVillainContext });
+
+  console.log("(FightPageVillainCard) villain: ", villain);
+  const totalVillainHealth =
+    villain.strength + villain.speed + villain.durability;
+  const villainAttackPower =
+    villain.intelligence + villain.power + villain.combat;
+
+  var currentVillainHealth = totalVillainHealth;
+  var lastAttack = 10;
+  currentVillainHealth = currentVillainHealth - lastAttack;
+  var healthbarValPercent = Math.floor(
+    (currentVillainHealth / totalVillainHealth) * 100
+  );
 
 
-  // console.log("(FightPageHeroCard) props: ", villain);
+  console.log("totalVillainHealth: ", totalVillainHealth);
+  console.log("villainAttackPower: ", villainAttackPower);
+  var currentVillainHealth = totalVillainHealth;
+  var lastAttack = 10;
+  currentVillainHealth = currentVillainHealth - lastAttack;
+  var healthbarValPercent = Math.floor((currentVillainHealth/totalVillainHealth)*100 )
+  // console.log("(FightPageVillainCard) props: ", Villain);
   // creates the colors in the dropdown menu in our card
   function statBarColor(value) {
     if (value <= 50) {
-      return "warning";
-    } else if (value > 50 && value <= 75) {
-      return "success";
-    } else if (value > 75 && value <= 100) {
       return "danger";
+    } else if (value > 50 && value <= 75) {
+      return "warning";
+    } else if (value > 75 && value <= 100) {
+      return "success";
     } else {
       return;
     }
   }
 
-  
-
-
   return (
     <Fragment>
-      <MDBView hover zoom >
+      <MDBView hover zoom>
         <MDBCard style={{ width: "17rem" }} className="m-2">
           <MDBCardImage
             className="img-thumbnail"
@@ -75,6 +96,9 @@ export default function FightPageVillainCard({ villain }) {
               <MDBCardText>
                 <strong>Total Power: {villain.total_power}</strong>{" "}
               </MDBCardText>
+              {/* <MDBCardText>
+                <strong>Total Power: {villain.total_power}</strong>{" "}
+              </MDBCardText>
               <MDBCardText className="marginBtm">
                 Alignment: {villain.alignment}
               </MDBCardText>
@@ -86,9 +110,21 @@ export default function FightPageVillainCard({ villain }) {
               </MDBCardText>
               <MDBCardText className="marginBtm">
                 Weight: {villain.weight}{" "}
-              </MDBCardText>
+              </MDBCardText> 
               <MDBCardText className="">
                 Publisher: <strong>{villain.publisher}</strong>
+              </MDBCardText> */}
+              <MDBCardText>
+                Health:
+                <MDBProgress
+                  className="my-2"
+                  material
+                  value={healthbarValPercent}
+                  color={statBarColor(parseInt(healthbarValPercent))}
+                  animated
+                >
+                  {healthbarValPercent + "%"}
+                </MDBProgress>
               </MDBCardText>
             </div>
             <hr></hr>
@@ -116,12 +152,12 @@ export default function FightPageVillainCard({ villain }) {
                   />
                 </MDBDropdownItem>
                 <MDBDropdownItem>
-                  Intelligence: {villain.intelligence}
+                  Intelligence: {villain.intel}
                   <MDBProgress
                     className="my-2"
                     material
-                    value={villain.intelligence}
-                    color={statBarColor(parseInt(villain.intelligence))}
+                    value={villain.intel}
+                    color={statBarColor(parseInt(villain.intel))}
                   />
                 </MDBDropdownItem>
                 <MDBDropdownItem>
@@ -154,11 +190,11 @@ export default function FightPageVillainCard({ villain }) {
               </MDBDropdownMenu>
             </MDBDropdown>
             <MDBRow>
-              <MDBCol className="text-center"> 
-                <MDBLink to="/fight">
+              <MDBCol className="text-center">
+                {/* <MDBLink to="/fight">
                   <MDBBtn className="mb-1" color="danger" size="sm" >
                   Fight!</MDBBtn>
-                </MDBLink>  
+                </MDBLink>   */}
               </MDBCol>
             </MDBRow>
           </MDBCardBody>

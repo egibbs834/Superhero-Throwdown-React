@@ -1,5 +1,5 @@
 import React, { useContext, Fragment } from "react";
-import { Route} from "react-router-dom";
+import { Route } from "react-router-dom";
 import {
   MDBView,
   MDBBtn,
@@ -15,22 +15,24 @@ import {
   MDBDropdownToggle,
   MDBDropdownMenu,
   MDBDropdownItem,
-  MDBLink
+  MDBLink,
 } from "mdbreact";
-// import "./style.css";
 
+// import "./style.css";
+import Attack from "../AttackBtn/index";
 
 export default function FightPageHeroCard({ hero }) {
-
-  console.log("(FightPageHeroCard) hero: ", hero)
+  console.log("(FightPageHeroCard) hero: ", hero);
   const totalHeroHealth = hero.strength + hero.speed + hero.durability;
   const heroAttack = hero.intelligence + hero.power + hero.combat;
   console.log("totalHeroHealth: ", totalHeroHealth);
   console.log("heroAttack: ", heroAttack);
   var currentHeroHealth = totalHeroHealth;
-  var lastAttack = 10;
+  var lastAttack = 130;
   currentHeroHealth = currentHeroHealth - lastAttack;
-  var healthbarValPercent = Math.floor((currentHeroHealth/totalHeroHealth)*100 )
+  var healthbarValPercent = Math.floor(
+    (currentHeroHealth / totalHeroHealth) * 100
+  );
   // console.log("(FightPageHeroCard) props: ", hero);
   // creates the colors in the dropdown menu in our card
   function statBarColor(value) {
@@ -44,7 +46,6 @@ export default function FightPageHeroCard({ hero }) {
       return;
     }
   }
-
 
   return (
     <Fragment>
@@ -98,12 +99,13 @@ export default function FightPageHeroCard({ hero }) {
               <MDBCardText>
                 Health:
                 <MDBProgress
-                    className="my-2"
-                    material
-                    value={ healthbarValPercent }
-                    color={statBarColor(parseInt(healthbarValPercent))}
-                    animated>
-                    { healthbarValPercent + "%"}   
+                  className="my-2"
+                  material
+                  value={healthbarValPercent}
+                  color={statBarColor(parseInt(healthbarValPercent))}
+                  animated
+                >
+                  {healthbarValPercent + "%"}
                 </MDBProgress>
               </MDBCardText>
             </div>
@@ -170,11 +172,8 @@ export default function FightPageHeroCard({ hero }) {
               </MDBDropdownMenu>
             </MDBDropdown>
             <MDBRow>
-              <MDBCol className="text-center"> 
-                <MDBLink to="/fight">
-                  <MDBBtn className="mb-1" color="danger" size="sm" >
-                  Fight!</MDBBtn>
-                </MDBLink>  
+              <MDBCol className="text-center">
+                <Attack />
               </MDBCol>
             </MDBRow>
           </MDBCardBody>

@@ -1,0 +1,9 @@
+.c {
+    /* position: absolute;
+    max-width: 500px;
+    max-height: 500px;
+    width: 50ch;
+    height: 50ch;  */
+    cursor: pointer;
+    will-change: transform, opacity;
+  }

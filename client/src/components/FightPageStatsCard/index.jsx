@@ -1,5 +1,5 @@
-import React, { useContext, Fragment } from "react";
-import { Route} from "react-router-dom";
+import React, { useContext, Fragment, useState } from "react";
+import { Route } from "react-router-dom";
 import {
   MDBView,
   MDBBtn,
@@ -15,28 +15,14 @@ import {
   MDBDropdownToggle,
   MDBDropdownMenu,
   MDBDropdownItem,
-  MDBLink
+  MDBLink,
 } from "mdbreact";
 // import "./style.css";
-import tempImg from "../../pages/Fight/images/conflictEarthImg.jpg"
+import tempImg from "../../pages/Fight/images/conflictEarthImg.jpg";
 
-
-
-export default function FightPageStatsCard({ villain }) {
-
-  function statBarColor(value) {
-    if (value <= 50) {
-      return "warning";
-    } else if (value > 50 && value <= 75) {
-      return "success";
-    } else if (value > 75 && value <= 100) {
-      return "danger";
-    } else {
-      return;
-    }
-  }
-
-
+export default function FightPageStatsCard() {
+  const [heroMessage, setHeroMessage] = useState("");
+  const [villainMessage, setVillainMessage] = useState("");
 
   return (
     <Fragment>
@@ -65,30 +51,7 @@ export default function FightPageStatsCard({ villain }) {
             </MDBCardTitle>
             <hr></hr>
             <div style={{ height: "10rem" }}>
-              {/* <MDBCardText className="marginBtm mt-0">
-                <strong>
-                  Tier Ranking:{" "}
-                  <span className="myColor">{villain.tier_list}</span>{" "}
-                </strong>
-              </MDBCardText>
-              <MDBCardText>
-                <strong>Total Power: {villain.total_power}</strong>{" "}
-              </MDBCardText>
-              <MDBCardText className="marginBtm">
-                Alignment: {villain.alignment}
-              </MDBCardText>
-              <MDBCardText className="marginBtm">
-                Race: {villain.race}
-              </MDBCardText>
-              <MDBCardText className="marginBtm">
-                Height: {villain.height}
-              </MDBCardText>
-              <MDBCardText className="marginBtm">
-                Weight: {villain.weight}{" "}
-              </MDBCardText>
-              <MDBCardText className="">
-                Publisher: <strong>{villain.publisher}</strong>
-              </MDBCardText> */}
+              {/* <MDBCardText value={heroMesasge}></MDBCardText> */}
             </div>
             <hr></hr>
             {/* <MDBDropdown className="text-center" size="sm" hover dropup>
@@ -153,11 +116,12 @@ export default function FightPageStatsCard({ villain }) {
               </MDBDropdownMenu>
             </MDBDropdown> */}
             <MDBRow>
-              <MDBCol className="text-center"> 
+              <MDBCol className="text-center">
                 <MDBLink to="/fight">
-                  <MDBBtn className="mb-1" color="danger" size="sm" >
-                  Fight!</MDBBtn>
-                </MDBLink>  
+                  <MDBBtn className="mb-1" color="danger" size="sm">
+                    Fight!
+                  </MDBBtn>
+                </MDBLink>
               </MDBCol>
             </MDBRow>
           </MDBCardBody>

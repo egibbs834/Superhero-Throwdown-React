@@ -82,7 +82,9 @@ const Navbar = () => {
               {isAuthenticated && (
                 <Fragment>
                   <MDBNavItem>
-                    <MDBLink to="/search" onClick={handleHeroContext}>
+                    {/* <MDBLink to="/search" onClick={handleHeroContext}> */}
+                    <MDBLink to="/search">
+
                       Search
                     </MDBLink>
                   </MDBNavItem>
