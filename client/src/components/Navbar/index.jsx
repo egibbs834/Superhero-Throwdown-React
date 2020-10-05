@@ -17,6 +17,7 @@ import {
 
 import "./index.css";
 import AuthenticationContext from "../../context/authenticationContext";
+import FightPageVillainContext from "../../context/fightPageVillainContext";
 import UsernameContext from "../../context/usernameContext";
 import HeroContext from "../../context/heroContext";
 import API from "../../utils/API";
@@ -34,6 +35,10 @@ const Navbar = () => {
 
   const { heroContext, setHeroContext } = useContext(HeroContext);
 
+  const { fightPageVillainContext, setFightPageVillainContext } = useContext(
+    FightPageVillainContext
+  );
+
   const handleTogglerClick = () => {
     // setCollapsed((prevState) => ({
     //   collapsed: !prevState.collapsed,
@@ -47,6 +52,7 @@ const Navbar = () => {
     setIsAuthenticated(false);
     setUsername("");
     setHeroContext({});
+    setFightPageVillainContext({});
     API.handleLogout()
       .then((res) => {
         console.log("user logged out");
