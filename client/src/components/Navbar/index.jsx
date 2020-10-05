@@ -47,6 +47,10 @@ const Navbar = () => {
   };
   // hello
 
+  function handleHeroContext() {
+    setHeroContext({});
+  }
+
   // sets authentication and username back to false and empty string for next user to login and hits route to back end to hit a req.logout
   function handleLogout() {
     setIsAuthenticated(false);
@@ -89,7 +93,9 @@ const Navbar = () => {
                 <Fragment>
                   <MDBNavItem>
                     {/* <MDBLink to="/search" onClick={handleHeroContext}> */}
-                    <MDBLink to="/search">Search</MDBLink>
+                    <MDBLink to="/search" onClick={handleHeroContext}>
+                      Search
+                    </MDBLink>
                   </MDBNavItem>
                   <MDBNavItem>
                     <MDBLink to="/universe">Universe</MDBLink>
