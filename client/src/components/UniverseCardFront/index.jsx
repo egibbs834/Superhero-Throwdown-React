@@ -1,5 +1,5 @@
 import React, { useContext, Fragment } from "react";
-import { Route} from "react-router-dom";
+import { Route } from "react-router-dom";
 import {
   MDBView,
   MDBBtn,
@@ -15,16 +15,19 @@ import {
   MDBDropdownToggle,
   MDBDropdownMenu,
   MDBDropdownItem,
-  MDBLink
+  MDBLink,
 } from "mdbreact";
 import "./style.css";
 import FightPageHeroContext from "../../context/fightPageHeroContext";
-
-
+import FightPageVillainContext from "../../context/fightPageVillainContext";
 
 export default function UniverseCardFront({ character, increment }) {
-
-  const {fightPageHeroContext, setFightPageHeroContext} = useContext(FightPageHeroContext);
+  const { fightPageHeroContext, setFightPageHeroContext } = useContext(
+    FightPageHeroContext
+  );
+  const { fightPageVillainContext, setFightPageVillainContext } = useContext(
+    FightPageVillainContext
+  );
 
   // console.log("(UniverseCardFront) props: ", character);
   // creates the colors in the dropdown menu in our card
@@ -42,19 +45,52 @@ export default function UniverseCardFront({ character, increment }) {
 
   // redirects the user to the fight page on button click
   function handleFight() {
-    console.log("(UniverseCardFront) FightPageHeroContext: ", fightPageHeroContext)
-    console.log(`sending ${character.name} to fight!`)
     setFightPageHeroContext(character);
-    
-    console.log("Launching Fight Page");
-  // setUsername("");
-    // setHeroContext({});
-    // API.handleLogout()
-    //   .then((res) => {
-    //     console.log("user logged out");
-    //   })
-    //   .catch(console.error);
+    setFightPageHeroContext({
+      ...character,
+      attack: Math.floor(
+        character.intelligence * 1.75 + character.power + character.combat * 1.3
+      ),
+      totalHealth: Math.floor(
+        character.durability * 2.75 +
+          character.speed * 1.25 +
+          character.strength
+      ),
+      currentHealth: Math.floor(
+        character.durability * 2.75 +
+          character.speed * 1.25 +
+          character.strength
+      ),
+    });
+    setFightPageVillainContext({
+      ...fightPageVillainContext,
+      attack: Math.floor(
+        fightPageVillainContext.intel * 1.75 +
+          fightPageVillainContext.power +
+          fightPageVillainContext.combat * 1.3
+      ),
+      totalHealth: Math.floor(
+        fightPageVillainContext.durability * 2.75 +
+          fightPageVillainContext.speed * 1.25 +
+          fightPageVillainContext.strength
+      ),
+      currentHealth: Math.floor(
+        fightPageVillainContext.durability * 2.75 +
+          fightPageVillainContext.speed * 1.25 +
+          fightPageVillainContext.strength
+      ),
+    });
   }
+  // console.log(`sending ${character.name} to fight!`);
+
+  // console.log("Launching Fight Page");
+  // setUsername("");
+  // setHeroContext({});
+  // API.handleLogout()
+  //   .then((res) => {
+  //     console.log("user logged out");
+  //   })
+  //   .catch(console.error);
 
   return (
     <Fragment>
@@ -169,11 +205,17 @@ export default function UniverseCardFront({ character, increment }) {
               </MDBDropdownMenu>
             </MDBDropdown>
             <MDBRow>
-              <MDBCol className="text-center"> 
+              <MDBCol className="text-center">
                 <MDBLink to="/fight">
-                  <MDBBtn className="mb-1" color="danger" size="sm" onClick={handleFight}>
-                  Fight!</MDBBtn>
-                </MDBLink>  
+                  <MDBBtn
+                    className="mb-1"
+                    color="danger"
+                    size="sm"
+                    onClick={handleFight}
+                  >
+                    Fight!
+                  </MDBBtn>
+                </MDBLink>
               </MDBCol>
             </MDBRow>
           </MDBCardBody>

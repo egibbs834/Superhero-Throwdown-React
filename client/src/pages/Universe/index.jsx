@@ -19,7 +19,7 @@ import parallaxImg from "./images/blueVredCloudsNebula.jpg";
 import LoadingSpinner from "../../components/LoadSpinner";
 import { useSpring, animated as a } from "react-spring";
 
-export default function Universe() {
+export default function Universe(props) {
   const [heroes, setHeroes] = useState({});
   const { username, setUsername } = useContext(UsernameContext);
   const [isLoading, setIsLoading] = useState(true);
