@@ -629,6 +629,7 @@ function FinalFightPage() {
           </Fragment>
         </MDBAnimation>
       </MDBRow>
+      <br></br>
     </>
   );
 }
