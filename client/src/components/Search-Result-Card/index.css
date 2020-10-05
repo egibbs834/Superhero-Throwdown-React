@@ -5,3 +5,19 @@
 .marginBtm {
   margin-bottom: 0px;
 }
+
+.flipCtn {
+  height: 12rem;
+  display: flex; 
+  justify-content: center;
+  overflow: auto;
+}
+
+h8 {
+  color: purple;
+}
+
+.flipDiv {
+  will-change: transform, opacity;
+  position: absolute;
+}

@@ -130,13 +130,19 @@ function SearchPage(props) {
           };
         });
         console.log("character: ", character);
+
         setResults({
           results: res.data.results,
           characters: character,
         });
       })
+
       .catch(console.error);
   }
+
+  
+
+  
   return (
     <div>
       <div id="apppage">
@@ -199,11 +205,19 @@ function SearchPage(props) {
             {isLoading ? (
               <LoadingSpinner />
             ) : (
-              <ResultCard
-                characters={results.characters}
-                errorMessage={errorMessage}
-                results={results.results}
-              />
+              <MDBCol className="justify-content-center align-items-center text-center container-fluid">
+                {errorMessage ? (
+                  <div className="alert alert-danger">{`${errorMessage}`}</div>
+                ) : results.characters.length ? (
+                  <div className="row justify-content-center align-items-center container-fluid">
+                    {results.characters.map((character, i) => (
+                      <ResultCard key={i}character={character} results={results.results}/>
+                    ))}
+                  </div>
+                ) : (
+                  <h3>No Searches Yet</h3>
+                )}
+              </MDBCol>
             )}
           </MDBRow>
         </MDBJumbotron>

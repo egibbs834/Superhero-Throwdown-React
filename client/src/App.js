@@ -93,6 +93,7 @@ function App() {
                         path="/signup"
                         render={(props) => <SignUp {...props} />}
                       />
+                      <Route component={Login} />
                     </Fragment>
                   )}
                   <Route exact path="*" component={NoMatch} />
