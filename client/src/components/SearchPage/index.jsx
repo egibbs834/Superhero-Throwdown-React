@@ -9,6 +9,7 @@ import {
   MDBAnimation,
   MDBCard,
   MDBJumbotron,
+  MDBCardText,
 } from "mdbreact";
 import LoadingSpinner from "../LoadSpinner";
 import "./index.css";
@@ -20,8 +21,7 @@ import UsernameContext from "../../context/usernameContext";
 import HeroContext from "../../context/heroContext";
 import HeroChart from "../Chart/index";
 import Counter from "../FightBtnClicker/index";
-import FightPageVillainContext from "../../context/fightPageVillainContext"
-
+import FightPageVillainContext from "../../context/fightPageVillainContext";
 
 function SearchPage(props) {
   console.log("(SearchPage) props: ", props);
@@ -35,18 +35,13 @@ function SearchPage(props) {
   // Sets default state to display content is loading
   const [isLoading, setIsLoading] = useState(false);
 
-  const {fightPageVillainContext, setFightPageVillainContext} = useContext(FightPageVillainContext);
+  const { fightPageVillainContext, setFightPageVillainContext } = useContext(
+    FightPageVillainContext
+  );
   console.log("fightPageVillainContext: ", fightPageVillainContext);
-
-  // const [randomVillain, setRandomVillain] = useState("");
-  // console.log("randomVillain: ", randomVillain);
 
   const { isAuthenticated } = useContext(AuthenticationContext);
   console.log("isAuthenticated: ", isAuthenticated);
-
-  // if (!isAuthenticated) {
-  //   props.match.url("/login");
-  // }
 
   const { username } = useContext(UsernameContext);
   console.log("username: ", username);
@@ -64,12 +59,9 @@ function SearchPage(props) {
     });
   }
 
-
   // check if there are no keys in our object, meanign we have an empty object
-  console.log("Number of keys in fightPageVillainContext: ", Object.keys(fightPageVillainContext).length);
   if (Object.keys(fightPageVillainContext).length === 0) {
     getRandomVillain();
-
   }
 
   function tierList(value) {
@@ -161,6 +153,7 @@ function SearchPage(props) {
                       Search over 700 comicbook superheroes and villains!
                     </h1>
                     <hr className="hr-light" />
+                    <MDBCardText className="lead text-white">{`Looks like ${fightPageVillainContext.name} is already approaching... Search and build your universe wisely to protect against the dark forces of the multiverse.`}</MDBCardText>
                     <div className="active-pink-3 active-pink-4 mb-4">
                       <input
                         onChange={handleInputChange}
@@ -226,11 +219,6 @@ function SearchPage(props) {
           </MDBJumbotron>
         </MDBContainer>
       )}
-      <MDBContainer>
-        <MDBJumbotron>
-          <Counter />
-        </MDBJumbotron>
-      </MDBContainer>
     </div>
   );
 }
