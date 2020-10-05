@@ -378,7 +378,7 @@ function FinalFightPage() {
 
                   <MDBCardBody
                     className="text-center"
-                    style={{ height: "12rem" }}
+                    style={{ height: "15rem" }}
                   >
                     {heroCurrentHealth < 0 || !randomHeroAttack ? (
                       <></>
@@ -416,7 +416,7 @@ function FinalFightPage() {
                       <strong>
                         {fightPageVillainContext.name}
                         {
-                          " is VICTORIOUS! YOU HAVE FAILED. Rejoin the rest of your team and recoup, add more Heroes. For there is always villains trying to take over the universe!"
+                          " is VICTORIOUS! YOU HAVE FAILED. Rejoin the rest of your team and recoup, add more Heroes!"
                         }
                       </strong>
                     ) : (
