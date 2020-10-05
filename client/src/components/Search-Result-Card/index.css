@@ -14,5 +14,10 @@
 }
 
 h8 {
-  color: purple
+  color: purple;
+}
+
+.flipDiv {
+  will-change: transform, opacity;
+  position: absolute;
 }

@@ -1,41 +1,28 @@
-
 import axios from "axios";
 
 const api_key = process.env.REACT_APP_API_KEY;
 const apicv_key = process.env.REACT_APP_APICV_KEY;
 
-
-console.log("api_key: ", api_key);
-
 export default {
   getSuperheroID: function (name) {
-    console.log("name", name);
-    console.log(apicv_key)
     return axios.get(
       `https://cors-anywhere.herokuapp.com/https://comicvine.gamespot.com/api/characters/?api_key=${apicv_key}&format=json&filter=name:${name}`
-    )
+    );
   },
   getMoreInfo: function (sh_id) {
-    console.log("getMoreInfo", sh_id);
     return axios.get(
       `https://cors-anywhere.herokuapp.com/https://comicvine.gamespot.com/api/character/4005-${sh_id}/?api_key=${apicv_key}&format=json`
-    )
+    );
   },
   getSuperhero: function (name) {
-    console.log("name", name);
-    console.log(
-      `GET https://cors-anywhere.herokuapp.com/https://superheroapi.com/api/${api_key}/search/${name}`
-    );
     return axios.get(
       `https://cors-anywhere.herokuapp.com/https://superheroapi.com/api/${api_key}/search/${name}`
     );
   },
   getComicVine: function () {
-    console.log("getComicVine api hit");
     return axios.get(`http://www.comicvine.com/api`);
   },
   getRandomVillain: function () {
-    console.log("POST /api/villain_data");
     return axios({
       method: "GET",
       withCredentials: true,
@@ -44,8 +31,6 @@ export default {
   },
 
   addHero: function (heroToBeAdded) {
-    console.log("POST /api/hero_data");
-    console.log({ heroToBeAdded });
     return axios({
       method: "POST",
       data: heroToBeAdded,
@@ -54,20 +39,15 @@ export default {
     });
   },
 
-  getAllHeroes: function(username) {
-    console.log("GET /api/universe");
-    console.log("getAllHeroes username: ", username)
-    console.log(`api url: /api/universe/${username}`)
+  getAllHeroes: function (username) {
     return axios({
       method: "GET",
       withCredentials: true,
-      url: `/api/universe/${username}`
-    })
+      url: `/api/universe/${username}`,
+    });
   },
 
   registerUsername: function (data) {
-    console.log("POST /api/signup");
-    console.log({ data });
     return axios({
       method: "POST",
       data: {
@@ -79,8 +59,6 @@ export default {
     });
   },
   handleLogin: function (data) {
-    console.log("POST /api/login");
-    console.log({ data });
     return axios({
       method: "POST",
       data: {
@@ -92,7 +70,6 @@ export default {
     });
   },
   handleLogout: function () {
-    console.log("GET /logout");
     return axios({
       method: "GET",
       withCredentials: true,

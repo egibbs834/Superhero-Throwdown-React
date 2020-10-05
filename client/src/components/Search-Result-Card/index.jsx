@@ -2,20 +2,20 @@ import React, { useContext, useState, useEffect } from "react";
 import API from "../../utils/API";
 import {
   MDBView,
+  MDBContainer,
   MDBBtn,
   MDBCard,
   MDBCardBody,
   MDBCardImage,
   MDBCardTitle,
   MDBCardText,
-  MDBCol,
   MDBProgress,
   MDBDropdown,
   MDBDropdownToggle,
   MDBDropdownMenu,
   MDBDropdownItem,
-  MDBContainer,
-} from "mdbreact";
+} 
+from "mdbreact";
 import "./index.css";
 import { useSpring, animated as a } from 'react-spring';
 
@@ -30,8 +30,7 @@ const ResultCard = ({character}) => {
   const [loading, setLoading] = useState(true);
   const { username } = useContext(UsernameContext);
   const { heroContext, setHeroContext } = useContext(HeroContext);
-  console.log("heroContext: ", heroContext);
-
+  
   const [flipped, setFlipped] = useState(false)
   const { transform, opacity } = useSpring({
     opacity: flipped ? 1 : 0,
@@ -59,7 +58,6 @@ const ResultCard = ({character}) => {
 function getMoreInfo(name){
   API.getSuperheroID(name)
         .then((res2) => {
-          console.log(res2)
           const match = res2.data.results.filter(character=>character.name.length === name.length)
           console.log(match)
           match.length > 0 && API.getMoreInfo(match[0].id)
@@ -102,7 +100,7 @@ moreInfo && console.log(moreInfo)
           </MDBCardTitle>
           <hr></hr>
           <div className="flipCtn">
-          <a.div className="moreInfoDiv" style={{ opacity, transform: transform.interpolate(t => `${t} rotateX(180deg)`),willChange: "transform, opacity",postion:"absolute" }}>
+          <a.div className="flipDiv" style={{ opacity, transform: transform.interpolate(t => `${t} rotateX(180deg)`)}} onClick={()=>setFlipped(state => !state)} >
           {loading ? <LoadSpinner/> :
            <>
             {moreInfo && <h8>Real Name:</h8>}
@@ -112,23 +110,17 @@ moreInfo && console.log(moreInfo)
               </MDBCardText>
             }
             <hr></hr>
-            {moreInfo && <h8>First Commic:</h8>}
+            {moreInfo && <h8>First Comic:</h8>}
             {moreInfo && 
               <MDBCardText className="marginBtm mt-0">
                 {moreInfo.first_appeared_in_issue.name}
               </MDBCardText>
             }
              <hr></hr>
-            {moreInfo && <h8>Powers:</h8>}
-            {moreInfo && moreInfo.powers.slice(0,10).map((power, i) =>(
-              <MDBCardText className="marginBtm mt-0" key={i}>
-                {power.name}
-              </MDBCardText>
-            ))}
            </>
           }
           </a.div>
-          <a.div fluid style={{ opacity: opacity.interpolate(o => 1 - o), transform, willChange: "transform, opacity",position: "absolute"  }} onClick={()=>setFlipped(state => !state)}>
+          <a.div fluid className="flipDiv" style={{ opacity: opacity.interpolate(o => 1 - o), transform }} onClick={()=>setFlipped(state => !state)}>
             <MDBCardText className="marginBtm mt-0">
               <strong>
                 Tier Ranking:{" "}
@@ -222,8 +214,8 @@ moreInfo && console.log(moreInfo)
           <div className="row">
             <AddHeroModal character={character} username={username} />
           </div>
-          <div className="row">
-            {/* <MDBContainer>
+          {/* <div className="row">
+            <MDBContainer>
               <MDBBtn
                 className="text-white"
                 color="secondary"
@@ -233,8 +225,8 @@ moreInfo && console.log(moreInfo)
               >
                 More Info
               </MDBBtn>
-            </MDBContainer> */}
-          </div>
+            </MDBContainer>
+          </div> */}
           
         </MDBCardBody>
       </MDBCard>

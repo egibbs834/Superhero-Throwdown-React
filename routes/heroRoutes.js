@@ -63,6 +63,5 @@ module.exports = (app) => {
       console.log("result: ", result)
       res.send(result);
     });
-
   });
 };

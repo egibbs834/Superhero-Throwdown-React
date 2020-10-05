@@ -25,13 +25,12 @@ import API from "../../utils/API";
 
 const Navbar = () => {
   const [collapsed, setCollapsed] = useState(false);
-  console.log("collapsed: ", collapsed);
+
   const { isAuthenticated, setIsAuthenticated } = useContext(
     AuthenticationContext
   );
 
   const { username, setUsername } = useContext(UsernameContext);
-  console.log("(Navbar) username: ", username);
 
   const { heroContext, setHeroContext } = useContext(HeroContext);
 
