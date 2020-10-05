@@ -81,7 +81,7 @@ export default function FightPageVillainCard({ villain }) {
                 </strong>
               </MDBCardText>
               <MDBCardText>
-                <strong>Total Power: {hero.total_power}</strong>{" "}
+                <strong>Total Power: {villain.total_power}</strong>{" "}
               </MDBCardText>
               {/* <MDBCardText>
                 <strong>Total Power: {villain.total_power}</strong>{" "}
@@ -138,12 +138,12 @@ export default function FightPageVillainCard({ villain }) {
                   />
                 </MDBDropdownItem>
                 <MDBDropdownItem>
-                  Intelligence: {villain.intelligence}
+                  Intelligence: {villain.intel}
                   <MDBProgress
                     className="my-2"
                     material
-                    value={villain.intelligence}
-                    color={statBarColor(parseInt(villain.intelligence))}
+                    value={villain.intel}
+                    color={statBarColor(parseInt(villain.intel))}
                   />
                 </MDBDropdownItem>
                 <MDBDropdownItem>
@@ -177,10 +177,10 @@ export default function FightPageVillainCard({ villain }) {
             </MDBDropdown>
             <MDBRow>
               <MDBCol className="text-center"> 
-                <MDBLink to="/fight">
+                {/* <MDBLink to="/fight">
                   <MDBBtn className="mb-1" color="danger" size="sm" >
                   Fight!</MDBBtn>
-                </MDBLink>  
+                </MDBLink>   */}
               </MDBCol>
             </MDBRow>
           </MDBCardBody>

@@ -20,37 +20,80 @@ import {
 } from "mdbreact";
 import "./style.css";
 import UniverseCardFront from "../UniverseCardFront";
-// import UniverseCardBack from "../UniverseCardBack";
+import { Fragment } from "react";
+import UniverseCardBack from "../UniverseCardBack";
+import tempImg from "../../pages/Universe/images/purpleNebula.jpg"
 
-  export default function UniverseCard(props) {
-    const [flipped, set] = useState(false)
-    const { transform, opacity } = useSpring({
-      opacity: flipped ? 1 : 0,
-      transform: `perspective(600px) rotateY(${flipped ? 180 : 0}deg)`,
-      config: { mass: 5, tension: 500, friction: 80 }
-    })
-    console.log("universe card props: ", props)
+// export default function UniverseCard(props) {
+export default function UniverseCard({ character }) {
+  const [flipped, set] = useState(false);
+  const { transform, opacity } = useSpring({
+    opacity: flipped ? 1 : 0,
+    transform: ` rotateY(${flipped ? 180 : 0}deg)`,
+    config: { mass: 5, tension: 500, friction: 80 },
+  });
+  console.log("universe card props: ", character);
 
-
-    return(
-        <div >
-            <MDBRow className="justify-content-center align-items-center  mx-5" id="rowWrapper">
-            {props.characters.map((character, i) => {
-                return (
-                    <MDBCol className = "mt-5" key={i}>
-                        <UniverseCardFront character={character} />
-
-                        {/* <a.div  onClick={() => set(state => !state)} style={{ opacity: opacity.interpolate(o => 1 - o), transform }}>
-                            <UniverseCardFront character={character}/>
-                        </a.div> */}
-              {/* <a.div className="c back" style={{ opacity, transform: transform.interpolate(t => `${t} rotateY(180deg)`) }}>
-                            Back Card component here 
-                             <UniverseCardBack character={character} />
-                        </a.div> */}
-            </MDBCol>
-          );
-        })}
-      </MDBRow>
-    </div>
+  return (
+    <Fragment>
+      {flipped ? (
+        // ========================================================================
+        // BACK OF CARD
+        // ========================================================================
+        <a.div
+          className="c back"
+          style={{
+            opacity,
+            transform: transform.interpolate((t) => `${t} rotateY(180deg)`),
+          }}
+        >
+          <MDBView hover zoom>
+            <MDBCard style={{ width: "17rem" }} className="m-2">
+              <div onClick={() => set(!flipped)}>
+                <MDBCardImage
+                  className="img-thumbnail"
+                  src={character.img_url}
+                  style={{
+                    width: "100%",
+                    maxHeight: "338px",
+                  }}
+                  alt={`picture of ${character.name}`}
+                />
+              </div>
+              <UniverseCardBack character={character} />
+            </MDBCard>
+          </MDBView>
+        </a.div>
+      ) : (
+        // ========================================================================
+        // FRONT OF CARD
+        // ========================================================================
+        <a.div
+          className="c front"
+          style={{ opacity: opacity.interpolate((o) => 1 - o), transform }}
+        >
+          <MDBView hover zoom>
+            <MDBCard style={{ width: "17rem" }} className="m-2">
+              <div onClick={() => set(!flipped)}>
+                <MDBCardImage
+                  className="img-thumbnail"
+                  src={character.img_url}
+                  style={{
+                    width: "100%",
+                    maxHeight: "338px",
+                  }}
+                  alt={`picture of ${character.name}`}
+                />
+              </div>
+              <UniverseCardFront character={character} />
+            </MDBCard>
+          </MDBView>
+        </a.div>
+      )}
+    </Fragment>
   );
+}
+
+{
+  /* <a.div class="c front" style={{ opacity, transform: transform.interpolate(t => `${t} rotateX(180deg)`) }} /> */
 }
