@@ -60,6 +60,7 @@ export default function Universe() {
       {/* <MDBJumbotron>Welcome to our universe</MDBJumbotron> */}
       <MDBView src={parallaxImg} fixed className="universeBackground">
         <MDBMask overlay="grey-light" className="flex-center"></MDBMask>
+
         <MDBContainer fluid className="mt-3 justify-content-center">
           {isLoading ? (
             <MDBRow>

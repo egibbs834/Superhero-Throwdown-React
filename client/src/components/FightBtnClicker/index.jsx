@@ -9,6 +9,11 @@ function Counter() {
     setCount(count + 1);
   }
 
+  function timer() {
+    setTimeout();
+  }
+
+
   return (
     <>
       <MDBBtn color="secondary" onClick={handleIncrement}>
