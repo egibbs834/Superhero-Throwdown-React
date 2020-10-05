@@ -12,6 +12,7 @@ import {
   MDBDropdownMenu,
   MDBDropdownItem,
   MDBLink,
+  MDBContainer,
 } from "mdbreact";
 import "./style.css";
 import FightPageHeroContext from "../../context/fightPageHeroContext";

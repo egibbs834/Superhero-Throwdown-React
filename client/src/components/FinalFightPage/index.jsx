@@ -1,10 +1,8 @@
 import React, { Fragment, useContext, useState, useEffect } from "react";
 
 import {
-  MDBContainer,
   MDBCard,
   MDBView,
-  MDBMask,
   MDBAnimation,
   MDBBtn,
   MDBCardBody,
@@ -24,8 +22,11 @@ import {
 
 import FightPageHeroContext from "../../context/fightPageHeroContext";
 import FightPageVillainContext from "../../context/fightPageVillainContext";
+import HeroContext from "../../context/heroContext";
 
 import tempImg from "../../pages/Fight/images/conflictEarthImg.jpg";
+import winPic from "./img/universe_saved_message_pic.jpg";
+import lossPic from "./img/universe_defeated_message_pic.jpg";
 
 function FinalFightPage() {
   const { fightPageHeroContext, setFightPageHeroContext } = useContext(
@@ -34,6 +35,8 @@ function FinalFightPage() {
   const { fightPageVillainContext, setFightPageVillainContext } = useContext(
     FightPageVillainContext
   );
+  const { heroContext, setHeroContext } = useContext(HeroContext);
+
   console.log({ fightPageHeroContext, fightPageVillainContext });
 
   const [show, setShow] = useState(false);
@@ -62,6 +65,7 @@ function FinalFightPage() {
   const [randomVillainAttack, setRandomVillainAttack] = useState();
 
   function handleAttack() {
+    setShow(false);
     // attacks villain
     var randomHeroAttackValue = Math.floor((Math.random() * heroAttack) / 2);
     console.log({ randomHeroAttackValue });
@@ -86,10 +90,17 @@ function FinalFightPage() {
           currentHealth: heroCurrentHealth,
         });
         setRandomVillainAttack(randomVillainAttackValue);
+        setShow(true);
       }, 2000);
     } else {
       return;
     }
+  }
+
+  function resetVillainContext() {
+    setFightPageVillainContext({});
+    setFightPageHeroContext({});
+    setHeroContext({});
   }
 
   function statBarColor(value) {
@@ -108,13 +119,13 @@ function FinalFightPage() {
     <>
       <MDBRow>
         <MDBCol>
-          <MDBJumbotron>
-            <MDBCardTitle className="text-center">
+          <MDBJumbotron className="text-white" style={{ background: "none" }}>
+            <h1 className="text-center display-4">
               Welcome to the Battlegrounds...
-            </MDBCardTitle>
+            </h1>
             <MDBCard>
-              <MDBCardBody>
-                <MDBCardText className="text-center">{`Welcome to the fight to save the universe. ${fightPageVillainContext.name} has been preparing to take over the universe and you have choosen ${fightPageHeroContext.name} to stop them. Below you will find out if you have succesfully done your job. Your total attack power is a combination of characters intelligence, power, and combat - with a 1.75x buff to intelligence and a 1.3x buff to combat. The total health is durability, speed, and strength - with a 2.75x buff to durability and a 1.25x buff to speed.`}</MDBCardText>
+              <MDBCardBody className="secondary-color">
+                <MDBCardText className="text-center text-white lead">{`Welcome to the fight to save the universe. ${fightPageVillainContext.name} has been preparing to take over the universe and you have choosen ${fightPageHeroContext.name} to stop them. Below you will find out if you have succesfully done your job. Your total attack power is a combination of characters intelligence, power, and combat - with a 1.75x buff to intelligence and a 1.3x buff to combat. The total health is durability, speed, and strength - with a 2.75x buff to durability and a 1.25x buff to speed.`}</MDBCardText>
               </MDBCardBody>
             </MDBCard>
           </MDBJumbotron>
@@ -140,7 +151,7 @@ function FinalFightPage() {
                 />
                 <MDBCardBody
                   style={{
-                    maxHeight: "24rem",
+                    minHeight: "24rem",
                     padding: "none",
                     textTransform: "capitalize",
                   }}
@@ -287,7 +298,7 @@ function FinalFightPage() {
                       </MDBDropdownItem>
                     </MDBDropdownMenu>
                   </MDBDropdown>
-                  <MDBRow>
+                  <MDBRow className="justify-content-center">
                     <MDBCol className="text-center">
                       {fightPageHeroContext.currentHealth > 0 &&
                       fightPageVillainContext.currentHealth > 0 ? (
@@ -316,19 +327,46 @@ function FinalFightPage() {
           <Fragment>
             <MDBView hover zoom>
               <MDBCard style={{ width: "17rem" }} className="m-2">
-                <MDBCardImage
-                  className="img-thumbnail"
-                  // src={villain.img_url}
-                  src={tempImg}
-                  style={{
-                    width: "100%",
-                    maxHeight: "338px",
-                  }}
-                  // alt={`picture of ${villain.name}`}
-                />
+                {heroCurrentHealth > 0 && villainCurrentHealth <= 0 ? (
+                  <MDBCardImage
+                    className="img-thumbnail"
+                    src={winPic}
+                    style={{
+                      width: "100%",
+                      maxHeight: "338px",
+                    }}
+                  />
+                ) : (
+                  <></>
+                )}
+                {villainCurrentHealth > 0 && heroCurrentHealth <= 0 ? (
+                  <MDBCardImage
+                    className="img-thumbnail"
+                    src={lossPic}
+                    style={{
+                      width: "100%",
+                      maxHeight: "338px",
+                    }}
+                  />
+                ) : (
+                  <></>
+                )}
+                {heroCurrentHealth > 0 && villainCurrentHealth > 0 ? (
+                  <MDBCardImage
+                    className="img-thumbnail"
+                    src={tempImg}
+                    style={{
+                      width: "100%",
+                      maxHeight: "338px",
+                    }}
+                  />
+                ) : (
+                  <></>
+                )}
+
                 <MDBCardBody
                   style={{
-                    maxHeight: "24rem",
+                    maxHeight: "27rem",
                     padding: "none",
                     textTransform: "capitalize",
                   }}
@@ -338,26 +376,71 @@ function FinalFightPage() {
                   </MDBCardTitle>
                   <hr></hr>
 
-                  <div style={{ height: "10rem" }}>
-                    {heroCurrentHealth < 0 ? (
+                  <MDBCardBody
+                    className="text-center"
+                    style={{ height: "12rem" }}
+                  >
+                    {heroCurrentHealth < 0 || !randomHeroAttack ? (
                       <></>
                     ) : (
                       <>
-                        <MDBCardText>{`${fightPageHeroContext.name} hit for ${randomHeroAttack}`}</MDBCardText>
+                        <MDBCardText>
+                          <strong>{fightPageHeroContext.name}</strong> attacked
+                          and hit for <strong>{randomHeroAttack}</strong>
+                          {" damage! "}
+                        </MDBCardText>
                       </>
                     )}
-                    {villainCurrentHealth < 0 ? (
+                    {villainCurrentHealth < 0 || !randomVillainAttack ? (
                       <></>
                     ) : (
-                      <MDBCardText>{`${fightPageVillainContext.name} hit for ${randomVillainAttack}`}</MDBCardText>
+                      <MDBCardText>
+                        <strong>{fightPageVillainContext.name}</strong> attacked
+                        and hit for <strong>{randomVillainAttack}</strong>
+                        {" damage! "}
+                      </MDBCardText>
+                    )}
+                    {heroCurrentHealth > 0 && villainCurrentHealth <= 0 ? (
+                      <MDBCardText>
+                        <strong>
+                          {fightPageHeroContext.name}
+                          {
+                            " is VICTORIOUS! YOU HAVE SAVED THE UNIVERSE! Rejoin the rest of your team and prepare, for the next villain is approaching..."
+                          }
+                        </strong>
+                      </MDBCardText>
+                    ) : (
+                      <></>
+                    )}
+                    {villainCurrentHealth > 0 && heroCurrentHealth <= 0 ? (
+                      <strong>
+                        {fightPageVillainContext.name}
+                        {
+                          " is VICTORIOUS! YOU HAVE FAILED. Rejoin the rest of your team and recoup, add more Heroes. For there is always villains trying to take over the universe!"
+                        }
+                      </strong>
+                    ) : (
+                      <></>
                     )}
 
                     <MDBCardText id="villainMessage"></MDBCardText>
-                  </div>
+                  </MDBCardBody>
                   <hr></hr>
                   <MDBRow>
                     <MDBCol className="text-center">
-                      <MDBLink to="/fight">
+                      {villainCurrentHealth <= 0 || heroCurrentHealth <= 0 ? (
+                        <>
+                          <MDBLink to="/search">
+                            <MDBBtn
+                              color="secondary"
+                              size="md"
+                              onClick={resetVillainContext}
+                            >
+                              Search for More Heroes!
+                            </MDBBtn>
+                          </MDBLink>
+                        </>
+                      ) : (
                         <MDBBtn
                           className="mb-1"
                           color="danger"
@@ -366,7 +449,7 @@ function FinalFightPage() {
                         >
                           Ready to Fight!
                         </MDBBtn>
-                      </MDBLink>
+                      )}
                     </MDBCol>
                   </MDBRow>
                 </MDBCardBody>
@@ -390,7 +473,7 @@ function FinalFightPage() {
                 />
                 <MDBCardBody
                   style={{
-                    maxHeight: "24rem",
+                    minHeight: "24rem",
                     padding: "none",
                     textTransform: "capitalize",
                   }}
@@ -538,12 +621,7 @@ function FinalFightPage() {
                     </MDBDropdownMenu>
                   </MDBDropdown>
                   <MDBRow>
-                    <MDBCol className="text-center">
-                      {/* <MDBLink to="/fight">
-                  <MDBBtn className="mb-1" color="danger" size="sm" >
-                  Fight!</MDBBtn>
-                </MDBLink>   */}
-                    </MDBCol>
+                    <MDBCol className="text-center"></MDBCol>
                   </MDBRow>
                 </MDBCardBody>
               </MDBCard>

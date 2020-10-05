@@ -1,52 +1,53 @@
-  
-   #universePage .universeBackground {
-    /* background-image: url("../../pages/Universe/images/conflcitEarthImg.jpg"); */
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-    min-height: 100vh !important;
-    height: unset !important;
-  }
-  
-  #universePage h6 {
-    line-height: 1.7;
-  }
-  
-  /* .rightCardImg {
+#universePage .universeBackground {
+  /* background-image: url("../../pages/Universe/images/conflcitEarthImg.jpg"); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  min-height: 100vh !important;
+  height: unset !important;
+}
+
+#universePage h6 {
+  line-height: 1.7;
+}
+
+/* .rightCardImg {
     margin-top: 10rem;
   } */
-  
-  .flex {
-    display: flex;
+
+.flex {
+  display: flex;
+}
+.marginTop {
+  margin-top: 5rem;
+}
+
+@media only screen and (max-width: 400px) {
+  #universePage .animated img {
+    max-height: 50vh;
+    transform: translateX(-50%);
+    left: 50%;
+    position: absolute;
   }
-  
-  @media only screen and (max-width: 400px) {
-    #universePage .animated img {
-      max-height: 50vh;
-      transform: translateX(-50%);
-      left: 50%;
-      position: absolute;
-    }
+}
+@media only screen and (max-width: 767px) {
+  #universePage .animated img {
+    max-height: 35vh;
+    transform: translateX(-50%);
+    left: 50%;
   }
-  @media only screen and (max-width: 767px) {
-    #universePage .animated img {
-      max-height: 35vh;
-      transform: translateX(-50%);
-      left: 50%;
-    }
+}
+
+@media (max-width: 767px) and (orientation: landscape) {
+  #universePage .animated img {
+    max-height: 50vh;
+    transform: translateX(-50%);
+    left: 50%;
+    position: relative;
   }
-  
-  @media (max-width: 767px) and (orientation: landscape) {
-    #universePage .animated img {
-      max-height: 50vh;
-      transform: translateX(-50%);
-      left: 50%;
-      position: relative;
-    }
+}
+@media (max-width: 1000px) and (orientation: landscape) {
+  #universePage .universeBackground {
+    min-height: 150vh;
   }
-  @media (max-width: 1000px) and (orientation: landscape) {
-    #universePage .universeBackground {
-      min-height: 150vh;
-    }
-  }
-  
+}
