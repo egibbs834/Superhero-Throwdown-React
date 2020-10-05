@@ -19,6 +19,8 @@ Any fan of superhero movies and comics has at one point wondered who would win i
 - CSS
 - React
 - MongoDB
+- MDBReact
+- ReactSpring
 ## DEPENDENCIES
 - bcrypt
 - express
