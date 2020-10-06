@@ -1,7 +1,8 @@
+const axios = require('axios');
 const mongoose = require("mongoose");
-// const Hero = mongoose.model("Hero");
+
 const Hero = require("../models/heroes");
-// const Heroes = require("../models")
+
 module.exports = (app) => {
   app.post("/api/hero_data", (req, res) => {
     console.log("post /api/hero_data");
@@ -62,6 +63,27 @@ module.exports = (app) => {
     Hero.find({ createdBy: req.params.username } ).then((result) => {
       console.log("result: ", result)
       res.send(result);
+    });
+  });
+  app.get("/api/superhero/:hero", (req, res) => {
+    axios.get(
+      `https://superheroapi.com/api/${process.env.API_KEY}/search/${req.params.hero}`
+    ).then(superHeroResp=>{
+      res.json(superHeroResp.data)
+    }).catch(err=>{
+      res.json(err);
+    });
+  });
+  app.get("/api/comicvine/:hero", (req, res) => {
+    axios.get(
+      `https://comicvine.gamespot.com/api/characters/?api_key=${process.env.APICV_KEY}&format=json&filter=name:${req.params.hero}`
+    ).then(superHeroIDResp=>{
+      let match = superHeroIDResp.data.results.filter(character=>character.name.length === req.params.hero.length);
+          match.length > 0 && axios.get(
+        `https://comicvine.gamespot.com/api/character/4005-${match[0].id}/?api_key=${process.env.APICV_KEY}&format=json`
+      ).then(superHeroResp=>{
+          res.json(superHeroResp.data);
+    })
     });
   });
 };

@@ -14,8 +14,6 @@ import FightPageVillainContext from "./context/fightPageVillainContext";
 import Search from "./pages/Search/Search";
 import Universe from "./pages/Universe";
 
-const dotenv = require("dotenv").config();
-
 // set up context
 // update context to let the app know you've been signed in
 

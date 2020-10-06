@@ -56,17 +56,12 @@ const ResultCard = ({character}) => {
   },[character])
 
 function getMoreInfo(name){
-  API.getSuperheroID(name)
+  API.getMoreInfo(name)
         .then((res2) => {
-          const match = res2.data.results.filter(character=>character.name.length === name.length)
-          console.log(match)
-          match.length > 0 && API.getMoreInfo(match[0].id)
-          .then((res3) => {
-          console.log("res3:", res3);
-          setMoreInfo(res3.data.results);
+          console.log(res2)
+          res2 && setMoreInfo(res2.data.results);
           setLoading(false);
       })
-    })
 }
 
 
